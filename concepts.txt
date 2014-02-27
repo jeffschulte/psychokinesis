@@ -1,0 +1,9 @@
+control gravity, essentially when you hold a button, you see icons above the heads of gravity changeable things that are different buttons.  When you press the button and control stick at the same time you redirect the gravity of things (or bad guys).   
+
+As get more experience, have  to affect gravity - so can affect heavier and heavier things, and give things more and more mass (make gravity stronger), can also be time limited, so hold things for longer
+
+Get very powerful and can crush people with houses, rip trees out of ground, turn around bullets in air (with bullets they could all have the same button icon so d be mashing  button or whatever to stop the bullets from hitting you)
+
+Starts out with basic push or pull, not a lot of control.  So try push, with each pushable thing assigned a button and the direction you push pushes against anything in that direction, and then conservation of momentum, so if a push a bad s button and then point down, then the bad guy will push off the ground.  s one button s always assigned to you, and this acts the same on you as from the bad guy.
+
+At the end you beat Him.
