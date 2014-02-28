@@ -6,4 +6,5 @@ Get very powerful and can crush people with houses, rip trees out of ground, tur
 
 Starts out with basic push or pull, not a lot of control.  So try push, with each pushable thing assigned a button and the direction you push pushes against anything in that direction, and then conservation of momentum, so if a push a bad s button and then point down, then the bad guy will push off the ground.  s one button s always assigned to you, and this acts the same on you as from the bad guy.
 
+
 At the end you beat Him.
