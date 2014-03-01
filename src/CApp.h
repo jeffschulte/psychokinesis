@@ -4,14 +4,17 @@
 #ifndef _CAPP_H_
     #define _CAPP_H_
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 //==============================================================================
 class CApp {
     private:
-        bool            Running;
+        bool Running;
 
-        SDL_Surface*    Surf_Display;
+        SDL_Renderer* renderer;
+        SDL_Haptic *haptic;
+
+        int Mainlocx, Mainlocy;
 
     public:
         CApp();

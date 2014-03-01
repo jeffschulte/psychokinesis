@@ -3,7 +3,7 @@
 
 //==============================================================================
 void CApp::OnCleanup() {
-    SDL_FreeSurface(Surf_Display);
+	SDL_HapticClose( haptic );
     SDL_Quit();
 }
 

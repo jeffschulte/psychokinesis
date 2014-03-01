@@ -3,7 +3,11 @@
 
 //==============================================================================
 CApp::CApp() {
-    Surf_Display = NULL;
+    renderer = NULL;
+    haptic = NULL;
+
+    Mainlocx = 200;
+    Mainlocy = 200;
 
     Running = true;
 }
