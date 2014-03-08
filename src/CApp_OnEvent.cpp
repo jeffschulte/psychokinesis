@@ -26,6 +26,9 @@ void CApp::OnEvent(SDL_Event* Event) {
         if(Event->key.keysym.sym == SDLK_RIGHT) {
             movingright = true;
         }
+        if(Event->key.keysym.sym == SDLK_UP) {
+            yvel += 5;
+        }
     }
 
     if(Event->type == SDL_KEYUP) {

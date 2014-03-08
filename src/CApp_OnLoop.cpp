@@ -11,7 +11,7 @@ void CApp::OnLoop() {
         Mainlocx++;
     }
 
-    yvel -= 1;
+    yvel -= 0.1;
 
     Mainlocy -= yvel;
     if(Mainlocy > 405) {
