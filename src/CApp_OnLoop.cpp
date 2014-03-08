@@ -4,12 +4,21 @@
 //==============================================================================
 void CApp::OnLoop() {
 
-	if(movingleft) {
-		Mainlocx--;
-	}
-	if(movingright) {
-		Mainlocx++;
-	}
+    if(movingleft) {
+        Mainlocx--;
+    }
+    if(movingright) {
+        Mainlocx++;
+    }
+
+    yvel -= 1;
+
+    Mainlocy -= yvel;
+    if(Mainlocy > 405) {
+        Mainlocy = 405;
+        yvel = 0;
+    }
+
 }
 
 //==============================================================================

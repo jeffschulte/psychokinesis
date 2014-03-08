@@ -18,6 +18,8 @@ class CApp {
 
         bool movingright, movingleft;
 
+        double yvel;
+
     public:
         CApp();
 
