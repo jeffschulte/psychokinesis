@@ -20,7 +20,7 @@ void CApp::OnEvent(SDL_Event* Event) {
 
     if(Event->type == SDL_JOYBUTTONDOWN) {
 
-        if (SDL_HapticRumblePlay( haptic, 0.5, 1000 ) != 0) {
+        if (haptic != NULL && SDL_HapticRumblePlay( haptic, 0.5, 1000 ) != 0) {
             printf("RumblePlay Fail: %s\n", SDL_GetError());
         }
     }

@@ -3,7 +3,9 @@
 
 //==============================================================================
 void CApp::OnCleanup() {
-    SDL_HapticClose( haptic );
+    if(haptic != NULL) { 
+	    SDL_HapticClose( haptic );
+	}
     SDL_Quit();
 }
 

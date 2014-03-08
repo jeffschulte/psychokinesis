@@ -34,14 +34,14 @@ bool CApp::OnInit() {
     haptic = SDL_HapticOpen( 0 );
     if (haptic == NULL) {
         printf("HapticOpen Fail\n");
-        return false;
+        // return false;
     }
 
     // Initialize simple rumble
-    if (SDL_HapticRumbleInit( haptic ) != 0) {
+    if (haptic != NULL && SDL_HapticRumbleInit( haptic ) != 0) {
 
         printf("RumbleInit Fail: %s\n", SDL_GetError());
-        return false;
+        // return false;
     }
 
     return true;
