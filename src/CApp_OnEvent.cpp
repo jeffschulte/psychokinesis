@@ -18,6 +18,26 @@ void CApp::OnEvent(SDL_Event* Event) {
         }
     }
 
+
+	if(Event->type == SDL_KEYDOWN) {
+		if(Event->key.keysym.sym == SDLK_LEFT) {
+			movingleft = true;
+		}
+		if(Event->key.keysym.sym == SDLK_RIGHT) {
+			movingright = true;
+		}
+	}
+
+	if(Event->type == SDL_KEYUP) {
+		if(Event->key.keysym.sym == SDLK_LEFT) {
+			movingleft = false;
+		}
+		if(Event->key.keysym.sym == SDLK_RIGHT) {
+			movingright = false;
+		}
+	}
+
+
     if(Event->type == SDL_JOYBUTTONDOWN) {
 
         if (haptic != NULL && SDL_HapticRumblePlay( haptic, 0.5, 1000 ) != 0) {

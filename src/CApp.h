@@ -16,6 +16,8 @@ class CApp {
 
         int Mainlocx, Mainlocy;
 
+        bool movingright, movingleft;
+
     public:
         CApp();
 

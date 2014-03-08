@@ -10,6 +10,9 @@ CApp::CApp() {
     Mainlocy = 200;
 
     Running = true;
+
+    movingright = false;
+    movingleft = false;
 }
 
 //------------------------------------------------------------------------------
