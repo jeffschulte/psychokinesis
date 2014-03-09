@@ -25,7 +25,7 @@ bool CApp::OnInit() {
     printf("%i joysticks were found.\n\n", SDL_NumJoysticks() );
 
 
-    SDL_Joystick *joystick;
+
 
     SDL_JoystickEventState(SDL_ENABLE);
     joystick = SDL_JoystickOpen(0);

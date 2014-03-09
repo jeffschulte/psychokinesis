@@ -5,16 +5,20 @@
 CApp::CApp() {
     renderer = NULL;
     haptic = NULL;
+    joystick = NULL;
 
     Mainlocx = 200;
     Mainlocy = 200;
 
     Running = true;
 
-    movingright = false;
-    movingleft = false;
-
     yvel = 0;
+    xvel = 0;
+    xcont = 0;
+
+    targetx = 0;
+    targety = 0;
+
 }
 
 //------------------------------------------------------------------------------

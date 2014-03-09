@@ -1,5 +1,6 @@
 //==============================================================================
 #include "CApp.h"
+#include <math.h>
 
 //==============================================================================
 void CApp::OnRender() {
@@ -11,7 +12,7 @@ void CApp::OnRender() {
 
     // Draw some rectangles for the outside level
 
-    SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
+    SDL_SetRenderDrawColor(renderer, 0, 128, 0, 255);
     int rectwidth = 50;
 
     SDL_Rect rect = {0, 0, rectwidth, 480};
@@ -32,6 +33,18 @@ void CApp::OnRender() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
     SDL_Rect rect5 = {Mainlocx, Mainlocy, 12, 25};
     SDL_RenderFillRect(renderer, &rect5);
+
+
+    // Targeting line for push direction
+
+    double mag = sqrt(targetx*targetx + targety*targety);
+    if(mag > .2) {
+        SDL_SetRenderDrawColor(renderer, 0, 255, 255, 128);
+        SDL_RenderDrawLine(renderer, Mainlocx + 6 + 30 * targetx / mag,
+                            Mainlocy + 12 + 30 * targety / mag, 
+                            Mainlocx + 30 * targetx / mag + 100 * targetx, 
+                            Mainlocy + 12 + 6 + 30 * targety / mag + 100 * targety);
+    }
 
     SDL_RenderPresent(renderer);
 }

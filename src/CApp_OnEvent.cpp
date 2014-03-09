@@ -1,5 +1,6 @@
 //==============================================================================
 #include "CApp.h"
+#include <math.h>
 
 //==============================================================================
 void CApp::OnEvent(SDL_Event* Event) {
@@ -8,24 +9,41 @@ void CApp::OnEvent(SDL_Event* Event) {
     }
 
     if(Event->type == SDL_JOYAXISMOTION) {
-        if((Event->jaxis.value < -3200 ) || (Event->jaxis.value > 3200)) {
-            if(Event->jaxis.axis == 0) {
-                Mainlocy++;
+
+        if(Event->jaxis.axis == 0) {
+            if(Event->jaxis.value > 5000 || Event->jaxis.value < -5000) {
+                xcont = (double) Event->jaxis.value / 32767.0;
             }
-            if(Event->jaxis.axis == 1) {
-                Mainlocx++;
+            else {
+                xcont = 0;
             }
+        }
+
+
+        if(Event->jaxis.axis == 3) {
+            targetx = (double) Event->jaxis.value / 32767.0;
+        }
+        if(Event->jaxis.axis == 4) {
+            targety = (double) Event->jaxis.value / 32767.0;
         }
     }
 
 
     if(Event->type == SDL_KEYDOWN) {
         if(Event->key.keysym.sym == SDLK_LEFT) {
-            movingleft = true;
+            xcont--;
         }
         if(Event->key.keysym.sym == SDLK_RIGHT) {
-            movingright = true;
+            xcont++;
         }
+
+        if(xcont > 0) {
+            xcont = 1;
+        } 
+        else if (xcont < 0) {
+            xcont = -1;
+        }
+
         if(Event->key.keysym.sym == SDLK_UP) {
             yvel += 5;
         }
@@ -33,10 +51,17 @@ void CApp::OnEvent(SDL_Event* Event) {
 
     if(Event->type == SDL_KEYUP) {
         if(Event->key.keysym.sym == SDLK_LEFT) {
-            movingleft = false;
+            xcont++;
         }
         if(Event->key.keysym.sym == SDLK_RIGHT) {
-            movingright = false;
+            xcont--;
+        }
+
+        if(xcont > 0) {
+            xcont = 1;
+        } 
+        else if (xcont < 0) {
+            xcont = -1;
         }
     }
 
@@ -46,6 +71,10 @@ void CApp::OnEvent(SDL_Event* Event) {
         if (haptic != NULL && SDL_HapticRumblePlay( haptic, 0.5, 1000 ) != 0) {
             printf("RumblePlay Fail: %s\n", SDL_GetError());
         }
+
+        xvel -= 5 * targetx;
+        yvel += 5 * targety;
+
     }
 }
 

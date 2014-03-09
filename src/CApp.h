@@ -1,6 +1,4 @@
-//==============================================================================
-// SDL Tutorial 1
-//==============================================================================
+
 #ifndef _CAPP_H_
     #define _CAPP_H_
 
@@ -13,12 +11,15 @@ class CApp {
 
         SDL_Renderer* renderer;
         SDL_Haptic *haptic;
+        SDL_Joystick *joystick;
 
-        int Mainlocx, Mainlocy;
+        double Mainlocx, Mainlocy;
 
-        bool movingright, movingleft;
+        double xcont;
 
-        double yvel;
+        double xvel, yvel;
+
+        double targetx, targety;
 
     public:
         CApp();
