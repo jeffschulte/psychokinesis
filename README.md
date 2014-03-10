@@ -7,11 +7,7 @@ Setting up build environment
 ----------------------------
 Mac:
 
-`brew install sdl`
-
-Linux:
-
-`sudo apt-get install libsdl1.2-dev`
+`brew install sdl2`
 
 
 Compile with `make`
