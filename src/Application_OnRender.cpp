@@ -1,9 +1,9 @@
 //==============================================================================
-#include "CApp.h"
+#include "Application.h"
 #include <math.h>
 
 //==============================================================================
-void CApp::OnRender() {
+void Application::OnRender() {
 
     // Clear everything
 

@@ -1,9 +1,9 @@
 //==============================================================================
-#include "CApp.h"
+#include "Application.h"
 #include <stdio.h>
 
 //==============================================================================
-bool CApp::OnInit() {
+bool Application::OnInit() {
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         return false;
     }

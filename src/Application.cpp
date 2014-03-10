@@ -1,8 +1,8 @@
 //==============================================================================
-#include "CApp.h"
+#include "Application.h"
 
 //==============================================================================
-CApp::CApp() {
+Application::Application() {
     renderer = NULL;
     haptic = NULL;
     joystick = NULL;
@@ -67,7 +67,7 @@ CApp::CApp() {
 }
 
 //------------------------------------------------------------------------------
-int CApp::OnExecute() {
+int Application::OnExecute() {
     if(OnInit() == false) {
         return -1;
     }
@@ -90,9 +90,9 @@ int CApp::OnExecute() {
 
 //==============================================================================
 int main(int argc, char* argv[]) {
-    CApp theApp;
+    Application app;
 
-    return theApp.OnExecute();
+    return app.OnExecute();
 }
 
 //==============================================================================

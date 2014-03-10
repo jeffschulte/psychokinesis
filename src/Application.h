@@ -1,6 +1,4 @@
-
-#ifndef _CAPP_H_
-    #define _CAPP_H_
+#pragma once
 
 #include <SDL.h>
 #include <String>
@@ -9,7 +7,7 @@
 
 
 //==============================================================================
-class CApp {
+class Application {
     private:
         bool Running;
 
@@ -27,7 +25,7 @@ class CApp {
 
         Hud mainhud;
     public:
-        CApp();
+        Application();
 
         int OnExecute();
 

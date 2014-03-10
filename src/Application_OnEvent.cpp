@@ -1,9 +1,9 @@
 //==============================================================================
-#include "CApp.h"
+#include "Application.h"
 #include <math.h>
 
 //==============================================================================
-void CApp::OnEvent(SDL_Event* Event) {
+void Application::OnEvent(SDL_Event* Event) {
     if(Event->type == SDL_QUIT) {
         Running = false;
     }
@@ -39,7 +39,7 @@ void CApp::OnEvent(SDL_Event* Event) {
 
         if(xcont > 0) {
             xcont = 1;
-        } 
+        }
         else if (xcont < 0) {
             xcont = -1;
         }
@@ -59,7 +59,7 @@ void CApp::OnEvent(SDL_Event* Event) {
 
         if(xcont > 0) {
             xcont = 1;
-        } 
+        }
         else if (xcont < 0) {
             xcont = -1;
         }

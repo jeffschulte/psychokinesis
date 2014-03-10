@@ -1,12 +1,10 @@
-#ifndef _ENTITY_H
-#define _ENTITY_H
-
+#pragma once
 
 #include <SDL.h>
 #include <String>
 
 class Entity {
-    
+
     public:
         double x, y;            // Position of Entity (CoM)
         double xvel, yvel;      // Velocity
@@ -20,5 +18,3 @@ class Entity {
 
         bool collideline(double x, double y, double targetx, double targety);
 };
-
-#endif

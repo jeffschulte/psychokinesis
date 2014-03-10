@@ -1,9 +1,9 @@
 //==============================================================================
-#include "CApp.h"
+#include "Application.h"
 
 //==============================================================================
-void CApp::OnCleanup() {
-    if(haptic != NULL) { 
+void Application::OnCleanup() {
+    if(haptic != NULL) {
         SDL_HapticClose( haptic );
     }
     SDL_Quit();
