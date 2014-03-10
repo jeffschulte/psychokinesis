@@ -45,7 +45,7 @@ void CApp::OnEvent(SDL_Event* Event) {
         }
 
         if(Event->key.keysym.sym == SDLK_UP) {
-            yvel += 5;
+            player.yvel += 5;
         }
     }
 
@@ -72,8 +72,8 @@ void CApp::OnEvent(SDL_Event* Event) {
             printf("RumblePlay Fail: %s\n", SDL_GetError());
         }
 
-        xvel -= 5 * targetx;
-        yvel += 5 * targety;
+        player.xvel -= 5 * targetx;
+        player.yvel += 5 * targety;
 
     }
 }

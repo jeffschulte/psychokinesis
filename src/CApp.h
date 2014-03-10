@@ -3,6 +3,8 @@
     #define _CAPP_H_
 
 #include <SDL.h>
+#include "Entity.h"
+
 
 //==============================================================================
 class CApp {
@@ -13,14 +15,13 @@ class CApp {
         SDL_Haptic *haptic;
         SDL_Joystick *joystick;
 
-        double Mainlocx, Mainlocy;
+        int screenw, screenh;
 
         double xcont;
 
-        double xvel, yvel;
-
         double targetx, targety;
 
+        Entity player;
     public:
         CApp();
 

@@ -11,7 +11,7 @@ bool CApp::OnInit() {
     SDL_Window *screen = SDL_CreateWindow("Psychokinesis",
                           SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED,
-                          640, 480,
+                          screenw, screenh,
                           SDL_WINDOW_OPENGL);
     if(screen == NULL) {
         return false;
@@ -43,6 +43,8 @@ bool CApp::OnInit() {
         printf("RumbleInit Fail: %s\n", SDL_GetError());
         // return false;
     }
+
+
 
     return true;
 }

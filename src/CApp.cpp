@@ -7,18 +7,20 @@ CApp::CApp() {
     haptic = NULL;
     joystick = NULL;
 
-    Mainlocx = 200;
-    Mainlocy = 200;
-
     Running = true;
 
-    yvel = 0;
-    xvel = 0;
     xcont = 0;
 
     targetx = 0;
     targety = 0;
 
+    screenw = 640;
+    screenh = 480;
+
+    player.x = 200;
+    player.y = 200;
+    player.width = 12;
+    player.height = 26;
 }
 
 //------------------------------------------------------------------------------
