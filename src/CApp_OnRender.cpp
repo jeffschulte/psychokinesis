@@ -34,14 +34,7 @@ void CApp::OnRender() {
 
     // Targeting line for push direction
 
-    double mag = sqrt(targetx*targetx + targety*targety);
-    if(mag > .2) {
-        SDL_SetRenderDrawColor(renderer, 0, 255, 255, 128);
-        SDL_RenderDrawLine(renderer, player.x + 30 * targetx / mag,
-                            player.y + 30 * targety / mag, 
-                            player.x + 30 * targetx / mag + 100 * targetx, 
-                            player.y + 30 * targety / mag + 100 * targety);
-    }
+    mainhud.OnRender(renderer, player, targetx, targety);
 
     SDL_RenderPresent(renderer);
 }

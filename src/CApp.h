@@ -4,6 +4,7 @@
 
 #include <SDL.h>
 #include "Entity.h"
+#include "Hud.h"
 
 
 //==============================================================================
@@ -22,6 +23,8 @@ class CApp {
         double targetx, targety;
 
         Entity player;
+
+        Hud mainhud;
     public:
         CApp();
 
