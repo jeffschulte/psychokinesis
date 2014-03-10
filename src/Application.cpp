@@ -1,7 +1,5 @@
-//==============================================================================
 #include "Application.h"
 
-//==============================================================================
 Application::Application() {
     renderer = NULL;
     haptic = NULL;
@@ -45,7 +43,7 @@ Application::Application() {
     walltop.height = wallbottom.height = wallwidth;
 
     walltop.red = wallleft.red = wallright.red = wallbottom.red =
-    walltop.blue = wallbottom.blue = wallright.blue = wallleft.blue = 0;
+        walltop.blue = wallbottom.blue = wallright.blue = wallleft.blue = 0;
 
     walltop.green = wallleft.green = wallright.green = wallbottom.green = 128;
 
@@ -66,8 +64,9 @@ Application::Application() {
     block.debugname = "Block";
 }
 
-//------------------------------------------------------------------------------
+
 int Application::OnExecute() {
+
     if(OnInit() == false) {
         return -1;
     }
@@ -88,11 +87,9 @@ int Application::OnExecute() {
     return 0;
 }
 
-//==============================================================================
-int main(int argc, char* argv[]) {
-    Application app;
 
+int main(int argc, char* argv[]) {
+
+    Application app;
     return app.OnExecute();
 }
-
-//==============================================================================

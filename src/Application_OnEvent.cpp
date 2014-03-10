@@ -1,9 +1,9 @@
-//==============================================================================
 #include "Application.h"
 #include <math.h>
 
-//==============================================================================
+
 void Application::OnEvent(SDL_Event* Event) {
+
     if(Event->type == SDL_QUIT) {
         Running = false;
     }
@@ -96,5 +96,3 @@ void Application::OnEvent(SDL_Event* Event) {
         printf("\n");
     }
 }
-
-//==============================================================================

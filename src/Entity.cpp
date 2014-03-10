@@ -1,5 +1,5 @@
-
 #include "Entity.h"
+
 
 Entity::Entity() {
 
@@ -43,7 +43,7 @@ bool Entity::collideline(double xp, double yp, double targetx, double targety) {
 
     // Next see if it goes through the top or bottom
 
-    double horicoor = (y - height / 2 - b) / m; 
+    double horicoor = (y - height / 2 - b) / m;
 
     if(horicoor >= x - width / 2 && horicoor <= x + width / 2) {
         if((horicoor > xp && targetx > 0) || (horicoor < xp && targetx < 0) ) {
@@ -51,7 +51,7 @@ bool Entity::collideline(double xp, double yp, double targetx, double targety) {
         }
     }
 
-    horicoor = (y + height / 2 - b) / m; 
+    horicoor = (y + height / 2 - b) / m;
 
     if(horicoor >= x - width / 2 && horicoor <= x + width / 2) {
         if((horicoor > xp && targetx > 0) || (horicoor < xp && targetx < 0) ) {
