@@ -17,6 +17,11 @@ void CApp::OnRender() {
     wallright.OnRender(renderer);
     wallbottom.OnRender(renderer);
 
+
+    // Test block
+
+    block.OnRender(renderer);
+
     // Render the player
 
     player.OnRender(renderer);

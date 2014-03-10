@@ -23,7 +23,7 @@ class CApp {
 
         double targetx, targety;
 
-        Entity player, wallleft, wallright, walltop, wallbottom;
+        Entity player, wallleft, wallright, walltop, wallbottom, block;
 
         Hud mainhud;
     public:

@@ -53,6 +53,17 @@ CApp::CApp() {
     wallleft.debugname = "WallLeft";
     wallright.debugname = "WallRight";
     wallbottom.debugname = "WallBottom";
+
+
+    // Test block to shove around
+
+    block.x = 400;
+    block.y = 300;
+    block.width = 20;
+    block.height = 20;
+    block.red = 255;
+    block.green = block.blue = 0;
+    block.debugname = "Block";
 }
 
 //------------------------------------------------------------------------------
