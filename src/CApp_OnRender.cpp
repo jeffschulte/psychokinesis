@@ -12,20 +12,10 @@ void CApp::OnRender() {
 
     // Draw some rectangles for the outside level
 
-    SDL_SetRenderDrawColor(renderer, 0, 128, 0, 255);
-    int rectwidth = 50;
-
-    SDL_Rect rect = {0, 0, rectwidth, screenh};
-    SDL_RenderFillRect(renderer, &rect);
-
-    SDL_Rect rect2 = {0, 0, screenw, rectwidth};
-    SDL_RenderFillRect(renderer, &rect2);
-
-    SDL_Rect rect3 = {screenw-rectwidth, 0, rectwidth, screenh};
-    SDL_RenderFillRect(renderer, &rect3);
-
-    SDL_Rect rect4 = {0, screenh-rectwidth, screenw, rectwidth};
-    SDL_RenderFillRect(renderer, &rect4);
+    walltop.OnRender(renderer);
+    wallleft.OnRender(renderer);
+    wallright.OnRender(renderer);
+    wallbottom.OnRender(renderer);
 
     // Render the player
 

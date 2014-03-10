@@ -3,6 +3,7 @@
     #define _CAPP_H_
 
 #include <SDL.h>
+#include <String>
 #include "Entity.h"
 #include "Hud.h"
 
@@ -22,7 +23,7 @@ class CApp {
 
         double targetx, targety;
 
-        Entity player;
+        Entity player, wallleft, wallright, walltop, wallbottom;
 
         Hud mainhud;
     public:

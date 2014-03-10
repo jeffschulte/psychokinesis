@@ -75,6 +75,20 @@ void CApp::OnEvent(SDL_Event* Event) {
         player.xvel -= 5 * targetx;
         player.yvel += 5 * targety;
 
+        if(walltop.collideline(player.x, player.y, targetx, targety)) {
+            printf("Collision detected with walltop.\n");
+        }
+        if(wallleft.collideline(player.x, player.y, targetx, targety)) {
+            printf("Collision detected with wallleft.\n");
+        }
+        if(wallright.collideline(player.x, player.y, targetx, targety)) {
+            printf("Collision detected with wallright.\n");
+        }
+        if(wallbottom.collideline(player.x, player.y, targetx, targety)) {
+            printf("Collision detected with wallbottom.\n");
+        }
+
+        printf("\n\n");
     }
 }
 
