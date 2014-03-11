@@ -12,8 +12,8 @@ void Application::OnRender() {
     // Draw some rectangles for the outside level
 
     level.OnRender(renderer);
-    
-	block.OnRender(renderer);
+
+    block.OnRender(renderer);
 
     // Render the player
 
