@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Hud.h"
 #include "Logger.h"
+#include "Player.h"
 
 
 class Application {
@@ -21,7 +22,8 @@ class Application {
 
     double targetx, targety;
 
-    Entity player, wallleft, wallright, walltop, wallbottom, block;
+    Entity wallleft, wallright, walltop, wallbottom, block;
+    Player player;
 
     Hud mainhud;
  public:
