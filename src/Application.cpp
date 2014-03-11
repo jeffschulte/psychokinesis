@@ -8,6 +8,7 @@ Application::Application() {
     Running = true;
 
     xcont = 0;
+    pushing = false;
 
     targetx = 0;
     targety = 0;

@@ -5,6 +5,21 @@ void Application::OnLoop() {
 
     player.calcMotion(screenw, screenh, xcont);
 
+    if(pushing) {
+
+        player.yvel += 0.2 * targety;
+        player.xvel -= 0.2 * targetx;
+    
+        if(block.collideline(player.x, player.y, targetx, targety)) {
+            block.xvel += 0.2 * targetx;
+            block.yvel -= 0.2 * targety;
+        }
+
+        if (haptic != NULL && SDL_HapticRumblePlay( haptic, 0.5, 1000 ) != 0) {
+            Logger::log("RumblePlay Fail: " + std::string(SDL_GetError()));
+        }
+    }
+
     block.yvel -= 0.1;
     block.y -= block.yvel;
     block.x += block.xvel;

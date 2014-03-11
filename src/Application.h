@@ -19,6 +19,7 @@ class Application {
     int screenw, screenh;
 
     double xcont;
+    bool pushing;
 
     double targetx, targety;
 

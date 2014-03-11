@@ -68,12 +68,10 @@ void Application::OnEvent(SDL_Event* Event) {
 
     if(Event->type == SDL_JOYBUTTONDOWN) {
 
-        if (haptic != NULL && SDL_HapticRumblePlay( haptic, 0.5, 1000 ) != 0) {
-            Logger::log("RumblePlay Fail: " + std::string(SDL_GetError()));
-        }
-
-        player.xvel -= 5 * targetx;
-        player.yvel += 5 * targety;
+        pushing = true;
+        
+        //player.xvel -= 5 * targetx;
+        //player.yvel += 5 * targety;
 
         if(walltop.collideline(player.x, player.y, targetx, targety)) {
             Logger::log("Collision detected with walltop.");
@@ -89,8 +87,11 @@ void Application::OnEvent(SDL_Event* Event) {
         }
         if(block.collideline(player.x, player.y, targetx, targety)) {
             Logger::log("Collision detected with block.");
-            block.xvel += 5 * targetx;
-            block.yvel -= 5 * targety;
         }
+    }
+
+    if(Event->type == SDL_JOYBUTTONUP) {
+
+        pushing = false;
     }
 }
