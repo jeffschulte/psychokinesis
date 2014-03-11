@@ -74,13 +74,13 @@ void Player::calcMotion(int screenw, int screenh, double xcont, Level level) {
 
             if(yrot < y1rot) {
                 yrot = y1rot - height / 2;
-
-                if(xvrot < 1 && xvrot > -1) {
-                    xvrot += 0.5 * xcont;
-                }
             }
             else {
                 yrot = y1rot + height / 2;
+
+                if(xvrot < 1 && xvrot > -1) {
+                    xvrot -= 0.5 * xcont;
+                }
             }
 
             yvrot = 0;
