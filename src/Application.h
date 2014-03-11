@@ -6,6 +6,7 @@
 #include "Hud.h"
 #include "Logger.h"
 #include "Player.h"
+#include "Level.h"
 
 
 class Application {
@@ -26,6 +27,7 @@ class Application {
 
     Entity wallleft, wallright, walltop, wallbottom, block;
     Player player;
+    Level level;
 
     Hud mainhud;
  public:

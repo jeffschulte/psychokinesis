@@ -54,6 +54,23 @@ Application::Application() {
     wallbottom.debugname = "WallBottom";
 
 
+    level.pointsx.push_back(wallwidth);
+    level.pointsy.push_back(wallwidth);
+
+    level.pointsx.push_back(screenw - wallwidth);
+    level.pointsy.push_back(wallwidth);
+
+    level.pointsx.push_back(screenw - wallwidth);
+    level.pointsy.push_back(screenh - wallwidth);
+
+    level.pointsx.push_back(wallwidth);
+    level.pointsy.push_back(screenh - wallwidth);
+
+    level.pointsx.push_back(wallwidth);
+    level.pointsy.push_back(wallwidth);
+
+
+
     // Test block to shove around
 
     block.x = 400;
