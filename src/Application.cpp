@@ -70,16 +70,6 @@ Application::Application() {
     level.pointsy.push_back(wallwidth);
 
 
-
-    // Test block to shove around
-
-    block.x = 400;
-    block.y = 300;
-    block.width = 60;
-    block.height = 60;
-    block.red = 255;
-    block.green = block.blue = 0;
-    block.debugname = "Block";
 }
 
 

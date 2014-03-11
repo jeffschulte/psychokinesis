@@ -16,7 +16,7 @@ class Entity {
 
         Entity();
 		SDL_Texture* LoadTexture(const char* File,SDL_Renderer* renderer);
-        void OnRender(SDL_Renderer* renderer, SDL_Texture* texture);
+        void OnRender(SDL_Renderer* renderer);
 
         bool collideline(double x, double y, double targetx, double targety);
 };

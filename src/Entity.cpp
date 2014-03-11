@@ -19,7 +19,7 @@ SDL_Texture* Entity::LoadTexture(const char* File, SDL_Renderer* renderer) {
 }
 
 
-void Entity::OnRender(SDL_Renderer* renderer, SDL_Texture* texture) {
+void Entity::OnRender(SDL_Renderer* renderer) {
 
 	SDL_Rect rect5 = {x - width / 2, y - height / 2, width, height};	
 	if (texture != NULL) {

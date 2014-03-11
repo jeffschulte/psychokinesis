@@ -18,20 +18,12 @@ void Application::OnRender() {
 
 
     level.OnRender(renderer);
-
-    // Test block
-
-	SDL_Texture* block_texture;
-	if((block_texture = block.LoadTexture("art_assets/krebs.bmp", renderer)) == NULL) {
-		printf("problem loading texture\n");
-		exit(1);
-	}
     
-	block.OnRender(renderer,block_texture);
+	block.OnRender(renderer);
 
     // Render the player
 
-    player.OnRender(renderer,NULL);
+    player.OnRender(renderer);
 
 
     // Targeting line for push direction
