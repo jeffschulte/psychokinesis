@@ -25,7 +25,7 @@ class Application {
 
     double targetx, targety;
 
-    Entity wallleft, wallright, walltop, wallbottom, block;
+    Entity block;
     Player player;
     Level level;
 

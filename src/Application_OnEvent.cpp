@@ -73,25 +73,7 @@ void Application::OnEvent(SDL_Event* Event) {
         if (haptic != NULL) {
             SDL_HapticRunEffect(haptic, effect_id, SDL_HAPTIC_INFINITY);
         }
-        
-        //player.xvel -= 5 * targetx;
-        //player.yvel += 5 * targety;
 
-        if(walltop.collideline(player.x, player.y, targetx, targety)) {
-            Logger::log("Collision detected with walltop.");
-        }
-        if(wallleft.collideline(player.x, player.y, targetx, targety)) {
-            Logger::log("Collision detected with wallleft.");
-        }
-        if(wallright.collideline(player.x, player.y, targetx, targety)) {
-            Logger::log("Collision detected with wallright.");
-        }
-        if(wallbottom.collideline(player.x, player.y, targetx, targety)) {
-            Logger::log("Collision detected with wallbottom.");
-        }
-        if(block.collideline(player.x, player.y, targetx, targety)) {
-            Logger::log("Collision detected with block.");
-        }
     }
 
     if(Event->type == SDL_JOYBUTTONUP) {
