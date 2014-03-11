@@ -15,9 +15,9 @@ void Application::OnLoop() {
             block.yvel -= 0.2 * targety;
         }
 
-        if (haptic != NULL && SDL_HapticRumblePlay( haptic, 0.5, 1000 ) != 0) {
-            Logger::log("RumblePlay Fail: " + std::string(SDL_GetError()));
-        }
+        //if (haptic != NULL && SDL_HapticRumblePlay( haptic, 0.5, 1000 ) != 0) {
+        //    Logger::log("RumblePlay Fail: " + std::string(SDL_GetError()));
+        //}
     }
 
     block.yvel -= 0.1;

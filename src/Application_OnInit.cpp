@@ -43,8 +43,22 @@ bool Application::OnInit() {
     if (haptic != NULL && SDL_HapticRumbleInit( haptic ) != 0) {
 
         Logger::log("SDL_HapticRumbleInit failure: " + std::string(SDL_GetError()));
+        haptic = NULL;
         // return false;
     }
+
+    SDL_HapticEffect effect;
+    memset(&effect, 0, sizeof(SDL_HapticEffect));
+    effect.type = SDL_HAPTIC_SINE;
+    effect.periodic.direction.type = SDL_HAPTIC_POLAR; // Polar coordinates
+    effect.periodic.direction.dir[0] = 18000; // Force comes from south
+    effect.periodic.period = 1000; // 1000 ms
+    effect.periodic.magnitude = 20000; // 20000/32767 strength
+    effect.periodic.length = 1000; // .1 seconds long
+    effect.periodic.attack_length = 0; // Takes 0 seconds to get max strength
+    effect.periodic.fade_length = 0; // Takes 0 seconds to fade away
+
+    effect_id = SDL_HapticNewEffect(haptic, &effect);
 
     return true;
 }

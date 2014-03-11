@@ -21,7 +21,7 @@ void Player::calcMotion(int screenw, int screenh, double xcont) {
 
         if (xvel < 2 && xvel > -2)
         {
-            xvel += xcont;
+            xvel += 0.5 * xcont;
         }
     }
 

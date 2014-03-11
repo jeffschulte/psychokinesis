@@ -14,6 +14,7 @@ class Application {
 
     SDL_Renderer* renderer;
     SDL_Haptic *haptic;
+    int effect_id;
     SDL_Joystick *joystick;
 
     int screenw, screenh;

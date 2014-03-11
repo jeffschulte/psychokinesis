@@ -69,6 +69,10 @@ void Application::OnEvent(SDL_Event* Event) {
     if(Event->type == SDL_JOYBUTTONDOWN) {
 
         pushing = true;
+
+        if (haptic != NULL) {
+            SDL_HapticRunEffect(haptic, effect_id, SDL_HAPTIC_INFINITY);
+        }
         
         //player.xvel -= 5 * targetx;
         //player.yvel += 5 * targety;
@@ -93,5 +97,9 @@ void Application::OnEvent(SDL_Event* Event) {
     if(Event->type == SDL_JOYBUTTONUP) {
 
         pushing = false;
+
+        if (haptic != NULL) {
+            SDL_HapticStopEffect(haptic, effect_id);
+        }
     }
 }
