@@ -12,9 +12,11 @@ class Entity {
         std::string debugname;
 
         int red, green, blue;
+		SDL_Texture* texture;
 
         Entity();
-        void OnRender(SDL_Renderer* renderer);
+		SDL_Texture* LoadTexture(const char* File,SDL_Renderer* renderer);
+        void OnRender(SDL_Renderer* renderer, SDL_Texture* texture);
 
         bool collideline(double x, double y, double targetx, double targety);
 };

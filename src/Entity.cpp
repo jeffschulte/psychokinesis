@@ -4,14 +4,33 @@
 Entity::Entity() {
 
     x = y = xvel = yvel = 0;
+	texture = NULL;
 }
 
-void Entity::OnRender(SDL_Renderer* renderer) {
+SDL_Texture* Entity::LoadTexture(const char* File, SDL_Renderer* renderer) {
+    SDL_Surface* surface = NULL;
+ 
+    if((surface = SDL_LoadBMP(File)) == NULL) {
+        return NULL;
+    }
+	//might want to use SDL_ConvertSurfaceFormat
+	texture = SDL_CreateTextureFromSurface(renderer, surface);
+	return texture;
+}
 
 
-    SDL_SetRenderDrawColor(renderer, red, green, blue, 255);
-    SDL_Rect rect5 = {x - width / 2, y - height / 2, width, height};
-    SDL_RenderFillRect(renderer, &rect5);
+void Entity::OnRender(SDL_Renderer* renderer, SDL_Texture* texture) {
+
+	SDL_Rect rect5 = {x - width / 2, y - height / 2, width, height};	
+	if (texture != NULL) {
+		SDL_Rect rect6 = {600, 900, 500, 500};
+		SDL_RenderCopy(renderer, texture, &rect6, &rect5);
+	}
+	else {
+		SDL_SetRenderDrawColor(renderer, red, green, blue, 255);
+		SDL_RenderFillRect(renderer, &rect5);
+	}
+    
 }
 
 
