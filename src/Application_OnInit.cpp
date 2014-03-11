@@ -61,7 +61,7 @@ bool Application::OnInit() {
     effect_id = SDL_HapticNewEffect(haptic, &effect);
 
 
-    
+
 
     // Test block to shove around
 
@@ -73,12 +73,10 @@ bool Application::OnInit() {
     block.green = block.blue = 0;
     block.debugname = "Block";
 
-   // Test block
-
     SDL_Texture* block_texture;
     if((block_texture = block.LoadTexture("art_assets/krebs.bmp", renderer)) == NULL) {
-        printf("problem loading texture\n");
-        exit(1);
+        Logger::log("Problem loading texture");
+        return false;
     }
 
     return true;

@@ -11,12 +11,6 @@ void Application::OnRender() {
 
     // Draw some rectangles for the outside level
 
-    //walltop.OnRender(renderer);
-    //wallleft.OnRender(renderer);
-    //wallright.OnRender(renderer);
-    //wallbottom.OnRender(renderer);
-
-
     level.OnRender(renderer);
     
 	block.OnRender(renderer);
