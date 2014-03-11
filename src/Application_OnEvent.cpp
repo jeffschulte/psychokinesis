@@ -69,30 +69,28 @@ void Application::OnEvent(SDL_Event* Event) {
     if(Event->type == SDL_JOYBUTTONDOWN) {
 
         if (haptic != NULL && SDL_HapticRumblePlay( haptic, 0.5, 1000 ) != 0) {
-            printf("RumblePlay Fail: %s\n", SDL_GetError());
+            Logger::log("RumblePlay Fail: " + std::string(SDL_GetError()));
         }
 
         player.xvel -= 5 * targetx;
         player.yvel += 5 * targety;
 
         if(walltop.collideline(player.x, player.y, targetx, targety)) {
-            printf("Collision detected with walltop.\n");
+            Logger::log("Collision detected with walltop.");
         }
         if(wallleft.collideline(player.x, player.y, targetx, targety)) {
-            printf("Collision detected with wallleft.\n");
+            Logger::log("Collision detected with wallleft.");
         }
         if(wallright.collideline(player.x, player.y, targetx, targety)) {
-            printf("Collision detected with wallright.\n");
+            Logger::log("Collision detected with wallright.");
         }
         if(wallbottom.collideline(player.x, player.y, targetx, targety)) {
-            printf("Collision detected with wallbottom.\n");
+            Logger::log("Collision detected with wallbottom.");
         }
         if(block.collideline(player.x, player.y, targetx, targety)) {
-            printf("Collision detected with block.\n");
+            Logger::log("Collision detected with block.");
             block.xvel += 5 * targetx;
             block.yvel -= 5 * targety;
         }
-
-        printf("\n");
     }
 }

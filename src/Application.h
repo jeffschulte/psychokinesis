@@ -4,6 +4,7 @@
 #include <String>
 #include "Entity.h"
 #include "Hud.h"
+#include "Logger.h"
 
 
 class Application {

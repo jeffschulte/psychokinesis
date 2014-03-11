@@ -1,5 +1,6 @@
 #include "Application.h"
 #include <stdio.h>
+#include <sstream>
 
 
 bool Application::OnInit() {
@@ -13,14 +14,18 @@ bool Application::OnInit() {
                           screenw, screenh,
                           SDL_WINDOW_OPENGL);
     if(screen == NULL) {
+        Logger::log("SDL_CreateWindow failure");
         return false;
     }
 
     if((renderer = SDL_CreateRenderer(screen, -1, 0)) == NULL) {
+        Logger::log("SDL_CreateRenderer failure");
         return false;
     }
 
-    printf("%i joysticks were found.\n\n", SDL_NumJoysticks() );
+    std::stringstream ss;
+    ss << SDL_NumJoysticks() << " joysticks were found";
+    Logger::log(ss.str());
 
     SDL_JoystickEventState(SDL_ENABLE);
     joystick = SDL_JoystickOpen(0);
@@ -29,7 +34,7 @@ bool Application::OnInit() {
 
     haptic = SDL_HapticOpen( 0 );
     if (haptic == NULL) {
-        printf("HapticOpen Fail\n");
+        Logger::log("SDL_HapticOpen failure");
         // return false;
     }
 
@@ -37,7 +42,7 @@ bool Application::OnInit() {
 
     if (haptic != NULL && SDL_HapticRumbleInit( haptic ) != 0) {
 
-        printf("RumbleInit Fail: %s\n", SDL_GetError());
+        Logger::log("SDL_HapticRumbleInit failure: " + std::string(SDL_GetError()));
         // return false;
     }
 
