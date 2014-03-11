@@ -31,8 +31,8 @@ Application::Application() {
     int wallwidth = 50;
 
     level.AddLine(wallwidth, wallwidth, screenw - wallwidth, wallwidth);
-    level.AddLine(screenw - wallwidth, wallwidth, screenw - wallwidth, screenh - wallwidth);
-    level.AddLine(screenw - wallwidth, screenh - wallwidth, wallwidth, screenh - wallwidth);
+    level.AddLine(screenw - wallwidth, wallwidth, screenw - wallwidth, screenh - 2*wallwidth);
+    level.AddLine(screenw - wallwidth, screenh - 2*wallwidth, wallwidth, screenh - wallwidth);
     level.AddLine(wallwidth, screenh - wallwidth, wallwidth, wallwidth);
 }
 

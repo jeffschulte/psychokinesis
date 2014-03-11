@@ -43,7 +43,7 @@ void Player::calcMotion(int screenw, int screenh, double xcont, Level level) {
             xvel *= 0.8;
         }
 
-        if(closest->x1 == closest->x2) {
+        else if(closest->x1 == closest->x2) {
             if(x < closest->x1) {
                 x = closest->x1 - width / 2;
             }
@@ -55,15 +55,42 @@ void Player::calcMotion(int screenw, int screenh, double xcont, Level level) {
             yvel *= 0.8;
         }
 
+        else {
 
-        // Apply our friction component parallel to the surface
+            // Rotate coordinate system so line is horizontal
+            double lineangle = atan2(closest->y2 - closest->y1,
+                                     closest->x2 - closest->x1);
+            double xrot = x * cos(lineangle) + y * sin(lineangle);
+            double yrot = -x * sin(lineangle) + y * cos(lineangle);
 
-        // If we are attempting to walk, add a force if not going too fast
+            double xvrot = xvel * cos(lineangle) + yvel * sin(lineangle);
+            double yvrot = -xvel * sin(lineangle) + yvel * cos(lineangle);
 
-        // Apply gravity and pushing forces, and solve for the perpendicular accel
+            double x1rot = closest->x1 * cos(lineangle) + closest->y1 * sin(lineangle);
+            double y1rot = -closest->x1 * sin(lineangle) + closest->y1 * cos(lineangle);
 
+            double x2rot = closest->x2 * cos(lineangle) + closest->y2 * sin(lineangle);
+            double y2rot = -closest->x2 * sin(lineangle) + closest->y2 * cos(lineangle);
 
-        //printf("Nearest to line %g, %g; %g, %g; %g\n", closest->x1, 
-        //    closest->y1, closest->x2, closest->y2, closest->DistToPoint(x, y) );
+            if(yrot < y1rot) {
+                yrot = y1rot - height / 2;
+
+                if(xvrot < 1 && xvrot > -1) {
+                    xvrot += 0.5 * xcont;
+                }
+            }
+            else {
+                yrot = y1rot + height / 2;
+            }
+
+            yvrot = 0;
+            xvrot *= 0.8;
+
+            x = xrot * cos(lineangle) - yrot * sin(lineangle);
+            y = xrot * sin(lineangle) + yrot * cos(lineangle);
+
+            xvel = xvrot * cos(lineangle) - yvrot * sin(lineangle);
+            yvel = xvrot * sin(lineangle) + yvrot * cos(lineangle);
+        }
     }
 }
