@@ -7,7 +7,7 @@ void Application::OnLoop() {
 
         player.yvel += 0.2 * targety;
         player.xvel -= 0.2 * targetx;
-    
+
         if(block.collideline(player.x, player.y, targetx, targety)) {
             block.xvel += 0.2 * targetx;
             block.yvel -= 0.2 * targety;

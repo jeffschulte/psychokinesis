@@ -1,36 +1,37 @@
 #include "Entity.h"
-
+#include "Animation.cpp"
 
 Entity::Entity() {
 
     x = y = xvel = yvel = 0;
-	texture = NULL;
+    old_frame_time = SDL_GetTicks();
+    current_frame = 0;
+    texture = NULL;
 }
 
 SDL_Texture* Entity::LoadTexture(const char* File, SDL_Renderer* renderer) {
     SDL_Surface* surface = NULL;
- 
+
     if((surface = SDL_LoadBMP(File)) == NULL) {
         return NULL;
     }
-	//might want to use SDL_ConvertSurfaceFormat
-	texture = SDL_CreateTextureFromSurface(renderer, surface);
-	return texture;
+    //might want to use SDL_ConvertSurfaceFormat
+    texture = SDL_CreateTextureFromSurface(renderer, surface);
+    return texture;
 }
 
 
 void Entity::OnRender(SDL_Renderer* renderer) {
 
-	SDL_Rect rect5 = {x - width / 2, y - height / 2, width, height};	
-	if (texture != NULL) {
-		SDL_Rect rect6 = {600, 900, 500, 500};
-		SDL_RenderCopy(renderer, texture, &rect6, &rect5);
-	}
-	else {
-		SDL_SetRenderDrawColor(renderer, red, green, blue, 255);
-		SDL_RenderFillRect(renderer, &rect5);
-	}
-    
+    SDL_Rect rect5 = {x - width / 2, y - height / 2, width, height};
+    if (texture != NULL) {
+        SDL_Rect rect = get_frame_to_render(current_frame,old_frame_time);
+        SDL_RenderCopy(renderer, texture, &rect, &rect5);
+    }
+    else {
+        SDL_SetRenderDrawColor(renderer, red, green, blue, 255);
+        SDL_RenderFillRect(renderer, &rect5);
+    }
 }
 
 

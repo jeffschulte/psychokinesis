@@ -1,4 +1,4 @@
-#include "Application.h"
+#include "Application.cpp"
 #include <stdio.h>
 #include <sstream>
 
@@ -74,7 +74,8 @@ bool Application::OnInit() {
     block.debugname = "Block";
 
     SDL_Texture* block_texture;
-    if((block_texture = block.LoadTexture("art_assets/krebs.bmp", renderer)) == NULL) {
+    if((block_texture =
+        block.LoadTexture("art_assets/krebs.bmp", renderer)) == NULL) {
         Logger::log("Problem loading texture");
         return false;
     }
