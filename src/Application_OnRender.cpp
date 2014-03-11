@@ -11,19 +11,25 @@ void Application::OnRender() {
 
     // Draw some rectangles for the outside level
 
-    walltop.OnRender(renderer);
-    wallleft.OnRender(renderer);
-    wallright.OnRender(renderer);
-    wallbottom.OnRender(renderer);
+    walltop.OnRender(renderer,NULL);
+    wallleft.OnRender(renderer,NULL);
+    wallright.OnRender(renderer,NULL);
+    wallbottom.OnRender(renderer,NULL);
 
 
     // Test block
 
-    block.OnRender(renderer);
+	SDL_Texture* block_texture;
+	if((block_texture = block.LoadTexture("art_assets/krebs.bmp", renderer)) == NULL) {
+		printf("problem loading texture\n");
+		exit(1);
+	}
+    
+	block.OnRender(renderer,block_texture);
 
     // Render the player
 
-    player.OnRender(renderer);
+    player.OnRender(renderer,NULL);
 
 
     // Targeting line for push direction
