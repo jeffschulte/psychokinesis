@@ -53,23 +53,10 @@ Application::Application() {
     wallright.debugname = "WallRight";
     wallbottom.debugname = "WallBottom";
 
-
-    level.pointsx.push_back(wallwidth);
-    level.pointsy.push_back(wallwidth);
-
-    level.pointsx.push_back(screenw - wallwidth);
-    level.pointsy.push_back(wallwidth);
-
-    level.pointsx.push_back(screenw - wallwidth);
-    level.pointsy.push_back(screenh - wallwidth);
-
-    level.pointsx.push_back(wallwidth);
-    level.pointsy.push_back(screenh - wallwidth);
-
-    level.pointsx.push_back(wallwidth);
-    level.pointsy.push_back(wallwidth);
-
-
+    level.AddLine(wallwidth, wallwidth, screenw - wallwidth, wallwidth);
+    level.AddLine(screenw - wallwidth, wallwidth, screenw - wallwidth, screenh - wallwidth);
+    level.AddLine(screenw - wallwidth, screenh - wallwidth, wallwidth, screenh - wallwidth);
+    level.AddLine(wallwidth, screenh - wallwidth, wallwidth, wallwidth);
 }
 
 
