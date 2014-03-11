@@ -3,8 +3,6 @@
 
 void Application::OnLoop() {
 
-    player.calcMotion(screenw, screenh, xcont);
-
     if(pushing) {
 
         player.yvel += 0.2 * targety;
@@ -19,6 +17,8 @@ void Application::OnLoop() {
         //    Logger::log("RumblePlay Fail: " + std::string(SDL_GetError()));
         //}
     }
+
+    player.calcMotion(screenw, screenh, xcont);
 
     block.yvel -= 0.1;
     block.y -= block.yvel;

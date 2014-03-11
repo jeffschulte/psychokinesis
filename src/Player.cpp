@@ -19,7 +19,7 @@ void Player::calcMotion(int screenw, int screenh, double xcont) {
 
         // The movement will give a constant accel up to a maximum speed
 
-        if (xvel < 2 && xvel > -2)
+        if (xvel < 1 && xvel > -1)
         {
             xvel += 0.5 * xcont;
         }
