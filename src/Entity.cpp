@@ -23,9 +23,8 @@ void Entity::OnRender(SDL_Renderer* renderer, SDL_Texture* texture) {
 
 	SDL_Rect rect5 = {x - width / 2, y - height / 2, width, height};	
 	if (texture != NULL) {
-		SDL_Rect rect6 = {100, 100, 500, 500};
-		SDL_RenderCopy(renderer, texture, &rect5, &rect5);
-		printf("hello");
+		SDL_Rect rect6 = {600, 900, 500, 500};
+		SDL_RenderCopy(renderer, texture, &rect6, &rect5);
 	}
 	else {
 		SDL_SetRenderDrawColor(renderer, red, green, blue, 255);
