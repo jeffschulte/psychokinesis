@@ -3,45 +3,97 @@
 
 // Updates the position of the player based on the environment
 
-void Player::calcMotion(int screenw, int screenh, double xcont) {
-    
+void Player::calcMotion(int screenw, int screenh, double xcont, Level level) {
+
+    // For now, we'll just draw a circle from the CoM and see which
+    // line it is closest to
+
+    EnvLine* closest = level.ClosestLine(x, y);
+
     yvel -= 0.1;
-
     y -= yvel;
+    x += xvel;
 
-    // If we are in contact with a surface, then apply normal force and friction
+    if(closest->DistToPoint(x, y) > height / 2) {
 
-    if(y > screenh - height / 2 - 50) {
-        y = screenh - height / 2 - 50;
-        yvel = 0;
+        // We are airborne at this point, and we only care about gravity
 
-        xvel *= .8;
 
-        // The movement will give a constant accel up to a maximum speed
+    }
+    else {
 
-        if (xvel < 1 && xvel > -1)
-        {
-            xvel += 0.5 * xcont;
+        // Keep it a certain radial distace from the surface and set
+        // that component of the velocity = 0
+
+        // If we are horiz or vert, then we can apply in the usual fashion
+
+        if(closest->y1 == closest->y2) {
+            if(y < closest->y1) {
+                y = closest->y1 - height / 2;
+
+                if(xvel < 1 && xvel > -1) {
+                    xvel += 0.5 * xcont;
+                }
+            }
+            else {
+                y = closest->y1 + height / 2;
+            }
+
+            yvel = 0;
+            xvel *= 0.8;
+        }
+
+        else if(closest->x1 == closest->x2) {
+            if(x < closest->x1) {
+                x = closest->x1 - width / 2;
+            }
+            else {
+                x = closest->x1 + width / 2;
+            }
+
+            xvel = 0;
+            yvel *= 0.8;
+        }
+
+        else {
+
+            yvel += 0.1;
+
+            // Rotate coordinate system so line is horizontal
+            double lineangle = atan2(closest->y2 - closest->y1,
+                                     closest->x2 - closest->x1);
+            double xrot = x * cos(lineangle) + y * sin(lineangle);
+            double yrot = -x * sin(lineangle) + y * cos(lineangle);
+
+            double xvrot = xvel * cos(lineangle) + yvel * sin(lineangle);
+            double yvrot = -xvel * sin(lineangle) + yvel * cos(lineangle);
+
+            double x1rot = closest->x1 * cos(lineangle) + closest->y1 * sin(lineangle);
+            double y1rot = -closest->x1 * sin(lineangle) + closest->y1 * cos(lineangle);
+
+            double x2rot = closest->x2 * cos(lineangle) + closest->y2 * sin(lineangle);
+            double y2rot = -closest->x2 * sin(lineangle) + closest->y2 * cos(lineangle);
+
+            if(yrot < y1rot) {
+                yrot = y1rot - height / 2;
+            }
+            else {
+                yrot = y1rot + height / 2;
+
+                if(xvrot < 1 && xvrot > -1) {
+                    xvrot -= 0.5 * xcont;
+                }
+            }
+
+            yvrot = 0;
+            xvrot *= 0.8;
+
+            x = xrot * cos(lineangle) - yrot * sin(lineangle);
+            y = xrot * sin(lineangle) + yrot * cos(lineangle);
+
+            xvel = xvrot * cos(lineangle) - yvrot * sin(lineangle);
+            yvel = xvrot * sin(lineangle) + yvrot * cos(lineangle);
         }
     }
 
-    x += xvel;
-
-
-    if(x < 50 + width / 2) {
-        x = 50 + width / 2;
-        xvel = 0;
-        yvel *= .8;
-    }
-    if(x > screenw - width / 2 - 50) {
-        x = screenw - width / 2 - 50;
-        yvel *= .8;
-        xvel = 0;
-    }
-
-    if(y < 50 + height / 2) {
-        y = 50 + height / 2;
-        yvel = 0;
-        xvel *= .8;
-    }
 }

@@ -10,6 +10,7 @@ Entity::Entity() {
 }
 
 SDL_Texture* Entity::LoadTexture(const char* File, SDL_Renderer* renderer) {
+
     SDL_Surface* surface = NULL;
 
     if((surface = SDL_LoadBMP(File)) == NULL) {

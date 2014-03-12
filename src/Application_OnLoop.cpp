@@ -18,7 +18,7 @@ void Application::OnLoop() {
         //}
     }
 
-    player.calcMotion(screenw, screenh, xcont);
+    player.calcMotion(screenw, screenh, xcont, level);
 
     block.yvel -= 0.1;
     block.y -= block.yvel;
