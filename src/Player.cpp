@@ -57,6 +57,8 @@ void Player::calcMotion(int screenw, int screenh, double xcont, Level level) {
 
         else {
 
+            yvel += 0.1;
+
             // Rotate coordinate system so line is horizontal
             double lineangle = atan2(closest->y2 - closest->y1,
                                      closest->x2 - closest->x1);
@@ -93,4 +95,5 @@ void Player::calcMotion(int screenw, int screenh, double xcont, Level level) {
             yvel = xvrot * sin(lineangle) + yvrot * cos(lineangle);
         }
     }
+
 }
