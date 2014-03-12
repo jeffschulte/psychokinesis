@@ -1,10 +1,8 @@
-#ifndef _ENTITY_H
-#define _ENTITY_H
+#pragma once
 
 #include <SDL.h>
 #include <String>
-
-enum frames {STAND = 0, RUN_RIGHT = 10, RUN_LEFT = 20};
+#include "Animation.h"
 
 class Entity {
 
@@ -18,12 +16,11 @@ class Entity {
 
         int red, green, blue;
         SDL_Texture* texture;
+        Animation animation_object;
 
         Entity();
-        SDL_Texture* LoadTexture(const char* File,SDL_Renderer* renderer);
-        void OnRender(SDL_Renderer* renderer);
+        SDL_Texture* LoadTexture(const char* File, SDL_Renderer* renderer);
+        void OnRender(SDL_Renderer* renderer, int dt);
 
         bool collideline(double x, double y, double targetx, double targety);
 };
-
-#endif

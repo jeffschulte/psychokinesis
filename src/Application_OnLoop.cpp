@@ -2,6 +2,8 @@
 
 
 void Application::OnLoop() {
+    dt = SDL_GetTicks() - oldtime;
+    oldtime = SDL_GetTicks();
 
     if(pushing) {
 
@@ -12,7 +14,6 @@ void Application::OnLoop() {
             block.xvel += 0.2 * targetx;
             block.yvel -= 0.2 * targety;
         }
-
         //if (haptic != NULL && SDL_HapticRumblePlay( haptic, 0.5, 1000 ) != 0) {
         //    Logger::log("RumblePlay Fail: " + std::string(SDL_GetError()));
         //}

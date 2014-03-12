@@ -1,6 +1,7 @@
-#include "Application.cpp"
 #include <stdio.h>
 #include <sstream>
+
+#include "Application.h"
 
 
 bool Application::OnInit() {
@@ -59,9 +60,6 @@ bool Application::OnInit() {
     effect.periodic.fade_length = 0; // Takes 0 seconds to fade away
 
     effect_id = SDL_HapticNewEffect(haptic, &effect);
-
-
-
 
     // Test block to shove around
 

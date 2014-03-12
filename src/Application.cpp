@@ -7,6 +7,9 @@ Application::Application() {
 
     Running = true;
 
+    oldtime = SDL_GetTicks();
+    render_rate = 50; //millisecends
+
     xcont = 0;
     pushing = false;
 
@@ -49,11 +52,11 @@ int Application::OnExecute() {
         while(SDL_PollEvent(&Event)) {
             OnEvent(&Event);
         }
-
-        OnLoop();
-        OnRender();
+        if (SDL_GetTicks() - oldtime > render_rate) {
+            OnLoop();
+            OnRender();
+        }
     }
-
     OnCleanup();
 
     return 0;

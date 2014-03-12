@@ -1,5 +1,4 @@
 #include "Entity.h"
-#include "Animation.cpp"
 
 Entity::Entity() {
 
@@ -10,23 +9,17 @@ Entity::Entity() {
 }
 
 SDL_Texture* Entity::LoadTexture(const char* File, SDL_Renderer* renderer) {
-
-    SDL_Surface* surface = NULL;
-
-    if((surface = SDL_LoadBMP(File)) == NULL) {
-        return NULL;
-    }
-    //might want to use SDL_ConvertSurfaceFormat
-    texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_Texture* texture;
+    texture = animation_object.Animation_Load_Texture(File,renderer);
     return texture;
 }
 
 
-void Entity::OnRender(SDL_Renderer* renderer) {
+void Entity::OnRender(SDL_Renderer* renderer, int dt) {
 
     SDL_Rect rect5 = {x - width / 2, y - height / 2, width, height};
     if (texture != NULL) {
-        SDL_Rect rect = get_frame_to_render(current_frame,old_frame_time);
+        SDL_Rect rect = animation_object.Get_Frame_to_Render(current_frame,old_frame_time);
         SDL_RenderCopy(renderer, texture, &rect, &rect5);
     }
     else {

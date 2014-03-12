@@ -13,11 +13,11 @@ void Application::OnRender() {
 
     level.OnRender(renderer);
 
-    block.OnRender(renderer);
+    block.OnRender(renderer,dt);
 
     // Render the player
 
-    player.OnRender(renderer);
+    player.OnRender(renderer,dt);
 
 
     // Targeting line for push direction
