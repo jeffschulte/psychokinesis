@@ -7,7 +7,7 @@ void Application::OnLoop() {
 
         player.yvel += 0.2 * targety;
         player.xvel -= 0.2 * targetx;
-    
+
         if(block.collideline(player.x, player.y, targetx, targety)) {
             block.xvel += 0.2 * targetx;
             block.yvel -= 0.2 * targety;
@@ -19,6 +19,8 @@ void Application::OnLoop() {
     }
 
     player.calcMotion(screenw, screenh, xcont, level);
+
+    // TODO: The code below also needs to be generalized
 
     block.yvel -= 0.1;
     block.y -= block.yvel;

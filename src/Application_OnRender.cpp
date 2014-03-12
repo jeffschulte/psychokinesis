@@ -11,18 +11,18 @@ void Application::OnRender() {
 
     // Draw some rectangles for the outside level
 
-    level.OnRender(renderer);
+    level.OnRender(renderer, &camera);
 
-    block.OnRender(renderer);
+    block.OnRender(renderer, &camera);
 
     // Render the player
 
-    player.OnRender(renderer);
+    player.OnRender(renderer, &camera);
 
 
     // Targeting line for push direction
 
-    mainhud.OnRender(renderer, player, targetx, targety);
+    mainhud.OnRender(renderer, &camera, player, targetx, targety);
 
     SDL_RenderPresent(renderer);
 }

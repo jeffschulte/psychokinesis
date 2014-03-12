@@ -3,6 +3,8 @@
 #include <SDL.h>
 #include <String>
 
+#include "Camera.h"
+
 class Entity {
 
     public:
@@ -16,7 +18,7 @@ class Entity {
 
         Entity();
         SDL_Texture* LoadTexture(const char* File,SDL_Renderer* renderer);
-        void OnRender(SDL_Renderer* renderer);
+        void OnRender(SDL_Renderer* renderer, Camera* camera);
 
         bool collideline(double x, double y, double targetx, double targety);
 };

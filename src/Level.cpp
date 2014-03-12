@@ -29,14 +29,14 @@ double EnvLine::DistToPoint(double x, double y) {
 }
 
 
-void Level::OnRender(SDL_Renderer* renderer) {
+void Level::OnRender(SDL_Renderer* renderer, Camera* camera) {
 
     // For now, we'll just draw a series of lines between the points
 
     SDL_SetRenderDrawColor(renderer, 0, 128, 0, 255);
 
     for(int i = 0; i < lines.size(); i++) {
-        SDL_RenderDrawLine(renderer, lines[i].x1, lines[i].y1,
+        camera->RenderDrawLine(renderer, lines[i].x1, lines[i].y1,
                            lines[i].x2, lines[i].y2);
     }
 }

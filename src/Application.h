@@ -7,6 +7,7 @@
 #include "Logger.h"
 #include "Player.h"
 #include "Level.h"
+#include "Camera.h"
 
 
 class Application {
@@ -28,6 +29,7 @@ class Application {
     Entity block;
     Player player;
     Level level;
+    Camera camera;
 
     Hud mainhud;
  public:
