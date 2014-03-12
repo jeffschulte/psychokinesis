@@ -2,6 +2,12 @@
 
 #include <SDL.h>
 
+class Rect {
+
+ public:
+    double x, y, w, h;
+};
+
 class Camera {
 
  public:
@@ -11,12 +17,12 @@ class Camera {
     Camera();
     int RenderCopy(SDL_Renderer* renderer, SDL_Texture* texture,
                    const SDL_Rect* srcrect,
-                   const SDL_Rect* dstrect);
+                   const Rect* dstrect);
     int RenderFillRect(SDL_Renderer* renderer,
-                       const SDL_Rect* rect);
+                       const Rect* rect);
     int RenderDrawLine(SDL_Renderer* renderer,
-                           int x1,
-                           int y1,
-                           int x2,
-                           int y2);
+                           double x1,
+                           double y1,
+                           double x2,
+                           double y2);
 };

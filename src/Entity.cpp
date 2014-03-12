@@ -23,7 +23,7 @@ SDL_Texture* Entity::LoadTexture(const char* File, SDL_Renderer* renderer) {
 
 void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
 
-    SDL_Rect rect5 = {x - width / 2, y - height / 2, width, height};
+    Rect rect5 = {x - width / 2, y + height / 2, width, height};
     if (texture != NULL) {
         SDL_Rect rect6 = {600, 900, 500, 500};
         camera->RenderCopy(renderer, texture, &rect6, &rect5);

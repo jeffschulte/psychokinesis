@@ -32,6 +32,9 @@ class Application {
     Camera camera;
 
     Hud mainhud;
+
+    int oldtime, dt, frametime;
+
  public:
     Application();
     int OnExecute();

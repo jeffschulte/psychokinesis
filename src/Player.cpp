@@ -3,16 +3,19 @@
 
 // Updates the position of the player based on the environment
 
-void Player::calcMotion(int screenw, int screenh, double xcont, Level level) {
+void Player::calcMotion(int screenw, int screenh, double xcont,
+                        Level level, int dt) {
 
     // For now, we'll just draw a circle from the CoM and see which
     // line it is closest to
 
+    // TODO: Fix the below to take into account all lines somehow
+
     EnvLine* closest = level.ClosestLine(x, y);
 
-    yvel -= 0.1;
-    y -= yvel;
-    x += xvel;
+    yvel -= 9.8 * dt / 1000.0;
+    y += yvel * dt / 1000.0;
+    x += xvel * dt / 1000.0;
 
     if(closest->DistToPoint(x, y) > height / 2) {
 
@@ -31,12 +34,13 @@ void Player::calcMotion(int screenw, int screenh, double xcont, Level level) {
             if(y < closest->y1) {
                 y = closest->y1 - height / 2;
 
-                if(xvel < 1 && xvel > -1) {
-                    xvel += 0.5 * xcont;
-                }
             }
             else {
                 y = closest->y1 + height / 2;
+
+                if(xvel < 15 && xvel > -15) {
+                    xvel += 1000 * xcont * dt / 1000.0;
+                }
             }
 
             yvel = 0;
@@ -57,7 +61,7 @@ void Player::calcMotion(int screenw, int screenh, double xcont, Level level) {
 
         else {
 
-            yvel += 0.1;
+            yvel -= 9.8 * dt / 1000.0;
 
             // Rotate coordinate system so line is horizontal
             double lineangle = atan2(closest->y2 - closest->y1,

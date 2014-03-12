@@ -10,7 +10,7 @@ class Entity {
     public:
         double x, y;            // Position of Entity (CoM)
         double xvel, yvel;      // Velocity
-        int width, height;      // Size of Entity
+        double width, height;   // Size of Entity
         std::string debugname;
 
         int red, green, blue;
