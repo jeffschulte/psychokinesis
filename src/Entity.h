@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SDL.h>
-#include <String>
+#include <string>
 
 #include "Camera.h"
 

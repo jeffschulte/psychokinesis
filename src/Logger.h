@@ -1,7 +1,8 @@
 #pragma once
 
-#include <String>
+#include <string>
 #include <ctime>
+#include <stdio.h>
 
 class Logger {
 
