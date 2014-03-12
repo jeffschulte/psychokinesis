@@ -5,7 +5,8 @@
 
 void Player::calcMotion(int screenw, int screenh, double xcont, Level level) {
 
-    // For now, we'll just draw a circle from the CoM and see which line it is closest to
+    // For now, we'll just draw a circle from the CoM and see which
+    // line it is closest to
 
     EnvLine* closest = level.ClosestLine(x, y);
 
@@ -21,9 +22,8 @@ void Player::calcMotion(int screenw, int screenh, double xcont, Level level) {
     }
     else {
 
-        // We want to first constrain it to the surface
-        // Keep it a certain radial distace from the surface and set that component
-        // of the velocity = 0
+        // Keep it a certain radial distace from the surface and set
+        // that component of the velocity = 0
 
         // If we are horiz or vert, then we can apply in the usual fashion
 
