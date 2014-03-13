@@ -28,7 +28,8 @@ class Application {
 
     double targetx, targety;
 
-    Entity block;
+    std::vector<Entity> things;
+
     Player player;
     Level level;
     Camera camera;

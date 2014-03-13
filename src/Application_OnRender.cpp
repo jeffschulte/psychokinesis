@@ -13,7 +13,8 @@ void Application::OnRender() {
 
     level.OnRender(renderer, &camera);
 
-    block.OnRender(renderer, &camera);
+    things[0].OnRender(renderer, &camera);
+    things[1].OnRender(renderer, &camera);
 
     // Render the player
 

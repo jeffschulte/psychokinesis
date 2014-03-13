@@ -64,20 +64,25 @@ bool Application::OnInit() {
 
     // Test block to shove around
 
-    block.x = 16;
-    block.y = 16;
-    block.width = 4;
-    block.height = 4;
-    block.red = 255;
-    block.green = block.blue = 0;
-    block.debugname = "Block";
-
-
-    if((block.texture =
-        block.LoadTexture("art_assets/little-man.bmp", renderer)) == NULL) {
-        Logger::log("Problem loading texture in OnInit");
-        return false;
+    things.push_back(Entity());
+    things.push_back(Entity());
+    for (int i=0;i<things.size();i++) {
+        things[i].width = 4;
+        things[i].height = 4;
+        things[i].red = 4;
+        things[i].green = 4;
+        things[i].debugname = "block";
+        if((things[i].texture =
+            things[i].LoadTexture("art_assets/little-man.bmp", renderer)) == NULL) {
+            Logger::log("Problem loading texture in OnInit");
+            return false;
+        }
     }
+    things[0].y = 20;
+    things[1].y = 16;
+    things[0].x = 16;
+    things[1].x = 6;
+
     oldtime = SDL_GetTicks();
 
     return true;
