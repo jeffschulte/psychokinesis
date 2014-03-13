@@ -2,8 +2,6 @@
 
 
 void Application::OnLoop() {
-    dt = SDL_GetTicks() - oldtime;
-    oldtime = SDL_GetTicks();
 
     if(pushing) {
 

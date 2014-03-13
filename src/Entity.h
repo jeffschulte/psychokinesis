@@ -12,9 +12,9 @@ class Entity {
         double x, y;            // Position of Entity (CoM)
         double xvel, yvel;      // Velocity
 
-        int width, height;      // Size of Entity
+        double width, height;      // Size of Entity
         int last_frame_time;
-        int	current_frame;
+        int current_frame;
         std::string debugname;
 
         int red, green, blue;
