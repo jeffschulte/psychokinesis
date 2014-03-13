@@ -32,14 +32,14 @@ SDL_Rect Animation::Get_Frame_to_Render(double y, double yvel, double height) {
     else {
         last_frame_time = SDL_GetTicks();
         if (mini_anim_frame == 0) {
-            if (y > height/2 + 4) {
-                current_state = IN_AIR;
-            }
-            else if (y <= height/2 +.01) {
+            if (y <= height/2 +.01) {
                 current_state = ON_GROUND;
             }
+            else if (y > height/2 + 5 || yvel > 0) {
+                current_state = IN_AIR;
+            }
             else {
-                current_state = CLOSE_GROUND;
+                current_state = HITTING_GROUND;
             }
         }
         switch (current_state) {
@@ -53,7 +53,7 @@ SDL_Rect Animation::Get_Frame_to_Render(double y, double yvel, double height) {
                     mini_anim_frame = 0;
                 }
                 break;
-            case CLOSE_GROUND:
+            case HITTING_GROUND:
                 current_frame = HIT_GROUND + mini_anim_frame;
                 mini_anim_frame += 1;
                 if (mini_anim_frame == 7) {

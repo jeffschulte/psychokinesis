@@ -12,7 +12,7 @@ class Animation {
     int current_frame;
 
     int current_state;
-    enum states {ON_GROUND,IN_AIR,CLOSE_GROUND};
+    enum states {ON_GROUND,IN_AIR,HITTING_GROUND};
     int mini_anim_frame;
     enum frames {STAND = 0, F_IN_AIR = 1, HIT_GROUND = 5, GET_UP =8};
 
