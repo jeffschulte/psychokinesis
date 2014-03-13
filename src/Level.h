@@ -3,6 +3,7 @@
 #include <vector>
 #include <SDL.h>
 
+#include "Camera.h"
 
 class EnvLine {
 
@@ -16,11 +17,11 @@ public:
 
 
 class Level {
-    
+
     public:
         std::vector<EnvLine> lines;
 
-        void OnRender(SDL_Renderer* renderer);
+        void OnRender(SDL_Renderer* renderer, Camera* camera);
         void AddLine(double x1, double y1, double x2, double y2);
 
         EnvLine* ClosestLine(double x, double y);

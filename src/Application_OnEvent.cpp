@@ -24,7 +24,7 @@ void Application::OnEvent(SDL_Event* Event) {
             targetx = (double) Event->jaxis.value / 32767.0;
         }
         if(Event->jaxis.axis == 4) {
-            targety = (double) Event->jaxis.value / 32767.0;
+            targety = -(double) Event->jaxis.value / 32767.0;
         }
     }
 

@@ -15,16 +15,16 @@ SDL_Texture* Entity::LoadTexture(const char* File, SDL_Renderer* renderer) {
 }
 
 
-void Entity::OnRender(SDL_Renderer* renderer) {
+void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
 
-    SDL_Rect rect5 = {x - width / 2, y - height / 2, width, height};
+    Rect rect5 = {x - width / 2, y + height / 2, width, height};
     if (texture != NULL) {
         SDL_Rect rect = animation_object.Get_Frame_to_Render(&current_frame, &last_frame_time);
-        SDL_RenderCopy(renderer, texture, &rect, &rect5);
+        camera->RenderCopy(renderer, texture, &rect, &rect5);
     }
     else {
         SDL_SetRenderDrawColor(renderer, red, green, blue, 255);
-        SDL_RenderFillRect(renderer, &rect5);
+        camera->RenderFillRect(renderer, &rect5);
     }
 }
 

@@ -24,6 +24,7 @@ bool Application::OnInit() {
         return false;
     }
 
+
     std::stringstream ss;
     ss << SDL_NumJoysticks() << " joysticks were found";
     Logger::log(ss.str());
@@ -63,10 +64,10 @@ bool Application::OnInit() {
 
     // Test block to shove around
 
-    block.x = 400;
-    block.y = 300;
-    block.width = 60;
-    block.height = 60;
+    block.x = 16;
+    block.y = 16;
+    block.width = 4;
+    block.height = 4;
     block.red = 255;
     block.green = block.blue = 0;
     block.debugname = "Block";
@@ -77,5 +78,7 @@ bool Application::OnInit() {
         Logger::log("Problem loading texture in OnInit");
         return false;
     }
+    oldtime = SDL_GetTicks();
+
     return true;
 }
