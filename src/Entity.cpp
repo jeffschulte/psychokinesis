@@ -3,8 +3,8 @@
 Entity::Entity() {
 
     x = y = xvel = yvel = 0;
-    old_frame_time = SDL_GetTicks();
-    current_frame = 0;
+    current_frame = 2;
+    last_frame_time = 0;
     texture = NULL;
 }
 
@@ -15,11 +15,11 @@ SDL_Texture* Entity::LoadTexture(const char* File, SDL_Renderer* renderer) {
 }
 
 
-void Entity::OnRender(SDL_Renderer* renderer, int dt) {
+void Entity::OnRender(SDL_Renderer* renderer) {
 
     SDL_Rect rect5 = {x - width / 2, y - height / 2, width, height};
     if (texture != NULL) {
-        SDL_Rect rect = animation_object.Get_Frame_to_Render(current_frame,old_frame_time);
+        SDL_Rect rect = animation_object.Get_Frame_to_Render(&current_frame, &last_frame_time);
         SDL_RenderCopy(renderer, texture, &rect, &rect5);
     }
     else {

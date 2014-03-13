@@ -71,12 +71,11 @@ bool Application::OnInit() {
     block.green = block.blue = 0;
     block.debugname = "Block";
 
-    SDL_Texture* block_texture;
-    if((block_texture =
+
+    if((block.texture =
         block.LoadTexture("art_assets/krebs.bmp", renderer)) == NULL) {
-        Logger::log("Problem loading texture");
+        Logger::log("Problem loading texture in OnInit");
         return false;
     }
-
     return true;
 }
