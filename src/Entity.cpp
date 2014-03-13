@@ -3,8 +3,6 @@
 Entity::Entity() {
 
     x = y = xvel = yvel = 0;
-    current_frame = 2;
-    last_frame_time = 0;
     texture = NULL;
 }
 
@@ -19,7 +17,7 @@ void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
 
     Rect rect5 = {x - width / 2, y + height / 2, width, height};
     if (texture != NULL) {
-        SDL_Rect rect = animation_object.Get_Frame_to_Render(&current_frame, &last_frame_time);
+        SDL_Rect rect = animation_object.Get_Frame_to_Render(y, yvel, height);
         camera->RenderCopy(renderer, texture, &rect, &rect5);
     }
     else {

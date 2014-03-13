@@ -15,7 +15,6 @@ class Application {
     bool Running;
 
     int render_rate; //milliseconds
-    enum frames {STAND = 0, RUN_RIGHT = 10, RUN_LEFT = 20};
 
     SDL_Renderer* renderer;
     SDL_Haptic *haptic;

@@ -39,7 +39,6 @@ void Application::OnLoop() {
         block.x = 25 - block.width / 2;
         block.xvel *= -.8;
     }
-
     if(block.y < block.height / 2) {
         block.y = block.height / 2;
         block.yvel *= -.8;

@@ -74,7 +74,7 @@ bool Application::OnInit() {
 
 
     if((block.texture =
-        block.LoadTexture("art_assets/krebs.bmp", renderer)) == NULL) {
+        block.LoadTexture("art_assets/little-man.bmp", renderer)) == NULL) {
         Logger::log("Problem loading texture in OnInit");
         return false;
     }

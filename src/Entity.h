@@ -13,8 +13,6 @@ class Entity {
         double xvel, yvel;      // Velocity
 
         double width, height;      // Size of Entity
-        int last_frame_time;
-        int current_frame;
         std::string debugname;
 
         int red, green, blue;
