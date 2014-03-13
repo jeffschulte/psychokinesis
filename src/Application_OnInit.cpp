@@ -66,6 +66,7 @@ bool Application::OnInit() {
     things.push_back(Entity());
     things.push_back(Entity());
     things.push_back(Entity());
+    //below variables = renderer, pointer to ent, ent type, x pos, ypos
     Get_Ent_Specs(renderer, &things[0], LITTLE_MAN, 21, 20);
     Get_Ent_Specs(renderer, &things[1], BIG_MAN, 16, 16);
     Get_Ent_Specs(renderer, &things[2], BIG_MAN, 4, 20);
