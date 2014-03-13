@@ -62,26 +62,18 @@ bool Application::OnInit() {
 
     effect_id = SDL_HapticNewEffect(haptic, &effect);
 
-    // Test block to shove around
-
+    // Test blocks to shove around
     things.push_back(Entity());
     things.push_back(Entity());
-    for (int i=0;i<things.size();i++) {
-        things[i].width = 4;
-        things[i].height = 4;
-        things[i].red = 4;
-        things[i].green = 4;
-        things[i].debugname = "block";
-        if((things[i].texture =
-            things[i].LoadTexture("art_assets/little-man.bmp", renderer)) == NULL) {
-            Logger::log("Problem loading texture in OnInit");
-            return false;
-        }
+    things.push_back(Entity());
+    Get_Ent_Specs(renderer, &things[0], LITTLE_MAN, 21, 20);
+    Get_Ent_Specs(renderer, &things[1], BIG_MAN, 16, 16);
+    Get_Ent_Specs(renderer, &things[2], BIG_MAN, 4, 20);
+    if (&things[2] == NULL){
+        printf("null pointer\n");
+        exit(1);
     }
-    things[0].y = 20;
-    things[1].y = 16;
-    things[0].x = 16;
-    things[1].x = 6;
+
 
     oldtime = SDL_GetTicks();
 

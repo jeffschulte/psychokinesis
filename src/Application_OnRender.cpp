@@ -13,8 +13,9 @@ void Application::OnRender() {
 
     level.OnRender(renderer, &camera);
 
-    things[0].OnRender(renderer, &camera);
-    things[1].OnRender(renderer, &camera);
+    for (int i=0;i<things.size();i++) {
+        things[i].OnRender(renderer, &camera);
+    }
 
     // Render the player
 
