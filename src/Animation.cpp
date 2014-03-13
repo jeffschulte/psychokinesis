@@ -26,7 +26,7 @@ SDL_Texture* Animation::Animation_Load_Texture(const char* File, SDL_Renderer* r
 SDL_Rect Animation::Get_Frame_to_Render(double y, double yvel, double height) {
 
     if(SDL_GetTicks() - last_frame_time < anim_frame_rate){
-        SDL_Rect rect = {330,-270+(current_frame)*197,300,210};//xpos,ypos,width,hieght
+        SDL_Rect rect = {330,100+(current_frame)*197,300,210};//xpos,ypos,width,hieght
         return rect;
     }
     else {
@@ -35,7 +35,7 @@ SDL_Rect Animation::Get_Frame_to_Render(double y, double yvel, double height) {
             if (y <= height/2 +.01) {
                 current_state = ON_GROUND;
             }
-            else if (y > height/2 + 5 || yvel > 0) {
+            else if (y > height/2 + 3 || yvel > 0) {
                 current_state = IN_AIR;
             }
             else {
@@ -61,7 +61,8 @@ SDL_Rect Animation::Get_Frame_to_Render(double y, double yvel, double height) {
                 }
                 break;
         }
-        SDL_Rect rect =  {330,-270+(current_frame)*197,300,210};
+        //current_frame = STAND;
+        SDL_Rect rect =  {330,100+(current_frame)*197,300,210};
         return rect;
     }
 }
