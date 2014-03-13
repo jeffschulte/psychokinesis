@@ -13,8 +13,9 @@ double EnvLine::DistToPoint(double x, double y) {
 
     double lengthsq = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
 
-    double t = ((x - x1) * (x2 - x1) + (y - y1) * (y2 - y1)) / lengthsq;
+    double t = ((x - x1) * (x2 - x1) + (y - y1) * (y2 - y1)) / lengthsq;//dot product
 
+    //below is if x,y is to the left or right of both line end points
     if(t < 0.0) {
         return sqrt((x - x1) * (x - x1) + (y - y1) * (y - y1));
     }
@@ -22,6 +23,7 @@ double EnvLine::DistToPoint(double x, double y) {
         return sqrt((x - x2) * (x - x2) + (y - y2) * (y - y2));
     }
 
+    //the proj point is the closest on the line to the x,y point
     double projx = x1 + t * (x2 - x1);
     double projy = y1 + t * (y2 - y1);
 

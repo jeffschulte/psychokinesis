@@ -32,7 +32,7 @@ SDL_Rect Animation::Get_Frame_to_Render(double y, double yvel, double height) {
     else {
         last_frame_time = SDL_GetTicks();
         if (mini_anim_frame == 0) {
-            if (y <= height/2 +.01) {
+            if (y <= height/2 +.05) {
                 current_state = ON_GROUND;
             }
             else if (y > height/2 + 3 || yvel > 0) {

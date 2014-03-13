@@ -17,11 +17,12 @@ class Entity {
 
         int red, green, blue;
         SDL_Texture* texture;
-        Animation animation_object;
-
         Entity();
         SDL_Texture* LoadTexture(const char* File,SDL_Renderer* renderer);
         void OnRender(SDL_Renderer* renderer, Camera* camera);
 
         bool collideline(double x, double y, double targetx, double targety);
+ private:
+        Animation animation_object;
+
 };
