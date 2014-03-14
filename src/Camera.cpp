@@ -9,8 +9,19 @@ Camera::Camera() {
 }
 
 
-// TODO: Make a single transformation method for all three of these
+/// \todo Make a single transformation method for all three of these.
 
+///
+/// Performs same action as \c SDL_RenderCopy, but transforms to
+/// screen coordinates first.
+///
+/// @param renderer the rendering context
+/// @param texture the source texture
+/// @param srcrect the source rectangle argument
+/// @param dstrect the destination rectangle in world coordinates
+///
+/// @return Returns 0 on success or a negative error code on failure
+///
 int Camera::RenderCopy(SDL_Renderer* renderer, SDL_Texture* texture,
                        const SDL_Rect* srcrect,
                        const Rect* dstrect) {
@@ -35,7 +46,15 @@ int Camera::RenderCopy(SDL_Renderer* renderer, SDL_Texture* texture,
     }
 }
 
-
+///
+/// Performs same action as \c SDL_RenderFillRect, but transforms to
+/// screen coordinates first.
+///
+/// @param renderer the rendering context
+/// @param rect the rectangle to fill in world coordinates
+///
+/// @return Returns 0 on success or a negative error code on failure
+///
 int Camera::RenderFillRect(SDL_Renderer* renderer,
                            const Rect* rect) {
 
@@ -59,7 +78,18 @@ int Camera::RenderFillRect(SDL_Renderer* renderer,
     }
 }
 
-
+///
+/// Performs same action as \c SDL_RenderDrawLine, but transforms to
+/// screen coordinates first.
+///
+/// @param renderer the rendering context
+/// @param x1 x world coordinate of first point
+/// @param y1 y world coordinate of first point
+/// @param x2 x world coordinate of second point
+/// @param y2 y world coordinate of second point
+///
+/// @return Returns 0 on success or a negative error code on failure
+///
 int Camera::RenderDrawLine(SDL_Renderer* renderer,
                                double x1,
                                double y1,
