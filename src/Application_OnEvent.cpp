@@ -43,6 +43,10 @@ void Application::OnEvent(SDL_Event* Event) {
         else if (astate.xcont < 0) {
             astate.xcont = -1;
         }
+
+        if(Event->key.keysym.sym == SDLK_ESCAPE) {
+            Running = false;
+        }
     }
 
     if(Event->type == SDL_KEYUP) {
