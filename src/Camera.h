@@ -11,8 +11,9 @@ class Rect {
 class Camera {
 
  public:
-    double x, y, zoom;
-    int hscreenw, hscreenh;
+    double x;      ///< X coordinate center of focus of camera in world space
+    double y;      ///< Y coordinate center of focus of camera in world space
+    double zoom;   ///< Zoom factor of camera
 
     Camera();
     int RenderCopy(SDL_Renderer* renderer, SDL_Texture* texture,
@@ -25,4 +26,7 @@ class Camera {
                            double y1,
                            double x2,
                            double y2);
+
+ private:
+    int hscreenw, hscreenh;
 };
