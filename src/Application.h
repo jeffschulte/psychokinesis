@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Level.h"
 #include "Camera.h"
+#include "ActionState.h"
 
 
 class Application {
@@ -23,11 +24,6 @@ class Application {
 
     int screenw, screenh;
 
-    double xcont;
-    bool pushing;
-
-    double targetx, targety;
-
     std::vector<Entity> things;
     enum Ent_Types {BIG_MAN,LITTLE_MAN};
     void Get_Ent_Specs(SDL_Renderer* renderer, Entity* ent,
@@ -36,6 +32,7 @@ class Application {
     Player player;
     Level level;
     Camera camera;
+    ActionState astate;
 
     Hud mainhud;
 

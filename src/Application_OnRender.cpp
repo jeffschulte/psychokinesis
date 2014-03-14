@@ -24,7 +24,7 @@ void Application::OnRender() {
 
     // Targeting line for push direction
 
-    mainhud.OnRender(renderer, &camera, player, targetx, targety);
+    mainhud.OnRender(renderer, &camera, player, astate.targetx, astate.targety);
 
     SDL_RenderPresent(renderer);
 }
