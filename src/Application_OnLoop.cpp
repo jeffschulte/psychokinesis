@@ -8,10 +8,10 @@ void Application::OnLoop() {
         player.yvel -= 2 * 9.8 * targety * dt / 1000.0;
         player.xvel -= 2 * 9.8 * targetx * dt / 1000.0;
 
-        for (int i=0;i<things.size();i++) {
-            if(things[i].collideline(player.x, player.y, targetx, targety)) {
-                things[i].xvel += 2 * 9.8 * targetx * dt / 1000.0;
-                things[i].yvel += 2 * 9.8 * targety * dt / 1000.0;
+        for (int i=0;i<Entity::things.size();i++) {
+            if(Entity::things[i]->collideline(player.x, player.y, targetx, targety)) {
+                Entity::things[i]->xvel += 2 * 9.8 * targetx * dt / 1000.0;
+                Entity::things[i]->yvel += 2 * 9.8 * targety * dt / 1000.0;
             }
         }
         //if (haptic != NULL && SDL_HapticRumblePlay( haptic, 0.5, 1000 ) != 0) {
@@ -22,28 +22,28 @@ void Application::OnLoop() {
     player.calcMotion(screenw, screenh, xcont, level, dt);
 
     // TODO: The code below also needs to be generalized
-    for (int i=0;i<things.size();i++) {
-        things[i].yvel -= 9.8 * dt / 1000.0;
-        things[i].y += things[i].yvel * dt / 1000.0;
-        things[i].x += things[i].xvel * dt / 1000.0;
+    for (int i=0;i<Entity::things.size();i++) {
+        Entity::things[i]->yvel -= 9.8 * dt / 1000.0;
+        Entity::things[i]->y += Entity::things[i]->yvel * dt / 1000.0;
+        Entity::things[i]->x += Entity::things[i]->xvel * dt / 1000.0;
 
-        if(things[i].y > 25 - things[i].height / 2) {
-            things[i].y = 25 - things[i].height / 2;
-            things[i].yvel *= -0.8;
+        if(Entity::things[i]->y > 25 - Entity::things[i]->height / 2) {
+            Entity::things[i]->y = 25 - Entity::things[i]->height / 2;
+            Entity::things[i]->yvel *= -0.8;
 
-            things[i].xvel -= 0.01 * things[i].xvel;
+            Entity::things[i]->xvel -= 0.01 * Entity::things[i]->xvel;
         }
-        if(things[i].x < things[i].width / 2) {
-            things[i].x = things[i].width / 2;
-            things[i].xvel *= -.8;
+        if(Entity::things[i]->x < Entity::things[i]->width / 2) {
+            Entity::things[i]->x = Entity::things[i]->width / 2;
+            Entity::things[i]->xvel *= -.8;
         }
-        if(things[i].x > 25 - things[i].width / 2) {
-            things[i].x = 25 - things[i].width / 2;
-            things[i].xvel *= -.8;
+        if(Entity::things[i]->x > 25 - Entity::things[i]->width / 2) {
+            Entity::things[i]->x = 25 - Entity::things[i]->width / 2;
+            Entity::things[i]->xvel *= -.8;
         }
-        if(things[i].y < things[i].height / 2) {
-            things[i].y = things[i].height / 2;
-            things[i].yvel *= -.8;
+        if(Entity::things[i]->y < Entity::things[i]->height / 2) {
+            Entity::things[i]->y = Entity::things[i]->height / 2;
+            Entity::things[i]->yvel *= -.8;
         }
     }
 }

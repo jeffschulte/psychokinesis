@@ -63,18 +63,10 @@ bool Application::OnInit() {
     effect_id = SDL_HapticNewEffect(haptic, &effect);
 
     // Test blocks to shove around
-    things.push_back(Entity());
-    things.push_back(Entity());
-    things.push_back(Entity());
     //below variables = renderer, pointer to ent, ent type, x pos, ypos
-    Get_Ent_Specs(renderer, &things[0], LITTLE_MAN, 21, 20);
-    Get_Ent_Specs(renderer, &things[1], BIG_MAN, 16, 16);
-    Get_Ent_Specs(renderer, &things[2], BIG_MAN, 4, 20);
-    if (&things[2] == NULL){
-        printf("null pointer\n");
-        exit(1);
-    }
-
+    Entity::Create_Ent_With_Specs(renderer, Entity::LITTLE_MAN, 21, 20);
+    Entity::Create_Ent_With_Specs(renderer, Entity::BIG_MAN, 16, 16);
+    Entity::Create_Ent_With_Specs(renderer, Entity::BIG_MAN, 4, 20);
 
     oldtime = SDL_GetTicks();
 
