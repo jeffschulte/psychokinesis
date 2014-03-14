@@ -8,11 +8,11 @@ void Application::OnLoop() {
         player.yvel -= 2 * 9.8 * astate.targety * dt / 1000.0;
         player.xvel -= 2 * 9.8 * astate.targetx * dt / 1000.0;
 
-        for (int i=0;i<Entity::things.size();i++) {
-            if(Entity::things[i]->collideline(player.x, player.y,
+        for (int i=0;i<Entity::entities.size();i++) {
+            if(Entity::entities[i]->collideline(player.x, player.y,
                                               astate.targetx, astate.targety)) {
-                Entity::things[i]->xvel += 2 * 9.8 * astate.targetx * dt / 1000.0;
-                Entity::things[i]->yvel += 2 * 9.8 * astate.targety * dt / 1000.0;
+                Entity::entities[i]->xvel += 2 * 9.8 * astate.targetx * dt / 1000.0;
+                Entity::entities[i]->yvel += 2 * 9.8 * astate.targety * dt / 1000.0;
             }
         }
         //if (haptic != NULL && SDL_HapticRumblePlay( haptic, 0.5, 1000 ) != 0) {
@@ -20,33 +20,36 @@ void Application::OnLoop() {
         //}
     }
 
-    player.calcMotion(screenw, screenh, astate.xcont, level, dt);
+    player.calcMotion(&astate, level, dt);
     camera.x = player.x;
     camera.y = player.y;
 
     // TODO: The code below also needs to be generalized
-    for (int i=0;i<Entity::things.size();i++) {
-        Entity::things[i]->yvel -= 9.8 * dt / 1000.0;
-        Entity::things[i]->y += Entity::things[i]->yvel * dt / 1000.0;
-        Entity::things[i]->x += Entity::things[i]->xvel * dt / 1000.0;
+    for (int i=0; i < Entity::entities.size(); i++) {
 
-        if(Entity::things[i]->y > 25 - Entity::things[i]->height / 2) {
-            Entity::things[i]->y = 25 - Entity::things[i]->height / 2;
-            Entity::things[i]->yvel *= -0.8;
+        Entity* current = Entity::entities[i];
 
-            Entity::things[i]->xvel -= 0.01 * Entity::things[i]->xvel;
+        current->yvel -= 9.8 * dt / 1000.0;
+        current->y += current->yvel * dt / 1000.0;
+        current->x += current->xvel * dt / 1000.0;
+
+        if(current->y > 25 - current->height / 2) {
+            current->y = 25 - current->height / 2;
+            current->yvel *= -0.8;
+
+            current->xvel -= 0.01 * current->xvel;
         }
-        if(Entity::things[i]->x < Entity::things[i]->width / 2) {
-            Entity::things[i]->x = Entity::things[i]->width / 2;
-            Entity::things[i]->xvel *= -.8;
+        if(current->x < current->width / 2) {
+            current->x = current->width / 2;
+            current->xvel *= -.8;
         }
-        if(Entity::things[i]->x > 25 - Entity::things[i]->width / 2) {
-            Entity::things[i]->x = 25 - Entity::things[i]->width / 2;
-            Entity::things[i]->xvel *= -.8;
+        if(current->x > 25 - current->width / 2) {
+            current->x = 25 - current->width / 2;
+            current->xvel *= -.8;
         }
-        if(Entity::things[i]->y < Entity::things[i]->height / 2) {
-            Entity::things[i]->y = Entity::things[i]->height / 2;
-            Entity::things[i]->yvel *= -.8;
+        if(current->y < current->height / 2) {
+            current->y = current->height / 2;
+            current->yvel *= -.8;
         }
     }
 }

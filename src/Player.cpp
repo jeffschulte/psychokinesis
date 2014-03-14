@@ -3,8 +3,7 @@
 
 // Updates the position of the player based on the environment
 
-void Player::calcMotion(int screenw, int screenh, double xcont,
-                        Level level, int dt) {
+void Player::calcMotion(ActionState* s, Level level, int dt) {
 
     // For now, we'll just draw a circle from the CoM and see which
     // line it is closest to
@@ -30,7 +29,7 @@ void Player::calcMotion(int screenw, int screenh, double xcont,
 
         // If we are horiz or vert, then we can apply in the usual fashion
 
-        if(closest->y1 == closest->y2) {
+        if(fabs(closest->y1 - closest->y2) < DBL_EPSILON) {
             if(y < closest->y1) {
                 y = closest->y1 - height / 2;
 
@@ -39,7 +38,7 @@ void Player::calcMotion(int screenw, int screenh, double xcont,
                 y = closest->y1 + height / 2;
 
                 if(xvel < 15 && xvel > -15) {
-                    xvel += 1000 * xcont * dt / 1000.0;
+                    xvel += 1000 * s->xcont * dt / 1000.0;
                 }
             }
 
@@ -47,7 +46,7 @@ void Player::calcMotion(int screenw, int screenh, double xcont,
             xvel *= 0.8;
         }
 
-        else if(closest->x1 == closest->x2) {
+        else if(fabs(closest->x1 - closest->x2) < DBL_EPSILON) {
             if(x < closest->x1) {
                 x = closest->x1 - width / 2;
             }
@@ -72,11 +71,11 @@ void Player::calcMotion(int screenw, int screenh, double xcont,
             double xvrot = xvel * cos(lineangle) + yvel * sin(lineangle);
             double yvrot = -xvel * sin(lineangle) + yvel * cos(lineangle);
 
-            double x1rot = closest->x1 * cos(lineangle) + closest->y1 * sin(lineangle);
+            //double x1rot = closest->x1 * cos(lineangle) + closest->y1 * sin(lineangle);
             double y1rot = -closest->x1 * sin(lineangle) + closest->y1 * cos(lineangle);
 
-            double x2rot = closest->x2 * cos(lineangle) + closest->y2 * sin(lineangle);
-            double y2rot = -closest->x2 * sin(lineangle) + closest->y2 * cos(lineangle);
+            //double x2rot = closest->x2 * cos(lineangle) + closest->y2 * sin(lineangle);
+            //double y2rot = -closest->x2 * sin(lineangle) + closest->y2 * cos(lineangle);
 
             if(yrot < y1rot) {
                 yrot = y1rot - height / 2;
@@ -85,7 +84,7 @@ void Player::calcMotion(int screenw, int screenh, double xcont,
                 yrot = y1rot + height / 2;
 
                 if(xvrot < 1 && xvrot > -1) {
-                    xvrot -= 0.5 * xcont;
+                    xvrot -= 0.5 * s->xcont;
                 }
             }
 

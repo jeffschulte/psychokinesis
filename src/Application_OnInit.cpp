@@ -64,9 +64,9 @@ bool Application::OnInit() {
 
     // Test blocks to shove around
     //below variables = renderer, pointer to ent, ent type, x pos, ypos
-    Entity::Create_Ent_With_Specs(renderer, Entity::LITTLE_MAN, 21, 20);
-    Entity::Create_Ent_With_Specs(renderer, Entity::BIG_MAN, 16, 16);
-    Entity::Create_Ent_With_Specs(renderer, Entity::BIG_MAN, 4, 20);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 21, 20);
+    Entity::Create(renderer, Entity::BIG_MAN, 16, 16);
+    Entity::Create(renderer, Entity::BIG_MAN, 4, 20);
 
     if(level.LoadAssets(renderer, "art_assets/sky2.bmp",
                         "art_assets/grass.bmp") == NULL) {

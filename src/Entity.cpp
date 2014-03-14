@@ -1,5 +1,7 @@
 #include "Entity.h"
-std::vector<Entity*> Entity::things;
+
+
+std::vector<Entity*> Entity::entities;
 
 Entity::Entity() {
 
@@ -8,7 +10,7 @@ Entity::Entity() {
 }
 
 SDL_Texture* Entity::LoadTexture(const char* File, SDL_Renderer* renderer) {
-    SDL_Texture* texture;
+
     texture = animation_object.Animation_Load_Texture(File,renderer);
     return texture;
 }
