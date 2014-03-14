@@ -35,23 +35,13 @@ double EnvLine::DistToPoint(double x, double y) {
 SDL_Texture* Level::LoadAssets(SDL_Renderer* renderer, const char* background,
                                const char* foreground) {
 
-    SDL_Surface* surface = NULL;
-
-    if((surface = SDL_LoadBMP(background)) == NULL) {
+    if((bg = IMG_LoadTexture(renderer, background)) == NULL) {
         return NULL;
     }
 
     Logger::log("Loaded background");
 
-    if((bg = SDL_CreateTextureFromSurface(renderer, surface)) == NULL) {
-        return NULL;
-    }
-
-    if((surface = SDL_LoadBMP(foreground)) == NULL) {
-        return NULL;
-    }
-
-    return fg = SDL_CreateTextureFromSurface(renderer, surface);
+    return fg = IMG_LoadTexture(renderer, foreground);
 }
 
 void Level::OnRender(SDL_Renderer* renderer, Camera* camera) {
