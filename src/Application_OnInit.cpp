@@ -70,7 +70,7 @@ bool Application::OnInit() {
 
     if(level.LoadAssets(renderer, "art_assets/sky2.bmp",
                         "art_assets/grass.bmp") == NULL) {
-        Logger::log("Level loading failure");
+        Logger::log("Level loading failure: " + std::string(SDL_GetError()));
     }
 
 

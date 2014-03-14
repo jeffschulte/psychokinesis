@@ -30,6 +30,8 @@ double EnvLine::DistToPoint(double x, double y) {
     return sqrt((x - projx) * (x - projx) + (y - projy) * (y - projy));
 }
 
+
+
 SDL_Texture* Level::LoadAssets(SDL_Renderer* renderer, const char* background,
                                const char* foreground) {
 

@@ -29,11 +29,6 @@ Application::Application() {
 
     double wallwidth = 25;    // m
 
-    //level.AddLine(wallwidth, wallwidth, screenw - wallwidth, wallwidth);
-    //level.AddLine(screenw - wallwidth, wallwidth, screenw - wallwidth, screenh - 2*wallwidth);
-    //level.AddLine(screenw - wallwidth, screenh - 2*wallwidth, wallwidth, screenh - wallwidth);
-    //level.AddLine(wallwidth, screenh - wallwidth, wallwidth, wallwidth);
-
     level.AddLine(0, 0, wallwidth, 0);
     level.AddLine(wallwidth, 0, wallwidth, wallwidth);
     level.AddLine(wallwidth, wallwidth, 0, wallwidth);
