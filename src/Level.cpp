@@ -36,13 +36,17 @@ SDL_Texture* Level::LoadAssets(SDL_Renderer* renderer, const char* background,
     SDL_Surface* surface = NULL;
 
     if((surface = SDL_LoadBMP(background)) == NULL) {
-         return NULL;
+        return NULL;
     }
 
-    bg = SDL_CreateTextureFromSurface(renderer, surface);
+    Logger::log("Loaded background");
+
+    if((bg = SDL_CreateTextureFromSurface(renderer, surface)) == NULL) {
+        return NULL;
+    }
 
     if((surface = SDL_LoadBMP(foreground)) == NULL) {
-         return NULL;
+        return NULL;
     }
 
     return fg = SDL_CreateTextureFromSurface(renderer, surface);

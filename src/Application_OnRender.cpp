@@ -13,8 +13,8 @@ void Application::OnRender() {
 
     level.OnRender(renderer, &camera);
 
-    for (int i=0;i<Entity::things.size();i++) {
-        Entity::things[i]->OnRender(renderer, &camera);
+    for (int i=0;i<Entity::entities.size();i++) {
+        Entity::entities[i]->OnRender(renderer, &camera);
     }
 
     // Render the player

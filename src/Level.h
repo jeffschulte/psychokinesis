@@ -4,6 +4,7 @@
 #include <SDL.h>
 
 #include "Camera.h"
+#include "Logger.h"
 
 class EnvLine {
 
