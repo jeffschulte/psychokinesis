@@ -10,7 +10,7 @@ void Application::OnEvent(SDL_Event* Event) {
 
     if(Event->type == SDL_JOYAXISMOTION) {
 
-        if(Event->jaxis.axis == 0) {
+        if(Event->jaxis.axis == 3) {
             if(Event->jaxis.value > 5000 || Event->jaxis.value < -5000) {
                 astate.xcont = (double) Event->jaxis.value / 32767.0;
             }
@@ -20,10 +20,10 @@ void Application::OnEvent(SDL_Event* Event) {
         }
 
 
-        if(Event->jaxis.axis == 3) {
+        if(Event->jaxis.axis == 0) {
             astate.targetx = (double) Event->jaxis.value / 32767.0;
         }
-        if(Event->jaxis.axis == 4) {
+        if(Event->jaxis.axis == 1) {
             astate.targety = -(double) Event->jaxis.value / 32767.0;
         }
     }
