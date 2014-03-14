@@ -11,8 +11,8 @@ Application::Application() {
     oldtime = SDL_GetTicks();
     render_rate = 50; //millisecends
 
-    screenw = 640;
-    screenh = 480;
+    screenw = 1280;
+    screenh = 720;
 
     // Set up the player object
 
