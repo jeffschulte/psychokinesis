@@ -30,7 +30,8 @@ class Application {
 
     std::vector<Entity> things;
     enum Ent_Types {BIG_MAN,LITTLE_MAN};
-    void Get_Ent_Specs(SDL_Renderer* renderer, Entity* ent, Ent_Types ent_type, double x, double y);
+    void Get_Ent_Specs(SDL_Renderer* renderer, Entity* ent,
+                       Ent_Types ent_type, double x, double y);
 
     Player player;
     Level level;
