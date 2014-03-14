@@ -3,15 +3,16 @@
 
 void Application::OnLoop() {
 
-    if(pushing) {
+    if(astate.pushing) {
 
-        player.yvel -= 2 * 9.8 * targety * dt / 1000.0;
-        player.xvel -= 2 * 9.8 * targetx * dt / 1000.0;
+        player.yvel -= 2 * 9.8 * astate.targety * dt / 1000.0;
+        player.xvel -= 2 * 9.8 * astate.targetx * dt / 1000.0;
 
         for (int i=0;i<Entity::things.size();i++) {
-            if(Entity::things[i]->collideline(player.x, player.y, targetx, targety)) {
-                Entity::things[i]->xvel += 2 * 9.8 * targetx * dt / 1000.0;
-                Entity::things[i]->yvel += 2 * 9.8 * targety * dt / 1000.0;
+            if(Entity::things[i]->collideline(player.x, player.y,
+                                              astate.targetx, astate.targety)) {
+                Entity::things[i]->xvel += 2 * 9.8 * astate.targetx * dt / 1000.0;
+                Entity::things[i]->yvel += 2 * 9.8 * astate.targety * dt / 1000.0;
             }
         }
         //if (haptic != NULL && SDL_HapticRumblePlay( haptic, 0.5, 1000 ) != 0) {
@@ -19,7 +20,9 @@ void Application::OnLoop() {
         //}
     }
 
-    player.calcMotion(screenw, screenh, xcont, level, dt);
+    player.calcMotion(screenw, screenh, astate.xcont, level, dt);
+    camera.x = player.x;
+    camera.y = player.y;
 
     // TODO: The code below also needs to be generalized
     for (int i=0;i<Entity::things.size();i++) {

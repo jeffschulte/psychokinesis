@@ -11,12 +11,6 @@ Application::Application() {
     oldtime = SDL_GetTicks();
     render_rate = 50; //millisecends
 
-    xcont = 0;
-    pushing = false;
-
-    targetx = 0;
-    targety = 0;
-
     screenw = 640;
     screenh = 480;
 

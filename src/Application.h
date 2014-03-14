@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Level.h"
 #include "Camera.h"
+#include "ActionState.h"
 
 
 class Application {
@@ -23,14 +24,10 @@ class Application {
 
     int screenw, screenh;
 
-    double xcont;
-    bool pushing;
-
-    double targetx, targety;
-
     Player player;
     Level level;
     Camera camera;
+    ActionState astate;
 
     Hud mainhud;
 
