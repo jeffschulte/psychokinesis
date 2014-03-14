@@ -21,6 +21,8 @@ void Application::OnLoop() {
     }
 
     player.calcMotion(screenw, screenh, astate.xcont, level, dt);
+    camera.x = player.x;
+    camera.y = player.y;
 
     // TODO: The code below also needs to be generalized
     for (int i=0;i<things.size();i++) {

@@ -30,8 +30,28 @@ double EnvLine::DistToPoint(double x, double y) {
     return sqrt((x - projx) * (x - projx) + (y - projy) * (y - projy));
 }
 
+SDL_Texture* Level::LoadAssets(SDL_Renderer* renderer, const char* background,
+                               const char* foreground) {
+
+    SDL_Surface* surface = NULL;
+
+    if((surface = SDL_LoadBMP(background)) == NULL) {
+         return NULL;
+    }
+
+    bg = SDL_CreateTextureFromSurface(renderer, surface);
+
+    if((surface = SDL_LoadBMP(foreground)) == NULL) {
+         return NULL;
+    }
+
+    return fg = SDL_CreateTextureFromSurface(renderer, surface);
+}
 
 void Level::OnRender(SDL_Renderer* renderer, Camera* camera) {
+
+
+    SDL_RenderCopy(renderer, bg, NULL, NULL);
 
     // For now, we'll just draw a series of lines between the points
 
@@ -41,6 +61,10 @@ void Level::OnRender(SDL_Renderer* renderer, Camera* camera) {
         camera->RenderDrawLine(renderer, lines[i].x1, lines[i].y1,
                            lines[i].x2, lines[i].y2);
     }
+
+    Rect rect = {-20, 50, 70, 70};
+    camera->RenderCopy(renderer, fg, NULL, &rect);
+
 }
 
 void Level::AddLine(double x1, double y1, double x2, double y2) {

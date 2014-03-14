@@ -76,6 +76,9 @@ bool Application::OnInit() {
     }
 
 
+    level.LoadAssets(renderer, "art_assets/sky2.bmp",
+                     "art_assets/grass.bmp");
+
     oldtime = SDL_GetTicks();
 
     return true;
