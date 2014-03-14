@@ -63,7 +63,7 @@ bool Application::OnInit() {
     effect_id = SDL_HapticNewEffect(haptic, &effect);
 
     // Test blocks to shove around
-    //below variables = renderer, pointer to ent, ent type, x pos, ypos
+    //below variables = renderer, entype, xpos, ypos
     Entity::Create(renderer, Entity::LITTLE_MAN, 21, 20);
     Entity::Create(renderer, Entity::BIG_MAN, 16, 16);
     Entity::Create(renderer, Entity::BIG_MAN, 4, 20);
