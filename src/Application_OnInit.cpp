@@ -68,8 +68,11 @@ bool Application::OnInit() {
     Entity::Create_Ent_With_Specs(renderer, Entity::BIG_MAN, 16, 16);
     Entity::Create_Ent_With_Specs(renderer, Entity::BIG_MAN, 4, 20);
 
-    level.LoadAssets(renderer, "art_assets/sky2.bmp",
-                     "art_assets/grass.bmp");
+    if(level.LoadAssets(renderer, "art_assets/sky2.bmp",
+                        "art_assets/grass.bmp") == NULL) {
+        Logger::log("Level loading failure");
+    }
+
 
     oldtime = SDL_GetTicks();
 
