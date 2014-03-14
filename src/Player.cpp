@@ -12,9 +12,20 @@ void Player::calcMotion(ActionState* s, Level level, int dt) {
 
     EnvLine* closest = level.ClosestLine(x, y);
 
-    yvel -= 9.8 * dt / 1000.0;
-    y += yvel * dt / 1000.0;
-    x += xvel * dt / 1000.0;
+    double forcex = 0.0;
+    double forcey = 0.0;
+
+    // Apply gravity
+
+    forcey -= 9.8 * mass;
+
+    // Apply pushing force
+
+    if(s->pushing) {
+        forcex -= s->targetx * 2 * 9.8 * mass;
+        forcey -= s->targety * 2 * 9.8 * mass;
+    }
+
 
     if(closest->DistToPoint(x, y) > height / 2) {
 
@@ -38,12 +49,16 @@ void Player::calcMotion(ActionState* s, Level level, int dt) {
                 y = closest->y1 + height / 2;
 
                 if(xvel < 15 && xvel > -15) {
-                    xvel += 1000 * s->xcont * dt / 1000.0;
+                    forcex += 98 * mass * s->xcont;
                 }
             }
 
-            yvel = 0;
-            xvel *= 0.8;
+            double normal = -forcey;
+            yvel = forcey = 0;
+
+            forcex -= ((0.0 < xvel) - (xvel < 0.0)) *
+                (fabs(normal) * 1.0);
+
         }
 
         else if(fabs(closest->x1 - closest->x2) < DBL_EPSILON) {
@@ -59,8 +74,6 @@ void Player::calcMotion(ActionState* s, Level level, int dt) {
         }
 
         else {
-
-            yvel -= 9.8 * dt / 1000.0;
 
             // Rotate coordinate system so line is horizontal
             double lineangle = atan2(closest->y2 - closest->y1,
@@ -99,4 +112,16 @@ void Player::calcMotion(ActionState* s, Level level, int dt) {
         }
     }
 
+    xvel += forcex / mass * dt / 1000.0;
+    yvel += forcey / mass * dt / 1000.0;
+
+    if(fabs(xvel) < dt / 1000.0) {
+        xvel = 0.0;
+    }
+    if(fabs(yvel) < dt / 1000.0) {
+        yvel = 0.0;
+    }
+
+    y += yvel * dt / 1000.0;
+    x += xvel * dt / 1000.0;
 }

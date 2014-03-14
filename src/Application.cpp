@@ -16,10 +16,11 @@ Application::Application() {
 
     // Set up the player object
 
-    player.x = 12;       // m
-    player.y = 12;       // m
+    player.x = 12;        // m
+    player.y = 12;        // m
     player.width = 1.5;   // m
     player.height = 1.5;  // m
+    player.mass = 150;    // kg
     player.red = player.green = 0;
     player.blue = 255;
     player.debugname = "Player";
