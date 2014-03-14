@@ -3,20 +3,24 @@
 
 Camera::Camera() {
 
-    hscreenw = 320;
-    hscreenh = 240;
-
     x = 12.0;
     y = 12.0;
     zoom = 15.0;
 }
 
 
+// TODO: Make a single transformation method for all three of these
+
 int Camera::RenderCopy(SDL_Renderer* renderer, SDL_Texture* texture,
                        const SDL_Rect* srcrect,
                        const Rect* dstrect) {
 
     SDL_Rect transrect;
+
+    SDL_GetRendererOutputSize(renderer, &hscreenw, &hscreenh);
+
+    hscreenw /= 2;
+    hscreenh /= 2;
 
     if(dstrect == NULL) {
         return SDL_RenderCopy(renderer, texture, srcrect, NULL);
@@ -37,6 +41,11 @@ int Camera::RenderFillRect(SDL_Renderer* renderer,
 
     SDL_Rect transrect;
 
+    SDL_GetRendererOutputSize(renderer, &hscreenw, &hscreenh);
+
+    hscreenw /= 2;
+    hscreenh /= 2;
+
     if(rect == NULL) {
         return SDL_RenderFillRect(renderer, NULL);
     }
@@ -56,6 +65,11 @@ int Camera::RenderDrawLine(SDL_Renderer* renderer,
                                double y1,
                                double x2,
                                double y2) {
+
+    SDL_GetRendererOutputSize(renderer, &hscreenw, &hscreenh);
+
+    hscreenw /= 2;
+    hscreenh /= 2;
 
     return SDL_RenderDrawLine(renderer,
                               (int)((x1-x) * zoom) + hscreenw,
