@@ -68,8 +68,8 @@ bool Application::OnInit() {
     Entity::Create(renderer, Entity::BIG_MAN, 16, 16);
     Entity::Create(renderer, Entity::BIG_MAN, 4, 20);
 
-    if(level.LoadAssets(renderer, "art_assets/sky2.bmp",
-                        "art_assets/grass.bmp") == NULL) {
+    if(level.LoadAssets(renderer, "art_assets/sky2.png",
+                        "art_assets/grass.png") == NULL) {
         Logger::log("Level loading failure: " + std::string(SDL_GetError()));
     }
 
