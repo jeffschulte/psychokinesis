@@ -14,13 +14,13 @@ Animation::Animation() {
 }
 
 SDL_Texture* Animation::Animation_Load_Texture(const char* File, SDL_Renderer* renderer) {
-    SDL_Surface* surface = NULL;
-
-    if((surface = SDL_LoadBMP(File)) == NULL) {
+    SDL_Texture* texture;
+    if((texture = IMG_LoadTexture(renderer, File)) == NULL) {
         return NULL;
     }
-    //might want to use SDL_ConvertSurfaceFormat
-    return SDL_CreateTextureFromSurface(renderer, surface);
+    Logger::log("Loaded background");
+
+    return texture;
 }
 
 SDL_Rect Animation::Get_Frame_to_Render(double y, double yvel, double height) {
