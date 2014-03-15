@@ -1,19 +1,25 @@
 #include "Player.h"
 
 
-Player Player::Create(SDL_Renderer* renderer,double x, double y) {
-    Player player;
-    player.ent_type = PLAYER;
-    player.x = x;
-    player.y = y;
-    player.width = 5;
-    player.height = 5;
-    player.debugname = "big_man";
-    if((player.texture =
-        player.LoadTexture("art_assets/stickman2.png", renderer)) == NULL) {
+void Player::Create(SDL_Renderer* renderer, double xp, double yp) {
+
+
+    // Set up the player object
+
+    mass = 150;    // kg
+    red = green = 0;
+    blue = 255;
+
+    ent_type = PLAYER;
+    x = xp;
+    y = yp;
+    width = 5;            // m
+    height = 5;           // m
+    debugname = "player";
+    if((texture =
+        LoadTexture("art_assets/stickman2.png", renderer)) == NULL) {
         Logger::log("Problem loading texture in Entity_Create");
     }
-    return player;
 }
 
 

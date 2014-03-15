@@ -14,17 +14,6 @@ Application::Application() {
     screenw = 1280;
     screenh = 720;
 
-    // Set up the player object
-
-    player.x = 12;        // m
-    player.y = 12;        // m
-    player.width = 1.5;   // m
-    player.height = 1.5;  // m
-    player.mass = 150;    // kg
-    player.red = player.green = 0;
-    player.blue = 255;
-    player.debugname = "Player";
-
     // Set up the wall objects
 
     double wallwidth = 40;    // m
