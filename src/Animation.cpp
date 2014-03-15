@@ -18,7 +18,10 @@ SDL_Texture* Animation::Animation_Load_Texture(const char* File, SDL_Renderer* r
     if((texture = IMG_LoadTexture(renderer, File)) == NULL) {
         return NULL;
     }
-    Logger::log("Loaded background");
+    char message[100];
+    strcpy (message,"Loaded Entity from ");
+    strcat (message,File);
+    Logger::log(message);
 
     return texture;
 }
