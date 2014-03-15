@@ -5,7 +5,10 @@
 class Rect {
 
  public:
-    double x, y, w, h;
+    double x;  ///< the x location of the rectangle's upper left corner
+    double y;  ///< the y location of the rectangle's upper left corner
+    double w;  ///< the width of the rectangle
+    double h;  ///< the height of the rectangle
 };
 
 class Camera {
