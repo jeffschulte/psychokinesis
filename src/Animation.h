@@ -6,13 +6,14 @@
 #include "Logger.h"
 
 class Animation {
- public:
-    int anim_frame_rate;
-    int MaxFrames;
+public:
+int anim_frame_rate;
+int MaxFrames;
     int Oscillate;
     int last_frame_time;
     int current_frame;
 
+    enum EntType {BIG_MAN,LITTLE_MAN,PLAYER};
     int current_state;
     enum states {ON_GROUND,IN_AIR,HITTING_GROUND};
     int mini_anim_frame;
@@ -20,5 +21,6 @@ class Animation {
 
     Animation();
     SDL_Texture* Animation_Load_Texture(const char* File, SDL_Renderer* renderer);
-    SDL_Rect Get_Frame_to_Render(double y, double yvel, double height);
+    SDL_Rect Get_Frame_to_Render(double y, double yvel, double height,
+                                 int ent_type);
 };

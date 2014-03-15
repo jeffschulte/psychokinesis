@@ -1,6 +1,22 @@
 #include "Player.h"
 
 
+Player Player::Create(SDL_Renderer* renderer,double x, double y) {
+    Player player;
+    player.ent_type = PLAYER;
+    player.x = x;
+    player.y = y;
+    player.width = 5;
+    player.height = 5;
+    player.debugname = "big_man";
+    if((player.texture =
+        player.LoadTexture("art_assets/stickman2.png", renderer)) == NULL) {
+        Logger::log("Problem loading texture in Entity_Create");
+    }
+    return player;
+}
+
+
 // Updates the position of the player based on the environment
 
 void Player::calcMotion(ActionState* s, Level level, int dt) {

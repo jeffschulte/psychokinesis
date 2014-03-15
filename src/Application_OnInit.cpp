@@ -24,7 +24,6 @@ bool Application::OnInit() {
         return false;
     }
 
-
     std::stringstream ss;
     ss << SDL_NumJoysticks() << " joysticks were found";
     Logger::log(ss.str());
@@ -67,6 +66,7 @@ bool Application::OnInit() {
     Entity::Create(renderer, Entity::LITTLE_MAN, 21, 20);
     Entity::Create(renderer, Entity::BIG_MAN, 16, 16);
     Entity::Create(renderer, Entity::BIG_MAN, 4, 20);
+    player = Player::Create(renderer,9,20);
 
     if(level.LoadAssets(renderer, "art_assets/sky2.png",
                         "art_assets/grass.png") == NULL) {
