@@ -3,9 +3,11 @@
 
 Camera::Camera() {
 
+    /// \todo Put these parameters into the Level class (?)
+
     x = 12.0;
-    y = 12.0;
-    zoom = 15.0;
+    y = 8.0;
+    zoom = 32.0;
 }
 
 

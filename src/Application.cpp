@@ -27,10 +27,10 @@ Application::Application() {
 
     // Set up the wall objects
 
-    double wallwidth = 25;    // m
+    double wallwidth = 40;    // m
 
-    level.AddLine(0, 0, wallwidth, 4);
-    level.AddLine(wallwidth, 4, wallwidth, wallwidth);
+    level.AddLine(0, 0, wallwidth, 10);
+    level.AddLine(wallwidth, 10, wallwidth, wallwidth);
     level.AddLine(wallwidth, wallwidth, 0, wallwidth);
     level.AddLine(0, wallwidth, 0, 0);
 
