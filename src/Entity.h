@@ -21,6 +21,9 @@ class Entity {
         double xvel, yvel;      // Velocity
 
         double width, height;      // Size of Entity
+
+        double mass;
+
         std::string debugname;
 
         Uint8 red, green, blue;

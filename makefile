@@ -3,4 +3,4 @@
 WFLAGS=-Weverything -Wno-padded -Wno-documentation -Wno-sign-compare -Wno-sign-conversion
 
 bin/psycho: src/*.cpp src/*.h
-	clang++ src/*.cpp $(WFLAGS) `sdl2-config --cflags --libs` -o bin/psycho
+	clang++ src/*.cpp $(WFLAGS) -lSDL2_image `sdl2-config --cflags --libs` -o bin/psycho

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <SDL.h>
+#include <SDL_image.h>
 
 #include "Camera.h"
 #include "Logger.h"
@@ -19,17 +20,19 @@ public:
 
 class Level {
 
-    public:
-        std::vector<EnvLine> lines;
+ public:
+    std::vector<EnvLine> lines;
 
-        SDL_Texture* bg;
-        SDL_Texture* fg;
+    SDL_Texture* LoadAssets(SDL_Renderer* renderer, const char* background,
+                            const char* foreground);
 
-        SDL_Texture* LoadAssets(SDL_Renderer* renderer, const char* background,
-                                const char* foreground);
+    void OnRender(SDL_Renderer* renderer, Camera* camera);
+    void AddLine(double x1, double y1, double x2, double y2);
 
-        void OnRender(SDL_Renderer* renderer, Camera* camera);
-        void AddLine(double x1, double y1, double x2, double y2);
+    EnvLine* ClosestLine(double x, double y);
 
-        EnvLine* ClosestLine(double x, double y);
+ private:
+
+    SDL_Texture* bg;
+    SDL_Texture* fg;
 };

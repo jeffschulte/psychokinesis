@@ -5,14 +5,18 @@
 class Rect {
 
  public:
-    double x, y, w, h;
+    double x;  ///< the x location of the rectangle's upper left corner
+    double y;  ///< the y location of the rectangle's upper left corner
+    double w;  ///< the width of the rectangle
+    double h;  ///< the height of the rectangle
 };
 
 class Camera {
 
  public:
-    double x, y, zoom;
-    int hscreenw, hscreenh;
+    double x;      ///< X coordinate center of focus of camera in world space
+    double y;      ///< Y coordinate center of focus of camera in world space
+    double zoom;   ///< Zoom factor of camera
 
     Camera();
     int RenderCopy(SDL_Renderer* renderer, SDL_Texture* texture,
@@ -25,4 +29,7 @@ class Camera {
                            double y1,
                            double x2,
                            double y2);
+
+ private:
+    int hscreenw, hscreenh;
 };

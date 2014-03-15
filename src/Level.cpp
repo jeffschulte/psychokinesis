@@ -30,26 +30,18 @@ double EnvLine::DistToPoint(double x, double y) {
     return sqrt((x - projx) * (x - projx) + (y - projy) * (y - projy));
 }
 
+
+
 SDL_Texture* Level::LoadAssets(SDL_Renderer* renderer, const char* background,
                                const char* foreground) {
 
-    SDL_Surface* surface = NULL;
-
-    if((surface = SDL_LoadBMP(background)) == NULL) {
+    if((bg = IMG_LoadTexture(renderer, background)) == NULL) {
         return NULL;
     }
 
     Logger::log("Loaded background");
 
-    if((bg = SDL_CreateTextureFromSurface(renderer, surface)) == NULL) {
-        return NULL;
-    }
-
-    if((surface = SDL_LoadBMP(foreground)) == NULL) {
-        return NULL;
-    }
-
-    return fg = SDL_CreateTextureFromSurface(renderer, surface);
+    return fg = IMG_LoadTexture(renderer, foreground);
 }
 
 void Level::OnRender(SDL_Renderer* renderer, Camera* camera) {
@@ -66,7 +58,7 @@ void Level::OnRender(SDL_Renderer* renderer, Camera* camera) {
                            lines[i].x2, lines[i].y2);
     }
 
-    Rect rect = {-20, 50, 70, 70};
+    Rect rect = {0, 34, 40, 40};
     camera->RenderCopy(renderer, fg, NULL, &rect);
 
 }

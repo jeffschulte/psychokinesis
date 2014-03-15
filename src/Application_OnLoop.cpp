@@ -22,7 +22,9 @@ void Application::OnLoop() {
 
     player.calcMotion(&astate, level, dt);
     camera.x = player.x;
-    camera.y = player.y;
+    //camera.y = player.y;
+    camera.zoom = player.y > 22 ? 10 : -fabs(player.y) + 32;
+
 
     // TODO: The code below also needs to be generalized
     for (int i=0; i < Entity::entities.size(); i++) {
