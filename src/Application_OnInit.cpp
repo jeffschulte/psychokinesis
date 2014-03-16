@@ -62,7 +62,7 @@ bool Application::OnInit() {
     effect_id = SDL_HapticNewEffect(haptic, &effect);
 
 
-    if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) < 0) {
+    if(Mix_OpenAudio(22050, AUDIO_S16, 2, 4096) < 0) {
         return false;
     }
 
