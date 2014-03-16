@@ -11,5 +11,5 @@ class Player: public Entity {
 
   public:
     void calcMotion(ActionState* s, Level level, int dt);
-    static Player Create(SDL_Renderer* renderer,double x, double y);
+    void Create(SDL_Renderer* renderer,double xp, double yp);
 };
