@@ -1,11 +1,13 @@
 #pragma once
 
 #include <SDL.h>
+#include <string>
+#include <vector>
+#include "Camera.h"
 #include "Animation.h"
 #include "Logger.h"
-#include <string>
-#include "Camera.h"
-#include <vector>
+
+class Animation;
 
 class Entity {
 
@@ -35,5 +37,5 @@ class Entity {
 
     bool collideline(double x, double y, double targetx, double targety);
  private:
-    Animation animation_object;
+    Animation* animation_object;
 };

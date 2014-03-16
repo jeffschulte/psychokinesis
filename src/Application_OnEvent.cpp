@@ -47,6 +47,13 @@ void Application::OnEvent(SDL_Event* Event) {
         if(Event->key.keysym.sym == SDLK_ESCAPE) {
             Running = false;
         }
+
+        if(Event->key.keysym.sym == SDLK_s) {
+            if(music == NULL) {
+                music = Mix_LoadMUS("sound_assets/bib.ogg");
+                Mix_PlayMusic(music, 1);
+            }
+        }
     }
 
     if(Event->type == SDL_KEYUP) {

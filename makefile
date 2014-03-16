@@ -1,7 +1,7 @@
 # Very basic makefile for the time being
 
 WFLAGS=-Weverything -Wno-padded -Wno-documentation -Wno-sign-compare -Wno-sign-conversion
-SDLFLAGS=-lSDL2_image `sdl2-config --cflags --libs`
+SDLFLAGS=-lSDL2_image -lSDL2_mixer `sdl2-config --cflags --libs`
 CC=clang++ src/*.cpp
 
 default: bin/psycho

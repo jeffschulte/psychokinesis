@@ -4,17 +4,16 @@
 #include <string>
 #include <SDL_image.h>
 #include "Logger.h"
-#include "Animation.h"
+#include "Entity.h"
 
 class Animation {
-public:
-int anim_frame_rate;
-int MaxFrames;
+ public:
+    int anim_frame_rate;
+    int MaxFrames;
     int Oscillate;
     int last_frame_time;
     int current_frame;
 
-    enum EntType {BIG_MAN,LITTLE_MAN,PLAYER};
     int current_state;
     enum states {ON_GROUND,IN_AIR,HITTING_GROUND};
     enum player_states {P_STAND=0, PUSH_R=1, PUSH_L=2, PUSH_U=3, PUSH_D=4,
