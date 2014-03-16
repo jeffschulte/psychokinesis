@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL.h>
+#include <SDL_mixer.h>
 #include <string>
 #include "Entity.h"
 #include "Hud.h"
@@ -21,6 +22,8 @@ class Application {
     SDL_Haptic *haptic;
     int effect_id;
     SDL_Joystick *joystick;
+
+    Mix_Music* music;
 
     int screenw, screenh;
 

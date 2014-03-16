@@ -1,11 +1,12 @@
 #pragma once
 
 #include <SDL.h>
+#include <string>
+#include <vector>
+#include "Camera.h"
 #include "Animation.h"
 #include "Logger.h"
-#include <string>
-#include "Camera.h"
-#include <vector>
+
 
 class Entity {
 
