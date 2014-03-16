@@ -7,11 +7,13 @@ Entity::Entity() {
 
     x = y = xvel = yvel = 0;
     texture = NULL;
+
+    animation_object = new Animation();
 }
 
 SDL_Texture* Entity::LoadTexture(const char* File, SDL_Renderer* renderer) {
 
-    texture = animation_object.Animation_Load_Texture(File,renderer);
+    texture = animation_object->Animation_Load_Texture(File,renderer);
     return texture;
 }
 
@@ -20,7 +22,7 @@ void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
 
     Rect rect5 = {x - width / 2, y + height / 2, width, height};
     if (texture != NULL) {
-        SDL_Rect rect = animation_object.Get_Frame_to_Render(y, yvel, height,
+        SDL_Rect rect = animation_object->Get_Frame_to_Render(y, yvel, height,
                                                              int(ent_type));
         camera->RenderCopy(renderer, texture, &rect, &rect5);
     }

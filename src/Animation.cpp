@@ -28,7 +28,7 @@ SDL_Texture* Animation::Animation_Load_Texture(const char* File, SDL_Renderer* r
 
 SDL_Rect Animation::Get_Frame_to_Render(double y, double yvel, double height,
                                         int ent_type) {
-    if (ent_type == PLAYER) {
+    if (ent_type == Entity::PLAYER) {
         if(SDL_GetTicks() - last_frame_time < anim_frame_rate){
             SDL_Rect rect =  {68,22+(current_frame)*70,60,60};
             //68,90,60,60 works on a frame exactly guy pushin right.
