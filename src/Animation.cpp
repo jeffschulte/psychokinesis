@@ -1,7 +1,7 @@
 #include "Animation.h"
 
 Animation::Animation() {
-    anim_frame_rate = 5000; //milliseconds
+    anim_frame_rate = 30; //milliseconds
     current_frame = 0;
     last_frame_time = 0;
     MaxFrames = 12;
@@ -45,6 +45,7 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
             double xcont = ActionState::p_astate->xcont;
             EnvLine* line  = Level::p_level->ClosestLine(x, y);
             double dist_to_ground = line->DistToPoint(x, y) - 2.5; //dont understand
+            last_frame_time = SDL_GetTicks();
             //why this goes down to 2.5 at the ground and stops there.
             // printf("targetx = %g targety = %g xonct = %g dist_to_ground = %g\n",
             //        targetx, targety, xcont, dist_to_ground);

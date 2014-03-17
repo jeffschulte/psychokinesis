@@ -15,8 +15,8 @@ class Animation {
     int Oscillate;
     int last_frame_time;
     int current_frame;
-
     int current_state;
+    int mini_anim_frame;
     enum states {ON_GROUND,IN_AIR,HITTING_GROUND};
     enum player_states {P_STAND=0, PUSH_R=1, PUSH_L=2, PUSH_U=3, PUSH_D=4,
                         PUSH_R_F_STAND=5, STAND_F_PUSH_R=8, PUSH_L_F_STAND=11,
@@ -27,7 +27,6 @@ class Animation {
                         HGH_L=54, HGS_R=57, HGS_L=61, WALL_HUG_L=65,
                         WALL_HUG_R=66};
 
-    int mini_anim_frame;
     enum frames {STAND = 0, F_IN_AIR = 1, HIT_GROUND = 5, GET_UP =8};
 
     Animation();
