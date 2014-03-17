@@ -48,7 +48,7 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
             //why this goes down to 2.5 at the ground and stops there.
             // printf("targetx = %g targety = %g xonct = %g dist_to_ground = %g\n",
             //        targetx, targety, xcont, dist_to_ground);
-            printf("AAAAA\n");
+            //printf("AAAAA\n");
             // {P_STAND=0, PUSH_R=1, PUSH_L=2, PUSH_U=3, PUSH_D=4,
             //                 PUSH_R_F_STAND=5, STAND_F_PUSH_R=8, PUSH_L_F_STAND=11,
             //                 STAND_F_PUSH_L=14, PUSH_U_F_STAND=17, STAND_F_PUSH_U=20,
@@ -57,7 +57,7 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
             //                 STAND_F_RUN_L=46, IN_AIR_L=49, IN_AIR_R=50, HGH_R=51,
             //                 HGH_L=54, HGS_R=57, HGS_L=61, WALL_HUG_L=65,
             //                 WALL_HUG_R=66};
-            printf("state = %d  anim = %d\n",current_state,mini_anim_frame);
+            //printf("state = %d  anim = %d\n",current_state,mini_anim_frame);
             if (mini_anim_frame == 0) {
                 mini_anim_frame = 1;
                 if (dist_to_ground < height/2.0) {
@@ -71,7 +71,7 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
                         }
                     }
                     else if (yvel < -10) {
-                        printf("yvel = %g\n",yvel);
+                        //printf("yvel = %g\n",yvel);
                         if (current_state == P_STAND || current_state == IN_AIR_R ||
                             current_state == PUSH_R) {
                             current_state = HGS_R;
@@ -165,7 +165,7 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
                 }
             }
             else {
-                printf("frame = %d",mini_anim_frame);
+                //printf("frame = %d",mini_anim_frame);
                 if (current_state == STAND_F_PUSH_R || current_state == STAND_F_PUSH_L ||
                     current_state == STAND_F_PUSH_U || current_state == STAND_F_PUSH_D ||
                     current_state == STAND_F_RUN_R || current_state == STAND_F_RUN_L) {

@@ -1,7 +1,6 @@
 #include "Level.h"
 
 EnvLine::EnvLine(double ix1, double iy1, double ix2, double iy2) {
-
     x1 = ix1;
     y1 = iy1;
     x2 = ix2;
