@@ -1,7 +1,8 @@
 #pragma once
 
 #include <SDL.h>
-#include "SDL_mixer.h"
+//#include <SDL_mixer/SDL_mixer.h>
+#include "SDL/SDL_mixer.h"
 #include <string>
 #include "Entity.h"
 #include "Hud.h"

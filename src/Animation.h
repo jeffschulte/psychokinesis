@@ -5,6 +5,8 @@
 #include <SDL_image.h>
 #include "Logger.h"
 #include "Entity.h"
+#include "Level.h"
+#include "ActionState.h"
 
 class Animation {
  public:
@@ -30,6 +32,6 @@ class Animation {
 
     Animation();
     SDL_Texture* Animation_Load_Texture(const char* File, SDL_Renderer* renderer);
-    SDL_Rect Get_Frame_to_Render(double y, double yvel, double height,
-                                 int ent_type);
+    SDL_Rect Get_Frame_to_Render(double x, double y, double xvel, double yvel,
+                                 double height, int ent_type);
 };

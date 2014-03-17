@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 
+
 class ActionState {
 
  public:
@@ -10,6 +11,7 @@ class ActionState {
     bool pushing;
 
     double targetx, targety;
+    static ActionState* p_astate;
 
     ActionState();
 };

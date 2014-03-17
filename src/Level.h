@@ -28,6 +28,8 @@ class Level {
 
     void OnRender(SDL_Renderer* renderer, Camera* camera);
     void AddLine(double x1, double y1, double x2, double y2);
+    Level();
+    static Level* p_level;
 
     EnvLine* ClosestLine(double x, double y);
 
