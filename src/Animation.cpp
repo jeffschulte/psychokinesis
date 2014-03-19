@@ -10,7 +10,7 @@ Animation::Animation() {
     current_state = 0;
     mini_anim_frame = 0;
     //enum frames {STAND = 0, IN_AIR = 1, HIT_GROUND = 5, GET_UP =8};
-
+    initialize_states_list_values();
 }
 
 SDL_Texture* Animation::Animation_Load_Texture(const char* File, SDL_Renderer* renderer) {
@@ -31,214 +31,41 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
                                         int ent_type) {
 
     if (ent_type == Entity::PLAYER) {
-        // printf("xvel = %g yvel  =%g x = %g y = %g\n",xvel,yvel,x,y);
         if(SDL_GetTicks() - last_frame_time < anim_frame_rate){
             SDL_Rect rect =  {68,22+(current_frame)*70,60,60};
-            //68,90,60,60 works on a frame exactly guy pushin right.
-            //next frame is man pushing left next down 160 seems to work, so
-            //seperation of 70?
             return rect;
         }
         else {
-            double targetx = ActionState::p_astate->targetx;
-            double targety = ActionState::p_astate->targety;
-            double xcont = ActionState::p_astate->xcont;
-            EnvLine* line  = Level::p_level->ClosestLine(x, y);
-            double dist_to_ground = line->DistToPoint(x, y) - 2.5; //dont understand
             last_frame_time = SDL_GetTicks();
-            //why this goes down to 2.5 at the ground and stops there.
-            // printf("targetx = %g targety = %g xonct = %g dist_to_ground = %g\n",
-            //        targetx, targety, xcont, dist_to_ground);
-            //printf("AAAAA\n");
-            // {P_STAND=0, PUSH_R=1, PUSH_L=2, PUSH_U=3, PUSH_D=4,
-            //                 PUSH_R_F_STAND=5, STAND_F_PUSH_R=8, PUSH_L_F_STAND=11,
-            //                 STAND_F_PUSH_L=14, PUSH_U_F_STAND=17, STAND_F_PUSH_U=20,
-            //                 PUSH_D_F_STAND=23, STAND_F_PUSH_D=26, RUN_R=29, RUN_L=33,
-            //                 RUN_R_F_STAND=37, STAND_F_RUN_R=40, RUN_L_F_STAND=43,
-            //                 STAND_F_RUN_L=46, IN_AIR_L=49, IN_AIR_R=50, HGH_R=51,
-            //                 HGH_L=54, HGS_R=57, HGS_L=61, WALL_HUG_L=65,
-            //                 WALL_HUG_R=66};
-            //printf("state = %d  anim = %d\n",current_state,mini_anim_frame);
             if (mini_anim_frame == 0) {
-                mini_anim_frame = 1;
-                if (dist_to_ground < height/2.0) {
-                    if (yvel < -25) {
-                        if (current_state == P_STAND || current_state == IN_AIR_R ||
-                            current_state == PUSH_R) {
-                            current_state = HGH_R;
-                        }
-                        else {
-                            current_state = HGH_L;
-                        }
-                    }
-                    else if (yvel < -10) {
-                        //printf("yvel = %g\n",yvel);
-                        if (current_state == P_STAND || current_state == IN_AIR_R ||
-                            current_state == PUSH_R) {
-                            current_state = HGS_R;
-                        }
-                        else {
-                            current_state = HGS_L;
-                        }
-                    }
+                double targetx = ActionState::p_astate->targetx;
+                double targety = ActionState::p_astate->targety;
+                double xcont = ActionState::p_astate->xcont;
+                EnvLine* line  = Level::p_level->ClosestLine(x, y);
+                double dist_to_ground = line->DistToPoint(x, y) - 2.5; //dont understand
+                //why this goes down to 2.5 at the ground and stops there.
+                current_state = get_next_state(ent_type, targetx, targety,
+                                               xcont, dist_to_ground, height,
+                                               xvel,yvel);
+                if (current_state == P_STAND || current_state == PUSH_R ||
+                    current_state == PUSH_L || current_state == PUSH_U ||
+                    current_state == PUSH_D || current_state == FREE_U ||
+                    current_state == FREE_D || current_state == H_WALL_R ||
+                    current_state == H_WALL_L) {
+                    mini_anim_frame = 0;
                 }
-                switch (current_state) {
-                    case PUSH_R:
-                        if (targetx < .1) {
-                            current_state = STAND_F_PUSH_R;
-                        }
-                        mini_anim_frame = 0;
-                        break;
-                    case PUSH_L:
-                        if (targetx > -.1) {
-                            current_state = STAND_F_PUSH_L;
-                        }
-                        mini_anim_frame = 0;
-                        break;
-                    case PUSH_U:
-                        if (targety < .1) {
-                            current_state = STAND_F_PUSH_U;
-                        }
-                        mini_anim_frame = 0;
-                        break;
-                    case PUSH_D:
-                        if (targety > -.1) {
-                            current_state = STAND_F_PUSH_D;
-                        }
-                        mini_anim_frame = 0;
-                        break;
-                    case P_STAND:
-                        if (targetx >= .1) {
-                            current_state = PUSH_R_F_STAND;
-                        }
-                        else if (targetx <= -.1) {
-                            current_state = PUSH_L_F_STAND;
-                        }
-                        else if (targety > .1) {
-                            current_state = PUSH_U_F_STAND;
-                        }
-                        else if (targety < -.1) {
-                            current_state = PUSH_D_F_STAND;
-                        }
-                        else if (dist_to_ground < height && xcont > .1) {
-                            current_state = RUN_R_F_STAND;
-                        }
-                        else if (dist_to_ground < height && xcont < -.1) {
-                            current_state = RUN_L_F_STAND;
-                        }
-                        else if (dist_to_ground > height*3 && xvel > 0) {
-                            current_state = IN_AIR_R;
-                        }
-                        else if (dist_to_ground > height*3 && xvel < 0) {
-                            current_state = IN_AIR_L;
-                        }
-                        else {
-                            current_state = P_STAND;
-                            mini_anim_frame = 0;
-                        }
-                        break;
-                    case RUN_R:
-                        if (xcont < .1) {
-                            current_state = STAND_F_RUN_R;
-                        }
-                        break;
-                    case RUN_L:
-                        if (xcont > -.1) {
-                            current_state = STAND_F_RUN_L;
-                        }
-                        break;
-                    case IN_AIR_R:
-                        if (dist_to_ground > height*3 && xvel > 0) {
-                            current_state = IN_AIR_R;
-                        }
-                        else {
-                            current_state = P_STAND;
-                        }
-                        mini_anim_frame = 0;
-                    case IN_AIR_L:
-                        if (dist_to_ground > height*3 && xvel < 0) {
-                            current_state = IN_AIR_L;
-                        }
-                        current_state = P_STAND;
-                        mini_anim_frame = 0;
-                    default:
-                        break;
+                else {
+                    mini_anim_frame = 1;
                 }
+                current_frame = states[current_state].beg_frame;
             }
             else {
-                //printf("frame = %d",mini_anim_frame);
-                if (current_state == STAND_F_PUSH_R || current_state == STAND_F_PUSH_L ||
-                    current_state == STAND_F_PUSH_U || current_state == STAND_F_PUSH_D ||
-                    current_state == STAND_F_RUN_R || current_state == STAND_F_RUN_L) {
-                    current_frame = current_state + mini_anim_frame-1;
-                    mini_anim_frame += 1;
-                    if (mini_anim_frame == 4) {
-                        mini_anim_frame = 0;
-                        current_state = P_STAND;
-                    }
-                }
-                else if (current_state == PUSH_R_F_STAND || current_state == PUSH_L_F_STAND ||
-                         current_state == PUSH_U_F_STAND || current_state == PUSH_D_F_STAND ||
-                         current_state == RUN_R_F_STAND || current_state == RUN_L_F_STAND ||
-                         current_state == HGH_R || current_state == HGH_L) {
-                    current_frame = current_state + mini_anim_frame-1;
-                    mini_anim_frame += 1;
-                    if (mini_anim_frame == 4) {
-                        mini_anim_frame = 0;
-                        switch (current_state) {
-                            case PUSH_R_F_STAND:
-                                current_state = PUSH_R;
-                                break;
-                            case PUSH_L_F_STAND:
-                                current_state = PUSH_L;
-                                break;
-                            case PUSH_U_F_STAND:
-                                current_state = PUSH_U;
-                                break;
-                            case PUSH_D_F_STAND:
-                                current_state = PUSH_D;
-                                break;
-                            case RUN_R_F_STAND:
-                                current_state = RUN_R;
-                                break;
-                            case RUN_L_F_STAND:
-                                current_state = RUN_L;
-                                break;
-                            case HGH_R:
-                                current_state = P_STAND;
-                                //should just stay dead
-                                break;
-                            case HGH_L:
-                                current_state = P_STAND;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-                else if (current_state == RUN_R || current_state == RUN_L ||
-                         current_state == HGS_R || current_state == HGS_L) {
-                    current_frame = current_state + mini_anim_frame-1;
-                    mini_anim_frame += 1;
-                    if (mini_anim_frame == 5) {
-                        mini_anim_frame = 0;
-                        switch (current_state) {
-                            case RUN_R:
-                                current_state = RUN_R;
-                                break;
-                            case RUN_L:
-                                current_state = RUN_L;
-                                break;
-                            case HGS_R:
-                                current_state = P_STAND;
-                                break;
-                            case HGS_L:
-                                current_state = P_STAND;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
+                current_frame = states[current_state].beg_frame
+                    + mini_anim_frame - 1;
+                mini_anim_frame += 1;
+                if (mini_anim_frame == states[current_state].maframe_lim + 1) {
+                    mini_anim_frame = 0;
+                    current_state = states[current_state].end_state;
                 }
             }
             SDL_Rect rect =  {68,22+(current_frame)*70,60,60};
@@ -257,7 +84,7 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
                     current_state = ON_GROUND;
                 }
                 else if (y > height/2 + 3 || yvel > 0) {
-                    current_state = IN_AIR;
+                    current_state = F_IN_AIR;
                 }
                 else {
                     current_state = HITTING_GROUND;
@@ -267,7 +94,7 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
                 case ON_GROUND:
                     current_frame = STAND;
                     break;
-                case IN_AIR:
+                case F_IN_AIR:
                     current_frame = F_IN_AIR + mini_anim_frame;
                     mini_anim_frame += 1;
                     if (mini_anim_frame == 4) {
@@ -286,4 +113,149 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
             return rect;
         }
     }
+}
+
+
+
+int Animation::get_next_state(int ent_type, double targetx, double targety, double xcont,
+                   double dist_to_ground, double height, double xvel,
+                   double yvel) {
+    //int current_state = this->current_state;
+    if (ent_type == Entity::PLAYER) {
+        if (dist_to_ground < height/2.0) {
+            if (yvel < -20) {
+                current_state = HG_FREE_D;
+            }
+        }
+        switch (current_state) {
+            case PUSH_R:
+                if (targetx < .1) {
+                    current_state = STAND_F_PUSH_R;
+                }
+                break;
+            case PUSH_L:
+                if (targetx > -.1) {
+                    current_state = STAND_F_PUSH_L;
+                }
+                break;
+            case PUSH_U:
+                if (targety < .1) {
+                    current_state = STAND_F_PUSH_U;
+                }
+                break;
+            case PUSH_D:
+                if (targety > -.1) {
+                    current_state = STAND_F_PUSH_D;
+                }
+                break;
+            case P_STAND:
+                if (targetx >= .1) {
+                    current_state = PUSH_R_F_STAND;
+                }
+                else if (targetx <= -.1) {
+                    current_state = PUSH_L_F_STAND;
+                }
+                else if (targety > .1) {
+                    current_state = PUSH_U_F_STAND;
+                }
+                else if (targety < -.1) {
+                    current_state = PUSH_D_F_STAND;
+                }
+                else if (dist_to_ground < height && xcont > .1) {
+                    current_state = RUN_R_F_STAND;
+                }
+                else if (dist_to_ground < height && xcont < -.1) {
+                    current_state = RUN_L_F_STAND;
+                }
+                else {
+                    current_state = P_STAND;
+                }
+                break;
+            case RUN_R:
+                if (xcont < .1) {
+                    current_state = STAND_F_RUN_R;
+                }
+                break;
+            case RUN_L:
+                if (xcont > -.1) {
+                    current_state = STAND_F_RUN_L;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    return current_state;
+}
+
+void Animation::initialize_states_list_values() {
+    states[P_STAND].beg_frame=0; states[P_STAND].maframe_lim=0;
+    states[PUSH_R].beg_frame=1; states[PUSH_R].maframe_lim=0;
+    states[PUSH_L].beg_frame=2; states[PUSH_L].maframe_lim=0;
+    states[PUSH_U].beg_frame=3; states[PUSH_U].maframe_lim=0;
+    states[PUSH_D].beg_frame=4; states[PUSH_D].maframe_lim=0;
+    states[PUSH_R_F_STAND].beg_frame=5; states[PUSH_R_F_STAND].maframe_lim=3;
+    states[STAND_F_PUSH_R].beg_frame=8; states[STAND_F_PUSH_R].maframe_lim=3;
+    states[PUSH_L_F_STAND].beg_frame=11; states[PUSH_L_F_STAND].maframe_lim=3;
+    states[STAND_F_PUSH_L].beg_frame=14; states[STAND_F_PUSH_L].maframe_lim=3;
+    states[PUSH_U_F_STAND].beg_frame=17; states[PUSH_U_F_STAND].maframe_lim=3;
+    states[STAND_F_PUSH_U].beg_frame=20; states[STAND_F_PUSH_U].maframe_lim=3;
+    states[PUSH_D_F_STAND].beg_frame=23; states[PUSH_D_F_STAND].maframe_lim=3;
+    states[STAND_F_PUSH_D].beg_frame=26; states[STAND_F_PUSH_D].maframe_lim=3;
+    states[RUN_R].beg_frame=29; states[RUN_R].maframe_lim=5;
+    states[RUN_L].beg_frame=34; states[RUN_L].maframe_lim=3;
+    states[RUN_R_F_STAND].beg_frame=38; states[RUN_R_F_STAND].maframe_lim=2;
+    states[STAND_F_RUN_R].beg_frame=40; states[STAND_F_RUN_R].maframe_lim=3;
+    states[RUN_L_F_STAND].beg_frame=43; states[RUN_L_F_STAND].maframe_lim=2;
+    states[STAND_F_RUN_L].beg_frame=45; states[STAND_F_RUN_L].maframe_lim=3;
+    states[FREE_D].beg_frame=48; states[FREE_D].maframe_lim=1;
+    states[FREE_U].beg_frame=49; states[FREE_U].maframe_lim=1;
+    states[HG_FREE_D].beg_frame=50; states[HG_FREE_D].maframe_lim=4;
+    states[FREE_D_F_STAND].beg_frame=54; states[FREE_D_F_STAND].maframe_lim=2;
+    states[STAND_F_FREE_D].beg_frame=56; states[STAND_F_FREE_D].maframe_lim=2;
+    states[H_WALL_L].beg_frame=58; states[H_WALL_L].maframe_lim=1;
+    states[H_WALL_R].beg_frame=59; states[H_WALL_R].maframe_lim=1;
+    states[H_WALL_L_F_STAND].beg_frame=60; states[H_WALL_L_F_STAND].maframe_lim=3;
+    states[STAND_F_H_WALL_L].beg_frame=63; states[STAND_F_H_WALL_L].maframe_lim=3;
+    states[H_WALL_R_F_STAND].beg_frame=66; states[H_WALL_R_F_STAND].maframe_lim=3;
+    states[STAND_F_H_WALL_R].beg_frame=69; states[STAND_F_H_WALL_R].maframe_lim=3;
+    states[SWING_L].beg_frame=72; states[SWING_L].maframe_lim=9;
+    states[SWING_R].beg_frame=81; states[SWING_R].maframe_lim=9;
+    states[HIT_FACE_F_R].beg_frame=90; states[HIT_FACE_F_R].maframe_lim=7;
+    states[HIT_FACE_F_L].beg_frame=97; states[HIT_FACE_F_L].maframe_lim=7;
+
+    states[P_STAND].end_state = P_STAND;
+    states[PUSH_R].end_state = PUSH_R;
+    states[PUSH_L].end_state = PUSH_L;
+    states[PUSH_U].end_state = PUSH_U;
+    states[PUSH_D].end_state = PUSH_D;
+    states[PUSH_R_F_STAND].end_state = PUSH_R;
+    states[STAND_F_PUSH_R].end_state = P_STAND;
+    states[PUSH_L_F_STAND].end_state = PUSH_L;
+    states[STAND_F_PUSH_L].end_state = P_STAND;
+    states[PUSH_U_F_STAND].end_state = PUSH_U;
+    states[STAND_F_PUSH_U].end_state = P_STAND;
+    states[PUSH_D_F_STAND].end_state = PUSH_D;
+    states[STAND_F_PUSH_D].end_state = P_STAND;
+    states[RUN_R].end_state = RUN_R;
+    states[RUN_L].end_state = RUN_L;
+    states[RUN_R_F_STAND].end_state = RUN_R;
+    states[STAND_F_RUN_R].end_state = P_STAND;
+    states[RUN_L_F_STAND].end_state = RUN_L;
+    states[STAND_F_RUN_L].end_state = P_STAND;
+    states[FREE_D].end_state = FREE_D;
+    states[FREE_U].end_state = FREE_U;
+    states[HG_FREE_D].end_state = P_STAND;
+    states[FREE_D_F_STAND].end_state = FREE_D;
+    states[STAND_F_FREE_D].end_state = P_STAND;
+    states[H_WALL_L].end_state = H_WALL_L;
+    states[H_WALL_R].end_state = H_WALL_R;
+    states[H_WALL_L_F_STAND].end_state = H_WALL_L;
+    states[STAND_F_H_WALL_L].end_state = P_STAND;
+    states[H_WALL_R_F_STAND].end_state = H_WALL_R;
+    states[STAND_F_H_WALL_R].end_state = P_STAND;
+    states[SWING_L].end_state = P_STAND;
+    states[SWING_R].end_state = P_STAND;
+    states[HIT_FACE_F_R].end_state = P_STAND;
+    states[HIT_FACE_F_L].end_state = P_STAND;
 }

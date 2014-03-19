@@ -8,6 +8,12 @@
 #include "Level.h"
 #include "ActionState.h"
 
+struct states_struct {
+    int beg_frame;
+    int maframe_lim;
+    int end_state;
+};
+
 class Animation {
  public:
     int anim_frame_rate;
@@ -15,17 +21,19 @@ class Animation {
     int Oscillate;
     int last_frame_time;
     int current_frame;
-    int current_state;
     int mini_anim_frame;
-    enum states {ON_GROUND,IN_AIR,HITTING_GROUND};
-    enum player_states {P_STAND=0, PUSH_R=1, PUSH_L=2, PUSH_U=3, PUSH_D=4,
-                        PUSH_R_F_STAND=5, STAND_F_PUSH_R=8, PUSH_L_F_STAND=11,
-                        STAND_F_PUSH_L=14, PUSH_U_F_STAND=17, STAND_F_PUSH_U=20,
-                        PUSH_D_F_STAND=23, STAND_F_PUSH_D=26, RUN_R=29, RUN_L=33,
-                        RUN_R_F_STAND=37, STAND_F_RUN_R=40, RUN_L_F_STAND=43,
-                        STAND_F_RUN_L=46, IN_AIR_L=49, IN_AIR_R=50, HGH_R=51,
-                        HGH_L=54, HGS_R=57, HGS_L=61, WALL_HUG_L=65,
-                        WALL_HUG_R=66};
+    int current_state;
+    enum other_states {ON_GROUND,IN_AIR,HITTING_GROUND};
+    enum player_states {P_STAND, PUSH_R, PUSH_L, PUSH_U, PUSH_D,
+                        PUSH_R_F_STAND, STAND_F_PUSH_R, PUSH_L_F_STAND,
+                        STAND_F_PUSH_L, PUSH_U_F_STAND, STAND_F_PUSH_U,
+                        PUSH_D_F_STAND, STAND_F_PUSH_D, RUN_R, RUN_L,
+                        RUN_R_F_STAND, STAND_F_RUN_R, RUN_L_F_STAND,
+                        STAND_F_RUN_L, FREE_D, FREE_U, HG_FREE_D,
+                        FREE_D_F_STAND, STAND_F_FREE_D, H_WALL_L,
+                        H_WALL_R, H_WALL_L_F_STAND, STAND_F_H_WALL_L,
+                        H_WALL_R_F_STAND, STAND_F_H_WALL_R, SWING_L,
+                        SWING_R,HIT_FACE_F_R,HIT_FACE_F_L};
 
     enum frames {STAND = 0, F_IN_AIR = 1, HIT_GROUND = 5, GET_UP =8};
 
@@ -33,4 +41,10 @@ class Animation {
     SDL_Texture* Animation_Load_Texture(const char* File, SDL_Renderer* renderer);
     SDL_Rect Get_Frame_to_Render(double x, double y, double xvel, double yvel,
                                  double height, int ent_type);
+ private:
+    int get_next_state(int ent_type, double targetx, double targety, double xcont,
+                       double dist_to_ground, double height, double xvel,
+                       double yvel);
+    states_struct states[HIT_FACE_F_L+1];
+    void initialize_states_list_values();
 };

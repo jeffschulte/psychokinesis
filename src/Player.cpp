@@ -17,7 +17,7 @@ void Player::Create(SDL_Renderer* renderer, double xp, double yp) {
     height = 5;           // m
     debugname = "player";
     if((texture =
-        LoadTexture("art_assets/stickman2.png", renderer)) == NULL) {
+        LoadTexture("art_assets/stickman3sword.png", renderer)) == NULL) {
         Logger::log("Problem loading texture in Entity_Create");
     }
 }
