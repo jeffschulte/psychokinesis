@@ -6,7 +6,6 @@
 #include "Entity.h"
 #include "Hud.h"
 #include "Logger.h"
-#include "Player.h"
 #include "Level.h"
 #include "Camera.h"
 #include "ActionState.h"
@@ -27,7 +26,6 @@ class Application {
 
     int screenw, screenh;
 
-    Player player;
     Level level;
     Camera camera;
     ActionState astate;

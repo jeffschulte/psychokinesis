@@ -15,16 +15,15 @@ void Application::OnRender() {
 
     for (int i=0;i<Entity::entities.size();i++) {
         Entity::entities[i]->OnRender(renderer, &camera);
+        if (Entity::entities[i]->ent_type == Entity::PLAYER) {
+            mainhud.OnRender(renderer, &camera, Entity::entities[i],
+                             astate.targetx, astate.targety);
+        }
     }
-
     // Render the player
-
-    player.OnRender(renderer, &camera);
 
 
     // Targeting line for push direction
-
-    mainhud.OnRender(renderer, &camera, player, astate.targetx, astate.targety);
 
     SDL_RenderPresent(renderer);
 }

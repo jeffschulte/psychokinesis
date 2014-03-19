@@ -6,8 +6,10 @@
 #include "Camera.h"
 #include "Animation.h"
 #include "Logger.h"
+#include "Motion_Calc.h"
 
 class Animation;
+class Motion_Calc;
 
 class Entity {
 
@@ -19,12 +21,12 @@ class Entity {
                           EntType type,double x, double y);
 
 
-    double x, y;            // Position of Entity (CoM)
-    double xvel, yvel;      // Velocity
+    /* double x, y;            // Position of Entity (CoM) */
+    /* double xvel, yvel;      // Velocity */
 
-    double width, height;      // Size of Entity
+    /* double width, height;      // Size of Entity */
+    //double mass = 150;
     EntType ent_type;
-    double mass;
 
     std::string debugname;
 
@@ -36,6 +38,7 @@ class Entity {
     void OnRender(SDL_Renderer* renderer, Camera* camera);
 
     bool collideline(double x, double y, double targetx, double targety);
+    Motion_Calc* motion_object;
  private:
     Animation* animation_object;
 };

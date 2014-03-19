@@ -70,8 +70,7 @@ bool Application::OnInit() {
     //below variables = renderer, entype, xpos, ypos
     Entity::Create(renderer, Entity::LITTLE_MAN, 21, 20);
     Entity::Create(renderer, Entity::BIG_MAN, 16, 16);
-    Entity::Create(renderer, Entity::BIG_MAN, 4, 20);
-    player.Create(renderer,9,20);
+    Entity::Create(renderer, Entity::PLAYER, 4, 20);
 
     if(level.LoadAssets(renderer, "art_assets/sky2.png",
                         "art_assets/grass.png") == NULL) {
