@@ -70,7 +70,19 @@ bool Application::OnInit() {
     //below variables = renderer, entype, xpos, ypos
     Entity::Create(renderer, Entity::LITTLE_MAN, 21, 20);
     Entity::Create(renderer, Entity::BIG_MAN, 16, 16);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 9, 20);
     Entity::Create(renderer, Entity::PLAYER, 4, 20);
+
+    //After all Entities are loaded:
+    bool there_is_a_player = false;
+    for (int i =0; i< Entity::entities.size(); i++){
+        if (Entity::entities[i]->ent_type == Entity::PLAYER) {
+            there_is_a_player = true;
+        }
+    }
+    if (!there_is_a_player) {
+        Logger::log("There is not player initialized!!!\n");
+    }
 
     if(level.LoadAssets(renderer, "art_assets/sky2.png",
                         "art_assets/grass.png") == NULL) {
@@ -79,6 +91,5 @@ bool Application::OnInit() {
 
 
     oldtime = SDL_GetTicks();
-
     return true;
 }

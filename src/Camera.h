@@ -30,6 +30,7 @@ class Camera {
                            double x2,
                            double y2);
 
+    static Camera* camera;
  private:
     int hscreenw, hscreenh;
 };

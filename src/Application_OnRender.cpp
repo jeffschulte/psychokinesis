@@ -10,15 +10,18 @@ void Application::OnRender() {
     SDL_RenderClear(renderer);
 
     // Draw some rectangles for the outside level
-
     level.OnRender(renderer, &camera);
-
     for (int i=0;i<Entity::entities.size();i++) {
         Entity::entities[i]->OnRender(renderer, &camera);
-        if (Entity::entities[i]->ent_type == Entity::PLAYER) {
-            mainhud.OnRender(renderer, &camera, Entity::entities[i],
+        printf("\nhere\n");
+        //        if (Entity::entities[i]->this_a_player) {
+            // printf("x = %g and y = %g",Entity::entities[i]->motion_object->x,
+            //                            Entity::entities[i]->motion_object->y);
+            mainhud.OnRender(renderer, &camera,
+                             Entity::entities[i]->motion_object->x,
+                             Entity::entities[i]->motion_object->y,
                              astate.targetx, astate.targety);
-        }
+            //}
     }
     // Render the player
 

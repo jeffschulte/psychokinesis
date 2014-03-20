@@ -4,6 +4,7 @@
 #include <string>
 #include <SDL_image.h>
 #include "Logger.h"
+#include "Motion_Calc.h"
 #include "Entity.h"
 #include "Level.h"
 #include "ActionState.h"

@@ -49,7 +49,6 @@ int Application::OnExecute() {
         }
     }
     OnCleanup();
-
     return 0;
 }
 

@@ -4,9 +4,10 @@
 #include <string>
 #include <vector>
 #include "Camera.h"
+#include "Motion_Calc.h"
 #include "Animation.h"
 #include "Logger.h"
-#include "Motion_Calc.h"
+
 
 class Animation;
 class Motion_Calc;
@@ -27,6 +28,7 @@ class Entity {
     /* double width, height;      // Size of Entity */
     //double mass = 150;
     EntType ent_type;
+    bool this_a_player;
 
     std::string debugname;
 
@@ -39,6 +41,7 @@ class Entity {
 
     bool collideline(double x, double y, double targetx, double targety);
     Motion_Calc* motion_object;
- private:
+    void Calculate_Motion(int dt);
+private:
     Animation* animation_object;
 };

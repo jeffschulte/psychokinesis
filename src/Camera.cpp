@@ -1,13 +1,13 @@
 #include "Camera.h"
 
-
+Camera* Camera::camera;
 Camera::Camera() {
 
     /// \todo Put these parameters into the Level class (?)
-
     x = 12.0;
     y = 8.0;
     zoom = 32.0;
+    Camera::camera = this;
 }
 
 

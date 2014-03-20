@@ -5,9 +5,9 @@ std::vector<Entity*> Entity::entities;
 
 Entity::Entity() {
     texture = NULL;
-
     animation_object = new Animation();
     motion_object = new Motion_Calc();
+    this_a_player = false;
 }
 
 SDL_Texture* Entity::LoadTexture(const char* File, SDL_Renderer* renderer) {
@@ -20,9 +20,6 @@ SDL_Texture* Entity::LoadTexture(const char* File, SDL_Renderer* renderer) {
 void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
     double x = motion_object->x;
     double y = motion_object->y;
-    double xvel = motion_object->xvel;
-    double yvel = motion_object->yvel;
-    double mass = motion_object->mass;
     double width = motion_object->width;
     double height = motion_object->height;
     Rect rect5 = {x - width / 2, y + height / 2, width, height};
@@ -45,6 +42,12 @@ void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
 
 // Method to check if the rectangle collides with a given line segemnt
 
+void Entity::Calculate_Motion(int dt) {
+    motion_object->Calc_Motion(this, int(ent_type), dt, this_a_player);
+    return;
+}
+
+
 bool Entity::collideline(double xp, double yp, double targetx, double targety) {
 
     double m = targety / targetx;
@@ -52,9 +55,6 @@ bool Entity::collideline(double xp, double yp, double targetx, double targety) {
 
     double x = motion_object->x;
     double y = motion_object->y;
-    double xvel = motion_object->xvel;
-    double yvel = motion_object->yvel;
-    double mass = motion_object->mass;
     double width = motion_object->width;
     double height = motion_object->height;
     // Equation for the line is given in y = mx + b form

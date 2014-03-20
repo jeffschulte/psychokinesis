@@ -11,5 +11,6 @@ class Hud {
     public:
 
     void OnRender(SDL_Renderer* renderer, Camera* camera,
-                  Entity* player, double targetx, double targety);
+                  double player_x, double player_y,
+                  double targetx, double targety);
 };
