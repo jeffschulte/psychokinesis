@@ -13,7 +13,6 @@ void Application::OnRender() {
     level.OnRender(renderer, &camera);
     for (int i=0;i<Entity::entities.size();i++) {
         Entity::entities[i]->OnRender(renderer, &camera);
-        printf("\nhere\n");
         if (Entity::entities[i]->this_a_player) {
             mainhud.OnRender(renderer, &camera,
                              Entity::entities[i]->motion_object->x,
