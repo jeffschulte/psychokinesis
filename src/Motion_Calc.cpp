@@ -38,14 +38,14 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
         }
     }
 
-    if (!this_a_player) {
-        if (this_ent->collideline(player_x,player_y,targetx,targety)) {
-            xvel += 2 * 9.8 * targetx * dt / 1000.0;
-            yvel += 2 * 9.8 * targety * dt / 1000.0;
-        }
-    }
+    // if (!this_a_player) {
+    //     if (this_ent->collideline(player_x,player_y,targetx,targety)) {
+    //         xvel += 2 * 9.8 * targetx * dt / 1000.0;
+    //         yvel += 2 * 9.8 * targety * dt / 1000.0;
+    //     }
+    // }
 
-
+    //if(false) {
     if(closest->DistToPoint(x, y) < height / 2) {
         // We are airborne at this point, and we only care about gravity
         // Keep it a certain radial distace from the surface and set
@@ -53,7 +53,7 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
 
         // If we are horiz or vert, then we can apply in the usual fashion
 
-        if(fabs(closest->y1 - closest->y2) < .001) {
+        if(fabs(closest->y1 - closest->y2) < DBL_EPSILON) {
             double normal = -yforce;
             yvel = 0;
 
@@ -66,8 +66,10 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
             else {
                 y = closest->y1 + height / 2;
 
-                if(xvel < 15 && xvel > -15) {
-                    xforce += 9.8 * mass * ActionState::p_astate->xcont;
+                if(this_a_player) {
+                    if(xvel < 15 && xvel > -15) {
+                        xforce += 98 * mass * ActionState::p_astate->xcont;
+                    }
                 }
 
                 if(yforce < 0) {
@@ -76,11 +78,11 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
             }
 
             xforce -= ((0.0 < xvel) - (xvel < 0.0)) *
-                (fabs(normal) * 1.0);
+                (fabs(normal) * 10.0);
 
         }
 
-        else if(fabs(closest->x1 - closest->x2) < .0001) {
+        else if(fabs(closest->x1 - closest->x2) < DBL_EPSILON) {
 
             double normal = -xforce;
             xvel  = 0;
@@ -182,27 +184,9 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
     y += yvel * dt / 1000.0;
     x += xvel * dt / 1000.0;
 
-
-    //Collisions with boundaries
-    if(y > 25 - height / 2) {
-        y = 25 - height / 2;
-        yvel *= -0.8;
-        xvel -= 0.01 * xvel;
-    }
-    if(x < width / 2) {
-        x = width / 2;
-        xvel *= -.8;
-    }
-    if(x > 25 - width / 2) {
-        x = 25 - width / 2;
-        xvel *= -.8;
-    }
-    if(y < height / 2) {
-        y = height / 2;
-        yvel *= -.8;
-    }
-
-
+    // if(this_a_player) {
+    //     printf("%d: %g, %g; %g, %g\n", dt, xvel, yvel, x, y);
+    // }
 
     return;
 }

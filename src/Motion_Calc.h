@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cfloat>
 #include "Entity.h"
 class Entity;
 
