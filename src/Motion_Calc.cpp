@@ -17,13 +17,10 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
 
     // TODO: Fix the below to take into account all lines somehow
 
-    // Apply gravity
-    //printf("i = %d and xforce = %g and yforce= %g mass = %g\n",1,Entity::entities[1]->motion_object->xforce,
-    //       Entity::entities[1]->motion_object->yforce,mass);
+    xforce = 0;
+    yforce = 0;
 
     yforce -= 9.8 * mass;
-
-    // Apply pushing force
 
     double player_x=-10;
     double player_y=-10;
@@ -32,25 +29,30 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
         player_y = y;
         Camera::camera->x = player_x;
         Camera::camera->zoom = player_y > 22 ? 10 : -fabs(y) + 32;
+    }
+    else {
+        for (int i =0; i< Entity::entities.size(); i++){
+            if (Entity::entities[i]->ent_type == Entity::PLAYER) {
+                player_x = Entity::entities[i]->motion_object->x;
+                player_y = Entity::entities[i]->motion_object->y;
+            }
+        }
+    }
+
+    if (this_a_player) {
         if(ActionState::p_astate->pushing) {
             xforce -= targetx * 2 * 9.8 * mass;
             yforce -= targety * 2 * 9.8 * mass;
         }
     }
-
-    if (!this_a_player) {
+    else {
         if (this_ent->collideline(player_x,player_y,targetx,targety)) {
-            xvel += 2 * 9.8 * targetx * dt / 1000.0;
-            yvel += 2 * 9.8 * targety * dt / 1000.0;
+            xforce += targetx * 2 * 9.8 * mass;
+            yforce += targety * 2 * 9.8 * mass;
         }
     }
 
-
     if(closest->DistToPoint(x, y) < height / 2) {
-        // We are airborne at this point, and we only care about gravity
-        // Keep it a certain radial distace from the surface and set
-        // that component of the velocity = 0
-
         // If we are horiz or vert, then we can apply in the usual fashion
 
         if(fabs(closest->y1 - closest->y2) < .001) {
@@ -79,7 +81,6 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
                 (fabs(normal) * 1.0);
 
         }
-
         else if(fabs(closest->x1 - closest->x2) < .0001) {
 
             double normal = -xforce;
@@ -169,6 +170,84 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
         }
     }
 
+    //Starting collisions
+    //printf("net\n");
+
+    //as written, this will only have one of the two colliders bounce off,
+    //need to bounce both off
+    if(false) {
+    for (int i=0;i<Entity::entities.size();i++) {
+        if (!(this_ent == Entity::entities[i])) {
+            double x_other = Entity::entities[i]->motion_object->x;
+            double y_other = Entity::entities[i]->motion_object->y;
+            double width_other = Entity::entities[i]->motion_object->width;
+            double height_other = Entity::entities[i]->motion_object->height;
+            if (abs(x - x_other) < width + width_other
+                && abs(y-y_other) < height + height_other) {
+                printf("collision!  Between %d and %d at x,y %g,%g and x,y %g,%g\n",
+                       ent_type, Entity::entities[i]->ent_type,x,y,x_other,y_other);
+                double xa = x;
+                double xb = x_other;
+                double ya = y;
+                double yb = y_other;
+                double mb = Entity::entities[i]->motion_object->mass;
+                double Ia = 2*mass*(width + height)/2/5;
+                double Ib = 2*mb*(width_other + height_other)/2/5;
+                if (x - x_other > 0 && x - x_other < width + width_other) {
+                    x += 1.1*((width + width_other)/2.0 - (x - x_other));
+                    xa = -width/2.0;
+                    xb = width_other/2.0;
+                }
+                else if (x - x_other < 0 && x_other - x < width + width_other) {
+                    x -= 1.1*((width + width_other)/2.0 - (x_other - x));
+                    xa = width/2.0;
+                    xb = -width_other/2.0;
+                }
+                if (y - y_other > 0 && y - y_other < height + height_other){
+                    y += 1.1*((height + height_other)/2.0 - (y - y_other));
+                    ya = -height/2.0;
+                    yb = height_other/2.0;
+                    }
+                else if (y - y_other < 0 && y_other - y < height + height_other){
+                    y -= 1.1*((height + height_other)/2.0 - (y_other - y));
+                    ya = height/2.0;
+                    ya = -height_other/2.0;
+                }
+                double e = .1;
+                double k = 1/(mass*mass)+ 2/(mass*mb) +1/(mb*mb)
+                                       - xa*xa/(mass*Ia) - xb*xb/(mass*Ib)
+                                       - ya*ya/(mass*Ia) - ya*ya/(mb*Ia)
+                                       - xa*xa/(mb*Ia) - xb*xb/(mb*Ib)
+                                       - yb*yb/(mass*Ib) - yb*yb/(mb*Ib)
+                                       + ya*ya*xb*xb/(Ia*Ib) + xa*xa*yb*yb/(Ia*Ib)
+                                       - 2*xa*ya*xb*yb/(Ia*Ib);
+                double xvelb = Entity::entities[i]->motion_object->xvel;
+                double yvelb = Entity::entities[i]->motion_object->yvel;
+                double Jx = (e+1)/k * (xvel - xvelb)*
+                                       ( 1/mass - xa*xa/Ia + 1/mb - xb*xb/Ib)
+                                       - (e+1)/k * (yvel - yvelb)*
+                                       (xa*ya / Ia + xb*yb / Ib);
+
+                double Jy = - (e+1)/k * (xvel - xvelb)*
+                    (xa*ya / Ia + xb*yb / Ib)
+                    + (e+1)/k  * (yvel - yvelb)*
+                    ( 1/mass - ya*ya/Ia + 1/mb - yb*yb/Ib);
+
+                xvel = xvel - .01*Jx/mass;
+                yvel = yvel - .01*Jy/mass;
+                xvelb = xvelb - Jx/mb;
+                yvelb = yvelb - Jy/mb;
+                //the following lines will give the angular momentum.
+                //Should try to incorporate this too, otherwise all
+                //special moment of inertia stuff above is useless
+                // waf.x = wai.x - (Jx*ra.y - Jy*ra.x) /Ia;
+                // waf.y = wai.y - (Jx*ra.y - Jy*ra.x) /Ia;
+                // wbf.x = wbi.x - (Jx*rb.y - Jy*rb.x) /Ib;
+                // wbf.y = wbi.y - (Jx*rb.y - Jy*rb.x) /Ib;
+            }
+        }
+    }
+    }
     //Final velocity and position adjustments
     xvel += xforce / mass * dt / 1000.0;
     yvel += yforce / mass * dt / 1000.0;
@@ -182,27 +261,46 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
     y += yvel * dt / 1000.0;
     x += xvel * dt / 1000.0;
 
-
-    //Collisions with boundaries
-    if(y > 25 - height / 2) {
-        y = 25 - height / 2;
-        yvel *= -0.8;
-        xvel -= 0.01 * xvel;
-    }
-    if(x < width / 2) {
-        x = width / 2;
-        xvel *= -.8;
-    }
-    if(x > 25 - width / 2) {
-        x = 25 - width / 2;
-        xvel *= -.8;
-    }
-    if(y < height / 2) {
-        y = height / 2;
-        yvel *= -.8;
-    }
-
-
-
     return;
 }
+
+
+
+   /**
+       This function calulates the velocities after a 2D collision vaf, vbf,
+       waf and wbf from information about the colliding bodies
+       @param double e coefficient of restitution which depends on the nature
+       of the two colliding materials
+       @param double ma total mass of body a
+       @param double mb total mass of body b
+       @param double Ia inertia for body a.
+       @param double Ib inertia for body b.
+       @param vector ra position of collision point relative to centre of mass
+       of body a in absolute coordinates (if this is
+       known in local body coordinates it must be converted before this is called).
+       @param vector rb position of collision point relative to centre of mass
+       of body b in absolute coordinates (if this is
+       known in local body coordinates it must be converted before this is called).
+       @param vector n normal to collision point, the line along which the
+       impulse acts.
+       @param vector vai initial velocity of centre of mass on object a
+       @param vector vbi initial velocity of centre of mass on object b
+       @param vector wai initial angular velocity of object a
+       @param vector wbi initial angular velocity of object b
+       @param vector vaf final velocity of centre of mass on object a
+       @param vector vbf final velocity of centre of mass on object a
+       @param vector waf final angular velocity of object a
+       @param vector wbf final angular velocity of object b
+    */
+    //     double k=1/(ma*ma)+ 2/(ma*mb) +1/(mb*mb) - ra.x*ra.x/(ma*Ia) - rb.x*rb.x/(ma*Ib)  - ra.y*ra.y/(ma*Ia)
+    //         - ra.y*ra.y/(mb*Ia) - ra.x*ra.x/(mb*Ia) - rb.x*rb.x/(mb*Ib) - rb.y*rb.y/(ma*Ib)
+    //         - rb.y*rb.y/(mb*Ib) + ra.y*ra.y*rb.x*rb.x/(Ia*Ib) + ra.x*ra.x*rb.y*rb.y/(Ia*Ib) - 2*ra.x*ra.y*rb.x*rb.y/(Ia*Ib);
+    //     Vaf.x = Vai.x - Jx/Ma;
+    //     Vaf.y = Vai.y - Jy/Ma;
+    //     Vbf.x = Vbi.x - Jx/Mb;
+    //     Vbf.y = Vbi.y - Jy/Mb;
+    //     waf.x = wai.x - (Jx*ra.y - Jy*ra.x) /Ia;
+    //     waf.y = wai.y - (Jx*ra.y - Jy*ra.x) /Ia;
+    //     wbf.x = wbi.x - (Jx*rb.y - Jy*rb.x) /Ib;
+    //     wbf.y = wbi.y - (Jx*rb.y - Jy*rb.x) /Ib;
+    // }
