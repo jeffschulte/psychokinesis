@@ -34,18 +34,18 @@ class Animation {
                         FREE_D_F_STAND, STAND_F_FREE_D, H_WALL_L,
                         H_WALL_R, H_WALL_L_F_STAND, STAND_F_H_WALL_L,
                         H_WALL_R_F_STAND, STAND_F_H_WALL_R, SWING_L,
-                        SWING_R,HIT_FACE_F_R,HIT_FACE_F_L};
+                        SWING_R,HIT_FACE_F_R,HIT_FACE_F_L,DEAD};
 
     enum frames {STAND = 0, F_IN_AIR = 1, HIT_GROUND = 5, GET_UP =8};
 
     Animation();
     SDL_Texture* Animation_Load_Texture(const char* File, SDL_Renderer* renderer);
     SDL_Rect Get_Frame_to_Render(double x, double y, double xvel, double yvel,
-                                 double height, int ent_type);
+                                 double height, int ent_type, bool dead);
  private:
     int get_next_state(int ent_type, double targetx, double targety, double xcont,
                        double dist_to_ground, double height, double xvel,
-                       double yvel);
+                       double yvel,bool dead);
     states_struct states[HIT_FACE_F_L+1];
     void initialize_states_list_values();
 };

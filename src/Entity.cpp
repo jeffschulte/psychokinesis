@@ -8,6 +8,8 @@ Entity::Entity() {
     animation_object = new Animation();
     motion_object = new Motion_Calc();
     this_a_player = false;
+    hit_pts = 0;
+    dead = false;
 }
 
 SDL_Texture* Entity::LoadTexture(const char* File, SDL_Renderer* renderer) {
@@ -30,7 +32,7 @@ void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
                                                   motion_object->xvel,
                                                   motion_object->yvel,
                                                   motion_object->height,
-                                                  int(ent_type));
+                                                  int(ent_type),dead);
         camera->RenderCopy(renderer, texture, &rect, &rect5);
     }
     else {

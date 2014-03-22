@@ -31,8 +31,8 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
             double height_other = Entity::entities[i]->motion_object->height;
             if (fabs(x - x_other) < width/2.0 + width_other/2.0
                 && fabs(y - y_other) < height/2.0 + height_other/2.0) {
-                printf("collision!  Between %d and %d at x,y %g,%g and x,y %g,%g\n",
-                       ent_type, Entity::entities[i]->ent_type,x,y,x_other,y_other);
+                // printf("collision!  Between %d and %d at x,y %g,%g and x,y %g,%g\n",
+                //        ent_type, Entity::entities[i]->ent_type,x,y,x_other,y_other);
                 //double xa = x;
                 //double xb = x_other;
                 //double ya = y;
@@ -101,6 +101,26 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
 
                 double dvx2 = -2*(vxba + a*vyba)/((1+a*a)*(1+mba));
                 double R = 1.0;
+
+                //collision affecting hit_pts
+                //may want to change this is make glancing blows less effective,
+                //maybe something like the energy lost goes into hurting entity
+                Entity::entities[i]->hit_pts -= .1*sqrt(xvel*xvel + yvel*yvel);
+                this_ent->hit_pts -= .001*mb*sqrt(xvel_other*xvel_other
+                                             + yvel_other*yvel_other);
+                if (Entity::entities[i]->hit_pts < 0.0) {
+                    Entity::entities[i]->dead = true;
+                }
+                if (Entity::entities[i]->dead) {
+                    printf("dead\n");
+                }
+                else {
+                    printf("not dead\n");
+                    }
+                if (this_ent->hit_pts < 0.0) {
+                    this_ent->dead = true;
+                }
+                //adjust velocities due to collision
                 xvel_other = xvel_other + dvx2;
                 yvel_other = yvel_other + a*dvx2;
                 xvel = xvel - mba*dvx2;

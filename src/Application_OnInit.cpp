@@ -83,8 +83,8 @@ bool Application::OnInit() {
     Entity::Create(renderer, Entity::LITTLE_MAN, 16, 10);
     Entity::Create(renderer, Entity::LITTLE_MAN, 11, 10);
     Entity::Create(renderer, Entity::LITTLE_MAN, 7, 10);
-    
-//    Entity::Create(renderer, Entity::LITTLE_MAN, 9, 20);
+
+    //Entity::Create(renderer, Entity::LITTLE_MAN, 9, 20);
     Entity::Create(renderer, Entity::PLAYER, 4, 20);
 
     //After all Entities are loaded:

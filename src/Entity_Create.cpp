@@ -12,6 +12,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             ent->motion_object->width = 2;
             ent->motion_object->height = 2;
             ent->motion_object->mass = 100;
+            ent->hit_pts = 100;
             ent->debugname = "big_man";
             if((ent->texture =
                 ent->LoadTexture("art_assets/little-man.bmp", renderer)) == NULL) {
@@ -24,6 +25,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             ent->motion_object->width = 1.5;
             ent->motion_object->height = 1.5;
             ent->motion_object->mass = 90;
+            ent->hit_pts = 100;
             ent->debugname = "little_man";
             if((ent->texture =
                 ent->LoadTexture("art_assets/little-man.bmp", renderer)) == NULL) {
@@ -36,6 +38,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             ent->motion_object->width = 1.5;
             ent->motion_object->height = 1.5;
             ent->motion_object->mass = 90;
+            ent->hit_pts = 100;
             ent->debugname = "player";
             ent->this_a_player = true;
             if((ent->texture =

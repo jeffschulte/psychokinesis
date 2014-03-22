@@ -29,6 +29,8 @@ class Entity {
     //double mass = 150;
     EntType ent_type;
     bool this_a_player;
+    double hit_pts;
+    bool dead;
 
     std::string debugname;
 
