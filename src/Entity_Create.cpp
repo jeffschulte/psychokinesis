@@ -33,8 +33,8 @@ Entity* Entity::Create(SDL_Renderer* renderer,
         case PLAYER:
             ent->motion_object->x = x;
             ent->motion_object->y = y;
-            ent->motion_object->width = 5;
-            ent->motion_object->height = 5;
+            ent->motion_object->width = 1.5;
+            ent->motion_object->height = 1.5;
             ent->motion_object->mass = 90;
             ent->debugname = "player";
             ent->this_a_player = true;

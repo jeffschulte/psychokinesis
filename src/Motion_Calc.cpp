@@ -68,7 +68,6 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
             }
             else {
                 y = closest->y1 + height / 2;
-
                 if(this_a_player) {
                     if (xvel < -15) {
                         if (ActionState::p_astate->xcont > 0) {
@@ -88,10 +87,13 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
                     yforce = 0;
                 }
             }
-
-            //            xforce -= ((0.0 < xvel) - (xvel < 0.0)) *
-            //  (fabs(normal) * 10.0);
-
+            //friction
+            double friction_force  = ((0.0 > xvel) - (xvel > 0.0))
+                *fabs(normal)*10.0;
+            if (fabs(friction_force) > fabs(xvel)*mass/dt*1000.0) {
+                friction_force = -xvel*mass/dt*1000.0; //should set vel to zero
+            }
+            xforce += friction_force;
         }
 
         else if(fabs(closest->x1 - closest->x2) < DBL_EPSILON) {
@@ -113,12 +115,14 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
                 }
             }
 
-            yforce -= ((0.0 < yvel) - (yvel < 0.0)) *
-                (fabs(normal) * 1.0);
+            double friction_force  = ((0.0 > yvel) - (yvel > 0.0))
+                *fabs(normal)*10.0;
+            if (fabs(friction_force) > fabs(yvel)*mass/dt*1000.0) {
+                friction_force = -yvel*mass/dt*1000.0; //should set vel to zero
+            }
+            xforce += friction_force;
         }
-
         else {
-
             // Rotate coordinate system so line is horizontal
             double lineangle = atan2(closest->y2 - closest->y1,
                                      closest->x2 - closest->x1);
@@ -150,18 +154,32 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
             }
             else {
                 yrot = y1rot + height / 2;
-
-                if(xvrot < 15 && xvrot > -15) {
-                    xforcerot += 98 * mass * ActionState::p_astate->xcont;
+                if(this_a_player) {
+                     if (xvrot < -15) {
+                         if (ActionState::p_astate->xcont > 0) {
+                            xforcerot += 2.0*98 * mass * ActionState::p_astate->xcont;
+                        }
+                    }
+                    else if (xvrot > 15) {
+                        if (ActionState::p_astate->xcont < 0) {
+                            xforcerot += 2.0*98 * mass * ActionState::p_astate->xcont;
+                        }
+                    }
+                    else {
+                        xforcerot += 2.0*98 * mass * ActionState::p_astate->xcont;
+                    }
                 }
-
                 if(yforcerot < 0) {
                     yforcerot = 0;
                 }
             }
 
-            xforcerot -= ((0.0 < xvrot) - (xvrot < 0.0)) *
-                (fabs(normal) * 1.0);
+            double friction_force  = ((0.0 > xvrot) - (xvrot > 0.0))
+                *fabs(normal)*10.0;
+            if (fabs(friction_force) > fabs(xvrot)*mass/dt*1000.0) {
+                friction_force = -xvrot*mass/dt*1000.0; //should set vel to zero
+            }
+            xforcerot += friction_force;
 
             if(fabs(xvrot) < dt / 1000.0) {
                 xvrot = 0.0;
@@ -181,7 +199,6 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
             yforce = xforcerot * sin(lineangle) + yforcerot * cos(lineangle);
         }
     }
-
     //Starting collisions
     //printf("net\n");
 
@@ -260,8 +277,7 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
         }
     }
     }
-
-  //Final velocity and position adjustments
+    //Final velocity and position adjustments
     xvel += xforce / mass * dt / 1000.0;
     yvel += yforce / mass * dt / 1000.0;
 
