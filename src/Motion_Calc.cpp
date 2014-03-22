@@ -42,128 +42,77 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
                 double mb = Entity::entities[i]->motion_object->mass;
                 //double Ia = 2*mass*(width + height)/2/5;
                 //double Ib = 2*mb*(width_other + height_other)/2/5;
-                if (fabs(x - x_other) < (width + width_other)/2.0
-                    && y - y_other > 0.0
-                    && y - y_other < (height + height_other)/2.0
-                    && y - y_other > .2*(height + height_other)/2.0) {
-                    y += ((height + height_other)/2.0 - (y - y_other));
-                    ya = -height/2.0;
-                    yb = height_other/2.0;
+                double ratio_height_width = fabs(y-y_other)/fabs(x-x_other);
+                double dx = 0;
+                double dy = 0;
+                if ( (width + width_other)/2.0 - fabs(x - x_other) //width overlaps less
+                     < (height + height_other)/2.0 - fabs(y - y_other)) {
+                    dx = (width + width_other)/2.0 - fabs(x - x_other);
+                    dy = ratio_height_width*dx;
                 }
-                else if (x - x_other > 0 && x - x_other < (width + width_other)/2.0) {
-                    x += 1.1*((width + width_other)/2.0 - (x - x_other));
-                    xa = -width/2.0;
-                    xb = width_other/2.0;
+                else {
+                    dy = (height + height)/2.0 - fabs(y - y_other);
+                    dx = dy/ratio_height_width;
                 }
-                else if (x - x_other < 0 && x_other - x < (width + width_other)/2.0) {
-                    x -= 1.1*((width + width_other)/2.0 - (x_other - x));
-                    xa = width/2.0;
-                    xb = -width_other/2.0;
+                if (x - x_other > 0.0) {
+                    x += dx/1.99;
+                    x_other -= dx/1.99;
+                }
+                else {
+                    x -= dx;
+                    x_other += dx/1.99;
+                }
+                if (y - y_other > 0.0) {
+                    y += dy;
+                }
+                else {
+                    y_other += dy;
                 }
                 double rb;
                 double ra;
-                if (width_other <= height_other) {
-                    rb = width_other;
-                }
-                else {
-                    rb = height_other;
-                }
-                if (width <= height) {
-                    rb = width;
-                }
-                else {
-                    rb = height;
-                }
-                double xvel_other = Entity::entities[i]->motion_object->xvel;
-                double yvel_other = Entity::entities[i]->motion_object->yvel;
-                double pi2 = 2*3.141592653589793;
-                double error = 0;
-                double rab = ra + rb;
-                double mba = mb/mass;
-                double xba = xb - xa;
-                double yba = yb - ya;
-                double vxba = xvel_other - xvel;
-                double vyba = yvel_other - yvel;
-
-                double vx_cm = (mass*xvel - mb*xvel_other)/(mass+mb);
-                double vy_cm = (mass*yvel - mb*yvel_other)/(mass+mb);
-                //following will leave velocities as they are if not approaching
-                double gammav = atan2(-vyba,-vxba);
-
-                //************** look into doing the alpha code as well
-                double a = tan(gammav);
-
-                double dvx2 = -2*(vxba + a*vyba)/((1+a*a)*(1+mba));
-                double R = 1.5;
-                //xvel_other = xvel_other + dvx2;
-                //yvel_other = yvel_other + a*dvx2;
-                xvel = xvel - mba*dvx2;
-                yvel = yvel - a*mba*dvx2;
-
-                xvel = (xvel - vx_cm)*R + vx_cm;
-                yvel = (yvel - vy_cm)*R + vy_cm;
-                //xvel_other = (xvel_other - vx_cm)*R + vx_cm;
-                    //yvel_other = (yvel_other - vy_cm)*R + vy_cm;
-
-
-                // double sign;
-                // yba += (1.0E-12)*fabs(yba);
-                // if (fabs(xba)<yba) {
-                //     if (fabs(xba)<yba ) {
-                //         if (fabs(xba)<0) {
-                //             sign=-1;
-                //         }
-                //         else {
-                //             sign = 1;
-                //         }
-                //         xba = yba*sign;
-                //     }
+                // if (width_other <= height_other) {
+                //     rb = width_other;
                 // }
-                // double R = .5;
-                // double a = yba/xba;
-
-                
-               
-
-                // if (y - y_other > 0 && y - y_other < (height + height_other)/2.0){
-                //     y += 1.1*((height + height_other)/2.0 - (y - y_other));
-                //     ya = -height/2.0;
-                //     yb = height_other/2.0;
+                // else {
+                //     rb = height_other;
                 // }
-                // else if (y - y_other < 0 && y_other - y < (height + height_other)/2.0){
-                //     y -= 1.1*((height + height_other)/2.0 - (y_other - y));
-                //     ya = height/2.0;
-                //     ya = -height_other/2.0;
+                // if (width <= height) {
+                //     rb = width;
                 // }
-                // double e = .1;
-                // double k = 1/(mass*mass)+ 2/(mass*mb) +1/(mb*mb)
-                //                        - xa*xa/(mass*Ia) - xb*xb/(mass*Ib)
-                //                        - ya*ya/(mass*Ia) - ya*ya/(mb*Ia)
-                //                        - xa*xa/(mb*Ia) - xb*xb/(mb*Ib)
-                //                        - yb*yb/(mass*Ib) - yb*yb/(mb*Ib)
-                //                        + ya*ya*xb*xb/(Ia*Ib) + xa*xa*yb*yb/(Ia*Ib)
-                //                        - 2*xa*ya*xb*yb/(Ia*Ib);
-                // double xvelb = Entity::entities[i]->motion_object->xvel;
-                // double yvelb = Entity::entities[i]->motion_object->yvel;
-                // Jx = (e+1)/k * (xvel - xvelb)*
-                //                        ( 1/mass - xa*xa/Ia + 1/mb - xb*xb/Ib)
-                //                        - (e+1)/k * (yvel - yvelb)*
-                //                        (xa*ya / Ia + xb*yb / Ib);
+                // else {
+                //     rb = height;
+                // }
+                // double xvel_other = Entity::entities[i]->motion_object->xvel;
+                // double yvel_other = Entity::entities[i]->motion_object->yvel;
+                // double pi2 = 2*3.141592653589793;
+                // double error = 0;
+                // double rab = ra + rb;
+                // double mba = mb/mass;
+                // double xba = xb - xa;
+                // double yba = yb - ya;
+                // double vxba = xvel_other - xvel;
+                // double vyba = yvel_other - yvel;
 
-                // Jy = - (e+1)/k * (xvel - xvelb)*
-                //     (xa*ya / Ia + xb*yb / Ib)
-                //     + (e+1)/k  * (yvel - yvelb)*
-                //     ( 1/mass - ya*ya/Ia + 1/mb - yb*yb/Ib);
+                // double vx_cm = (mass*xvel - mb*xvel_other)/(mass+mb);
+                // double vy_cm = (mass*yvel - mb*yvel_other)/(mass+mb);
+                // //following will leave velocities as they are if not approaching
+                // double gammav = atan2(-vyba,-vxba);
 
-                // xvelb = xvelb - Jx/mb;
-                // yvelb = yvelb - Jy/mb;
-                //the following lines will give the angular momentum.
-                //Should try to incorporate this too, otherwise all
-                //special moment of inertia stuff above is useless
-                // waf.x = wai.x - (Jx*ra.y - Jy*ra.x) /Ia;
-                // waf.y = wai.y - (Jx*ra.y - Jy*ra.x) /Ia;
-                // wbf.x = wbi.x - (Jx*rb.y - Jy*rb.x) /Ib;
-                // wbf.y = wbi.y - (Jx*rb.y - Jy*rb.x) /Ib;
+                // //************** look into doing the alpha code as well
+                // double a = tan(gammav);
+
+                // double dvx2 = -2*(vxba + a*vyba)/((1+a*a)*(1+mba));
+                // double R = 0.0;
+                // //xvel_other = xvel_other + dvx2;
+                // //yvel_other = yvel_other + a*dvx2;
+                // xvel = xvel - mba*dvx2;
+                // yvel = yvel - a*mba*dvx2;
+
+                // xvel = (xvel - vx_cm)*R + vx_cm;
+                // yvel = (yvel - vy_cm)*R + vy_cm;
+                // xvel_other = (xvel_other - vx_cm)*R + vx_cm;
+                //     yvel_other = (yvel_other - vy_cm)*R + vy_cm;
+
             }
         }
     }
