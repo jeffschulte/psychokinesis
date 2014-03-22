@@ -40,8 +40,8 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
                 double ya = y;
                 double yb = y_other;
                 double mb = Entity::entities[i]->motion_object->mass;
-                double Ia = 2*mass*(width + height)/2/5;
-                double Ib = 2*mb*(width_other + height_other)/2/5;
+                //double Ia = 2*mass*(width + height)/2/5;
+                //double Ib = 2*mb*(width_other + height_other)/2/5;
                 if (fabs(x - x_other) < (width + width_other)/2.0
                     && y - y_other > 0.0
                     && y - y_other < (height + height_other)/2.0
@@ -60,6 +60,71 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
                     xa = width/2.0;
                     xb = -width_other/2.0;
                 }
+                double rb;
+                double ra;
+                if (width_other <= height_other) {
+                    rb = width_other;
+                }
+                else {
+                    rb = height_other;
+                }
+                if (width <= height) {
+                    rb = width;
+                }
+                else {
+                    rb = height;
+                }
+                double xvel_other = Entity::entities[i]->motion_object->xvel;
+                double yvel_other = Entity::entities[i]->motion_object->yvel;
+                double pi2 = 2*3.141592653589793;
+                double error = 0;
+                double rab = ra + rb;
+                double mba = mb/mass;
+                double xba = xb - xa;
+                double yba = yb - ya;
+                double vxba = xvel_other - xvel;
+                double vyba = yvel_other - yvel;
+
+                double vx_cm = (mass*xvel - mb*xvel_other)/(mass+mb);
+                double vy_cm = (mass*yvel - mb*yvel_other)/(mass+mb);
+                //following will leave velocities as they are if not approaching
+                double gammav = atan2(-vyba,-vxba);
+
+                //************** look into doing the alpha code as well
+                double a = tan(gammav);
+
+                double dvx2 = -2*(vxba + a*vyba)/((1+a*a)*(1+mba));
+                double R = 1.5;
+                //xvel_other = xvel_other + dvx2;
+                //yvel_other = yvel_other + a*dvx2;
+                xvel = xvel - mba*dvx2;
+                yvel = yvel - a*mba*dvx2;
+
+                xvel = (xvel - vx_cm)*R + vx_cm;
+                yvel = (yvel - vy_cm)*R + vy_cm;
+                //xvel_other = (xvel_other - vx_cm)*R + vx_cm;
+                    //yvel_other = (yvel_other - vy_cm)*R + vy_cm;
+
+
+                // double sign;
+                // yba += (1.0E-12)*fabs(yba);
+                // if (fabs(xba)<yba) {
+                //     if (fabs(xba)<yba ) {
+                //         if (fabs(xba)<0) {
+                //             sign=-1;
+                //         }
+                //         else {
+                //             sign = 1;
+                //         }
+                //         xba = yba*sign;
+                //     }
+                // }
+                // double R = .5;
+                // double a = yba/xba;
+
+                
+               
+
                 // if (y - y_other > 0 && y - y_other < (height + height_other)/2.0){
                 //     y += 1.1*((height + height_other)/2.0 - (y - y_other));
                 //     ya = -height/2.0;
