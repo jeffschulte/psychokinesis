@@ -52,6 +52,7 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
             yforce += targety * 2 * 9.8 * mass;
         }
     }
+
     if(closest->DistToPoint(x, y) < height / 2) {
         // If we are horiz or vert, then we can apply in the usual fashion
 
@@ -69,18 +70,27 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
                 y = closest->y1 + height / 2;
 
                 if(this_a_player) {
-                    if(xvel < 15 && xvel > -15) {
-                        xforce += 98 * mass * ActionState::p_astate->xcont;
+                    if (xvel < -15) {
+                        if (ActionState::p_astate->xcont > 0) {
+                            xforce += 2.0*98 * mass * ActionState::p_astate->xcont;
+                        }
+                    }
+                    else if (xvel > 15) {
+                        if (ActionState::p_astate->xcont < 0) {
+                            xforce += 2.0*98 * mass * ActionState::p_astate->xcont;
+                        }
+                    }
+                    else {
+                        xforce += 2.0*98 * mass * ActionState::p_astate->xcont;
                     }
                 }
-
                 if(yforce < 0) {
                     yforce = 0;
                 }
             }
 
-            xforce -= ((0.0 < xvel) - (xvel < 0.0)) *
-                (fabs(normal) * 10.0);
+            //            xforce -= ((0.0 < xvel) - (xvel < 0.0)) *
+            //  (fabs(normal) * 10.0);
 
         }
 
@@ -250,7 +260,8 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
         }
     }
     }
-    //Final velocity and position adjustments
+
+  //Final velocity and position adjustments
     xvel += xforce / mass * dt / 1000.0;
     yvel += yforce / mass * dt / 1000.0;
 
