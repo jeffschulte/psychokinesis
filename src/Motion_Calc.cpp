@@ -106,7 +106,7 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
                 //may want to change this is make glancing blows less effective,
                 //maybe something like the energy lost goes into hurting entity
                 Entity::entities[i]->hit_pts -= .1*sqrt(xvel*xvel + yvel*yvel);
-                this_ent->hit_pts -= .001*mb*sqrt(xvel_other*xvel_other
+                this_ent->hit_pts -= .0000001*mb*sqrt(xvel_other*xvel_other
                                              + yvel_other*yvel_other);
                 if (Entity::entities[i]->hit_pts < 0.0) {
                     Entity::entities[i]->dead = true;

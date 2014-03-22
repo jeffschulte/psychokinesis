@@ -29,92 +29,45 @@ SDL_Texture* Animation::Animation_Load_Texture(const char* File, SDL_Renderer* r
 SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
                                         double yvel, double height,
                                         int ent_type,bool dead) {
-
-    if (ent_type == Entity::PLAYER) {
-        if(SDL_GetTicks() - last_frame_time < anim_frame_rate){
-            SDL_Rect rect =  {68,22+(current_frame)*70,60,60};
-            return rect;
-        }
-        else {
-            last_frame_time = SDL_GetTicks();
-            if (mini_anim_frame == 0) {
-                double targetx = ActionState::p_astate->targetx;
-                double targety = ActionState::p_astate->targety;
-                double xcont = ActionState::p_astate->xcont;
-                EnvLine* line  = Level::p_level->ClosestLine(x, y);
-                double dist_to_ground = line->DistToPoint(x, y) - 2.5; //dont understand
-                //why this goes down to 2.5 at the ground and stops there.
-                current_state = get_next_state(ent_type, targetx, targety,
-                                               xcont, dist_to_ground, height,
-                                               xvel,yvel,dead);
-                if (current_state == P_STAND || current_state == PUSH_R ||
-                    current_state == PUSH_L || current_state == PUSH_U ||
-                    current_state == PUSH_D || current_state == FREE_U ||
-                    current_state == FREE_D || current_state == H_WALL_R ||
-                    current_state == H_WALL_L || current_state == DEAD ) {
-                    mini_anim_frame = 0;
-                }
-                else {
-                    mini_anim_frame = 1;
-                }
-                current_frame = states[current_state].beg_frame;
-            }
-            else {
-                current_frame = states[current_state].beg_frame
-                    + mini_anim_frame - 1;
-                mini_anim_frame += 1;
-                if (mini_anim_frame == states[current_state].maframe_lim + 1) {
-                    mini_anim_frame = 0;
-                    current_state = states[current_state].end_state;
-                }
-            }
-            SDL_Rect rect =  {68,22+(current_frame)*70,60,60};
-            return rect;
-        }
+    if(SDL_GetTicks() - last_frame_time < anim_frame_rate){
+        SDL_Rect rect =  {68,22+(current_frame)*70,60,60};
+        return rect;
     }
     else {
-        if(SDL_GetTicks() - last_frame_time < anim_frame_rate){
-            SDL_Rect rect = {330,100+(current_frame)*197,300,210};//xpos,ypos,width,hieght
-            return rect;
+        last_frame_time = SDL_GetTicks();
+        if (mini_anim_frame == 0) {
+            double targetx = ActionState::p_astate->targetx;
+            double targety = ActionState::p_astate->targety;
+            double xcont = ActionState::p_astate->xcont;
+            EnvLine* line  = Level::p_level->ClosestLine(x, y);
+            double dist_to_ground = line->DistToPoint(x, y) - 2.5; //dont understand
+            //why this goes down to 2.5 at the ground and stops there.
+            current_state = get_next_state(ent_type, targetx, targety,
+                                           xcont, dist_to_ground, height,
+                                           xvel,yvel,dead);
+            if (current_state == P_STAND || current_state == PUSH_R ||
+                current_state == PUSH_L || current_state == PUSH_U ||
+                current_state == PUSH_D || current_state == FREE_U ||
+                current_state == FREE_D || current_state == H_WALL_R ||
+                current_state == H_WALL_L || current_state == DEAD ) {
+                mini_anim_frame = 0;
+            }
+            else {
+                mini_anim_frame = 1;
+            }
+            current_frame = states[current_state].beg_frame;
         }
         else {
-            last_frame_time = SDL_GetTicks();
-            if (mini_anim_frame == 0) {
-                if (y <= height/2 +.1) {
-                    current_state = ON_GROUND;
-                }
-                else if (y > height/2 + 3 || yvel > 0) {
-                    current_state = F_IN_AIR;
-                }
-                else {
-                    current_state = HITTING_GROUND;
-                }
+            current_frame = states[current_state].beg_frame
+                + mini_anim_frame - 1;
+            mini_anim_frame += 1;
+            if (mini_anim_frame == states[current_state].maframe_lim + 1) {
+                mini_anim_frame = 0;
+                current_state = states[current_state].end_state;
             }
-            switch (current_state) {
-                case ON_GROUND:
-                    current_frame = STAND;
-                    break;
-                case F_IN_AIR:
-                    current_frame = F_IN_AIR + mini_anim_frame;
-                    mini_anim_frame += 1;
-                    if (mini_anim_frame == 4) {
-                        mini_anim_frame = 0;
-                    }
-                    break;
-                case HITTING_GROUND:
-                    current_frame = HIT_GROUND + mini_anim_frame;
-                    mini_anim_frame += 1;
-                    if (mini_anim_frame == 7) {
-                        mini_anim_frame = 0;
-                    }
-                    break;
-            }
-            if (dead) {
-                current_frame = HITTING_GROUND + 3;
-            }
-            SDL_Rect rect = {330,100+(current_frame)*197,300,210};//xpos,ypos,width,hieght
-            return rect;
         }
+        SDL_Rect rect =  {68,22+(current_frame)*70,60,60};
+        return rect;
     }
 }
 
@@ -124,6 +77,9 @@ int Animation::get_next_state(int ent_type, double targetx, double targety, doub
                    double dist_to_ground, double height, double xvel,
                               double yvel, bool dead) {
     //int current_state = this->current_state;
+    if (dead) {
+        current_state = DEAD;
+    }
     if (ent_type == Entity::PLAYER) {
         if (dist_to_ground < height/2.0) {
             if (yvel < -20) {
@@ -226,7 +182,7 @@ void Animation::initialize_states_list_values() {
     states[SWING_R].beg_frame=81; states[SWING_R].maframe_lim=9;
     states[HIT_FACE_F_R].beg_frame=90; states[HIT_FACE_F_R].maframe_lim=7;
     states[HIT_FACE_F_L].beg_frame=97; states[HIT_FACE_F_L].maframe_lim=7;
-    states[DEAD].beg_frame=94; states[DEAD].maframe_lim=0;
+    states[DEAD].beg_frame=95; states[DEAD].maframe_lim=0;
 
     states[P_STAND].end_state = P_STAND;
     states[PUSH_R].end_state = PUSH_R;

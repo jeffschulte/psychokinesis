@@ -15,7 +15,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             ent->hit_pts = 100;
             ent->debugname = "big_man";
             if((ent->texture =
-                ent->LoadTexture("art_assets/little-man.bmp", renderer)) == NULL) {
+                ent->LoadTexture("art_assets/stickman3sword.png", renderer)) == NULL) {
                 Logger::log("Problem loading texture in Entity_Create");
             }
             break;
@@ -28,7 +28,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             ent->hit_pts = 100;
             ent->debugname = "little_man";
             if((ent->texture =
-                ent->LoadTexture("art_assets/little-man.bmp", renderer)) == NULL) {
+                ent->LoadTexture("art_assets/stickman3sword.png", renderer)) == NULL) {
                 Logger::log("Problem loading texture in Entity_Create");
             }
             break;
