@@ -72,9 +72,19 @@ bool Application::OnInit() {
     Entity::Create(renderer, Entity::BIG_MAN, 15, 16);
     Entity::Create(renderer, Entity::BIG_MAN, 10, 16);
     Entity::Create(renderer, Entity::BIG_MAN, 6, 16);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 25, 20);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 28, 20);
-    //    Entity::Create(renderer, Entity::LITTLE_MAN, 9, 20);
+    Entity::Create(renderer, Entity::BIG_MAN, 25, 20);
+    Entity::Create(renderer, Entity::BIG_MAN, 28, 20);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 21, 27);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 25, 27);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 28, 27);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 16, 25);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 11, 25);
+    Entity::Create(renderer, Entity::BIG_MAN, 7, 25);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 16, 10);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 11, 10);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 7, 10);
+    
+//    Entity::Create(renderer, Entity::LITTLE_MAN, 9, 20);
     Entity::Create(renderer, Entity::PLAYER, 4, 20);
 
     //After all Entities are loaded:
@@ -99,7 +109,7 @@ bool Application::OnInit() {
             double yj = Entity::entities[j]->motion_object->y;
             double wj = Entity::entities[j]->motion_object->width;
             double hj = Entity::entities[j]->motion_object->height;
-            if (fabs(xi - xj) < (wi+wj)/2.0 && fabs(hi - hj) < (hi+hj)/2.0) {
+            if (fabs(xi - xj) < (wi+wj)/2.0 && fabs(yi - yj) < (hi+hj)/2.0) {
                 std::ostringstream message;
                 message << "There are overlapping starting entities at x,y "
                         << xi << "," << yi << " and " << xj << "," << yj << "\n";
