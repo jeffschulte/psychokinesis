@@ -204,15 +204,15 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
 
     //as written, this will only have one of the two colliders bounce off,
     //need to bounce both off
-    if(false) {
+
     for (int i=0;i<Entity::entities.size();i++) {
         if (!(this_ent == Entity::entities[i])) {
             double x_other = Entity::entities[i]->motion_object->x;
             double y_other = Entity::entities[i]->motion_object->y;
             double width_other = Entity::entities[i]->motion_object->width;
             double height_other = Entity::entities[i]->motion_object->height;
-            if (abs(x - x_other) < width + width_other
-                && abs(y-y_other) < height + height_other) {
+            if (fabs(x - x_other) < width/2.0 + width_other/2.0
+                && fabs(y - y_other) < height/2.0 + height_other/2.0) {
                 printf("collision!  Between %d and %d at x,y %g,%g and x,y %g,%g\n",
                        ent_type, Entity::entities[i]->ent_type,x,y,x_other,y_other);
                 double xa = x;
@@ -222,50 +222,50 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
                 double mb = Entity::entities[i]->motion_object->mass;
                 double Ia = 2*mass*(width + height)/2/5;
                 double Ib = 2*mb*(width_other + height_other)/2/5;
-                if (x - x_other > 0 && x - x_other < width + width_other) {
+                if (x - x_other > 0 && x - x_other < (width + width_other)/2.0) {
                     x += 1.1*((width + width_other)/2.0 - (x - x_other));
                     xa = -width/2.0;
                     xb = width_other/2.0;
                 }
-                else if (x - x_other < 0 && x_other - x < width + width_other) {
+                else if (x - x_other < 0 && x_other - x < (width + width_other)/2.0) {
                     x -= 1.1*((width + width_other)/2.0 - (x_other - x));
                     xa = width/2.0;
                     xb = -width_other/2.0;
                 }
-                if (y - y_other > 0 && y - y_other < height + height_other){
+                if (y - y_other > 0 && y - y_other < (height + height_other)/2.0){
                     y += 1.1*((height + height_other)/2.0 - (y - y_other));
                     ya = -height/2.0;
                     yb = height_other/2.0;
                     }
-                else if (y - y_other < 0 && y_other - y < height + height_other){
+                else if (y - y_other < 0 && y_other - y < (height + height_other)/2.0){
                     y -= 1.1*((height + height_other)/2.0 - (y_other - y));
                     ya = height/2.0;
                     ya = -height_other/2.0;
                 }
-                double e = .1;
-                double k = 1/(mass*mass)+ 2/(mass*mb) +1/(mb*mb)
-                                       - xa*xa/(mass*Ia) - xb*xb/(mass*Ib)
-                                       - ya*ya/(mass*Ia) - ya*ya/(mb*Ia)
-                                       - xa*xa/(mb*Ia) - xb*xb/(mb*Ib)
-                                       - yb*yb/(mass*Ib) - yb*yb/(mb*Ib)
-                                       + ya*ya*xb*xb/(Ia*Ib) + xa*xa*yb*yb/(Ia*Ib)
-                                       - 2*xa*ya*xb*yb/(Ia*Ib);
-                double xvelb = Entity::entities[i]->motion_object->xvel;
-                double yvelb = Entity::entities[i]->motion_object->yvel;
-                double Jx = (e+1)/k * (xvel - xvelb)*
-                                       ( 1/mass - xa*xa/Ia + 1/mb - xb*xb/Ib)
-                                       - (e+1)/k * (yvel - yvelb)*
-                                       (xa*ya / Ia + xb*yb / Ib);
+                // double e = .1;
+                // double k = 1/(mass*mass)+ 2/(mass*mb) +1/(mb*mb)
+                //                        - xa*xa/(mass*Ia) - xb*xb/(mass*Ib)
+                //                        - ya*ya/(mass*Ia) - ya*ya/(mb*Ia)
+                //                        - xa*xa/(mb*Ia) - xb*xb/(mb*Ib)
+                //                        - yb*yb/(mass*Ib) - yb*yb/(mb*Ib)
+                //                        + ya*ya*xb*xb/(Ia*Ib) + xa*xa*yb*yb/(Ia*Ib)
+                //                        - 2*xa*ya*xb*yb/(Ia*Ib);
+                // double xvelb = Entity::entities[i]->motion_object->xvel;
+                // double yvelb = Entity::entities[i]->motion_object->yvel;
+                // double Jx = (e+1)/k * (xvel - xvelb)*
+                //                        ( 1/mass - xa*xa/Ia + 1/mb - xb*xb/Ib)
+                //                        - (e+1)/k * (yvel - yvelb)*
+                //                        (xa*ya / Ia + xb*yb / Ib);
 
-                double Jy = - (e+1)/k * (xvel - xvelb)*
-                    (xa*ya / Ia + xb*yb / Ib)
-                    + (e+1)/k  * (yvel - yvelb)*
-                    ( 1/mass - ya*ya/Ia + 1/mb - yb*yb/Ib);
+                // double Jy = - (e+1)/k * (xvel - xvelb)*
+                //     (xa*ya / Ia + xb*yb / Ib)
+                //     + (e+1)/k  * (yvel - yvelb)*
+                //     ( 1/mass - ya*ya/Ia + 1/mb - yb*yb/Ib);
 
-                xvel = xvel - .01*Jx/mass;
-                yvel = yvel - .01*Jy/mass;
-                xvelb = xvelb - Jx/mb;
-                yvelb = yvelb - Jy/mb;
+                // xvel = xvel - .01*Jx/mass;
+                // yvel = yvel - .01*Jy/mass;
+                // xvelb = xvelb - Jx/mb;
+                // yvelb = yvelb - Jy/mb;
                 //the following lines will give the angular momentum.
                 //Should try to incorporate this too, otherwise all
                 //special moment of inertia stuff above is useless
@@ -276,7 +276,7 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
             }
         }
     }
-    }
+
     //Final velocity and position adjustments
     xvel += xforce / mass * dt / 1000.0;
     yvel += yforce / mass * dt / 1000.0;
