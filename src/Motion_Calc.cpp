@@ -22,9 +22,7 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
 
     yforce -= 9.8 * mass;
 
-    double Jx;
-    double Jy;
-
+    //collisions
     for (int i=0;i<Entity::entities.size();i++) {
         if (!(this_ent == Entity::entities[i])) {
             double x_other = Entity::entities[i]->motion_object->x;
@@ -35,10 +33,10 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
                 && fabs(y - y_other) < height/2.0 + height_other/2.0) {
                 printf("collision!  Between %d and %d at x,y %g,%g and x,y %g,%g\n",
                        ent_type, Entity::entities[i]->ent_type,x,y,x_other,y_other);
-                double xa = x;
-                double xb = x_other;
-                double ya = y;
-                double yb = y_other;
+                //double xa = x;
+                //double xb = x_other;
+                //double ya = y;
+                //double yb = y_other;
                 double mb = Entity::entities[i]->motion_object->mass;
                 //double Ia = 2*mass*(width + height)/2/5;
                 //double Ib = 2*mb*(width_other + height_other)/2/5;
@@ -70,48 +68,48 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
                 }
                 double rb;
                 double ra;
-                // if (width_other <= height_other) {
-                //     rb = width_other;
-                // }
-                // else {
-                //     rb = height_other;
-                // }
-                // if (width <= height) {
-                //     rb = width;
-                // }
-                // else {
-                //     rb = height;
-                // }
-                // double xvel_other = Entity::entities[i]->motion_object->xvel;
-                // double yvel_other = Entity::entities[i]->motion_object->yvel;
-                // double pi2 = 2*3.141592653589793;
-                // double error = 0;
-                // double rab = ra + rb;
-                // double mba = mb/mass;
-                // double xba = xb - xa;
-                // double yba = yb - ya;
-                // double vxba = xvel_other - xvel;
-                // double vyba = yvel_other - yvel;
+                if (width_other >= height_other) {
+                    rb = width_other;
+                }
+                else {
+                    rb = height_other;
+                }
+                if (width >= height) {
+                    ra = width;
+                }
+                else {
+                    ra = height;
+                }
+                double xvel_other = Entity::entities[i]->motion_object->xvel;
+                double yvel_other = Entity::entities[i]->motion_object->yvel;
+                //double pi2 = 2*3.141592653589793;
+                //double error = 0;
+                //double rab = ra + rb;
+                double mba = mb/mass;
+                //double xba = xb - xa;
+                //double yba = yb - ya;
+                double vxba = xvel_other - xvel;
+                double vyba = yvel_other - yvel;
 
-                // double vx_cm = (mass*xvel - mb*xvel_other)/(mass+mb);
-                // double vy_cm = (mass*yvel - mb*yvel_other)/(mass+mb);
-                // //following will leave velocities as they are if not approaching
-                // double gammav = atan2(-vyba,-vxba);
+                double vx_cm = (mass*xvel - mb*xvel_other)/(mass+mb);
+                double vy_cm = (mass*yvel - mb*yvel_other)/(mass+mb);
+                //following will leave velocities as they are if not approaching
+                double gammav = atan2(-vyba,-vxba);
 
-                // //************** look into doing the alpha code as well
-                // double a = tan(gammav);
+                //************** look into doing the alpha code as well
+                double a = tan(gammav);
 
-                // double dvx2 = -2*(vxba + a*vyba)/((1+a*a)*(1+mba));
-                // double R = 0.0;
-                // //xvel_other = xvel_other + dvx2;
-                // //yvel_other = yvel_other + a*dvx2;
-                // xvel = xvel - mba*dvx2;
-                // yvel = yvel - a*mba*dvx2;
+                double dvx2 = -2*(vxba + a*vyba)/((1+a*a)*(1+mba));
+                double R = 1.0;
+                xvel_other = xvel_other + dvx2;
+                yvel_other = yvel_other + a*dvx2;
+                xvel = xvel - mba*dvx2;
+                yvel = yvel - a*mba*dvx2;
 
-                // xvel = (xvel - vx_cm)*R + vx_cm;
-                // yvel = (yvel - vy_cm)*R + vy_cm;
-                // xvel_other = (xvel_other - vx_cm)*R + vx_cm;
-                //     yvel_other = (yvel_other - vy_cm)*R + vy_cm;
+                xvel = (xvel - vx_cm)*R + vx_cm;
+                yvel = (yvel - vy_cm)*R + vy_cm;
+                xvel_other = (xvel_other - vx_cm)*R + vx_cm;
+                yvel_other = (yvel_other - vy_cm)*R + vy_cm;
 
             }
         }

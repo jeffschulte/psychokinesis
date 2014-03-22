@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <sstream>
-
+#include <string>
 #include "Application.h"
 
 
@@ -69,11 +69,16 @@ bool Application::OnInit() {
     // Test blocks to shove around
     //below variables = renderer, entype, xpos, ypos
     Entity::Create(renderer, Entity::LITTLE_MAN, 21, 20);
-    Entity::Create(renderer, Entity::BIG_MAN, 16, 16);
+    Entity::Create(renderer, Entity::BIG_MAN, 15, 16);
+    Entity::Create(renderer, Entity::BIG_MAN, 10, 16);
+    Entity::Create(renderer, Entity::BIG_MAN, 6, 16);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 25, 20);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 28, 20);
     //    Entity::Create(renderer, Entity::LITTLE_MAN, 9, 20);
     Entity::Create(renderer, Entity::PLAYER, 4, 20);
 
     //After all Entities are loaded:
+    //check to see if there is a player
     bool there_is_a_player = false;
     for (int i =0; i< Entity::entities.size(); i++){
         if (Entity::entities[i]->ent_type == Entity::PLAYER) {
@@ -82,6 +87,26 @@ bool Application::OnInit() {
     }
     if (!there_is_a_player) {
         Logger::log("There is not player initialized!!!\n");
+    }
+    //check to see if there are overlapping starting entities
+    for (int i =0; i< Entity::entities.size(); i++){
+        double xi = Entity::entities[i]->motion_object->x;
+        double yi = Entity::entities[i]->motion_object->y;
+        double wi = Entity::entities[i]->motion_object->width;
+        double hi = Entity::entities[i]->motion_object->height;
+        for (int j = i+1; j< Entity::entities.size(); j++){
+            double xj = Entity::entities[j]->motion_object->x;
+            double yj = Entity::entities[j]->motion_object->y;
+            double wj = Entity::entities[j]->motion_object->width;
+            double hj = Entity::entities[j]->motion_object->height;
+            if (fabs(xi - xj) < (wi+wj)/2.0 && fabs(hi - hj) < (hi+hj)/2.0) {
+                std::ostringstream message;
+                message << "There are overlapping starting entities at x,y "
+                        << xi << "," << yi << " and " << xj << "," << yj << "\n";
+                Logger::log(message.str());
+                exit(1);
+            }
+        }
     }
 
     if(level.LoadAssets(renderer, "art_assets/sky2.png",
