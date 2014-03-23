@@ -7,6 +7,12 @@
 #include "Camera.h"
 #include "Logger.h"
 
+struct RelLineInfo {
+    double dist_to_pt;
+    double x_to_pt;
+    double y_to_pt;
+};
+
 class EnvLine {
 
 public:
@@ -14,7 +20,7 @@ public:
 
     EnvLine(double ix1, double iy1, double ix2, double iy2);
 
-    double DistToPoint(double x, double y);
+    RelLineInfo DistToPoint(double x, double y);
 };
 
 

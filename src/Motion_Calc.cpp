@@ -10,6 +10,10 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
                               bool this_a_player) {
 
     EnvLine* closest  = Level::p_level->ClosestLine(x, y);
+    double close_line_x = closest->DistToPoint(x,y).x_to_pt;
+    double close_line_y = closest->DistToPoint(x,y).y_to_pt;
+    double close_line_dist = closest->DistToPoint(x,y).dist_to_pt;
+
     double targetx = ActionState::p_astate->targetx;
     double targety = ActionState::p_astate->targety;
     // For now, we'll just draw a circle from the CoM and see which
@@ -111,12 +115,6 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
                 if (Entity::entities[i]->hit_pts < 0.0) {
                     Entity::entities[i]->dead = true;
                 }
-                if (Entity::entities[i]->dead) {
-                    printf("dead\n");
-                }
-                else {
-                    printf("not dead\n");
-                    }
                 if (this_ent->hit_pts < 0.0) {
                     this_ent->dead = true;
                 }
@@ -166,157 +164,183 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
         }
     }
 
-    if(closest->DistToPoint(x, y) < height / 2) {
-        // If we are horiz or vert, then we can apply in the usual fashion
+    //check to see if going to go outside closest line, divide up dt if
+    //going to and check again, then run the line code a number of times
+    //with smaller dt
+    double dt_divider = 1;
+    double test_xvel = xvel + xforce / mass * dt / 1000.0;
+    double test_yvel = yvel + yforce / mass * dt / 1000.0;
+    double test_y = y + test_yvel * dt / 1000.0;
+    double test_x = x + test_xvel * dt / 1000.0;
+    int loop_runs = 0;
+    while ( (close_line_x > 0.0 && close_line_y > 0.0
+             && test_x - x > close_line_x && test_y - y > close_line_y) ||
+            (close_line_x > 0.0 && close_line_y < 0.0
+             && test_x - x > close_line_x && test_y - y < close_line_y) ||
+            (close_line_x < 0.0 && close_line_y > 0.0
+             && test_x - x < close_line_x && test_y - y > close_line_y ) ||
+            (close_line_x < 0.0 && close_line_y < 0.0
+             && test_x - x < close_line_x && test_y - y < close_line_y ) &&
+            !(loop_runs>10)) {
+        printf("getting here  %g %g %g %g %g %g %g\n",dt_divider,x,y,
+           test_x,test_y,close_line_x,close_line_y);
+        dt_divider *= 2;
+        test_xvel = xvel + xforce / mass * dt/dt_divider / 1000.0;
+        test_yvel = yvel + yforce / mass * dt/dt_divider / 1000.0;
+        test_y = y + test_yvel * dt/dt_divider / 1000.0;
+        test_x = x + test_xvel * dt/dt_divider / 1000.0;
+        loop_runs++;
+    }
+    double mod_dt = dt/dt_divider;
+    for (int i=0; i<dt_divider; i++) {
+        if(closest->DistToPoint(x, y).dist_to_pt < height / 2) {
+            // If we are horiz or vert, then we can apply in the usual fashion
 
-        if(fabs(closest->y1 - closest->y2) < DBL_EPSILON) {
-            double normal = -yforce;
-            yvel = 0;
+            if(fabs(closest->y1 - closest->y2) < DBL_EPSILON) {
+                double normal = -yforce;
+                yvel = 0;
 
-            if(y < closest->y1) {
-                y = closest->y1 - height / 2;
-                if(yforce > 0) {
-                    yforce = 0;
+                if(y < closest->y1) {
+                    y = closest->y1 - height / 2;
+                    if(yforce > 0) {
+                        yforce = 0;
+                    }
                 }
-            }
-            else {
-                y = closest->y1 + height / 2;
-                if(this_a_player) {
-                    if (xvel < -15) {
-                        if (ActionState::p_astate->xcont > 0) {
+                else {
+                    y = closest->y1 + height / 2;
+                    if(this_a_player) {
+                        if (xvel < -15) {
+                            if (ActionState::p_astate->xcont > 0) {
+                                xforce += 2.0*98 * mass * ActionState::p_astate->xcont;
+                            }
+                        }
+                        else if (xvel > 15) {
+                            if (ActionState::p_astate->xcont < 0) {
+                                xforce += 2.0*98 * mass * ActionState::p_astate->xcont;
+                            }
+                        }
+                        else {
                             xforce += 2.0*98 * mass * ActionState::p_astate->xcont;
                         }
                     }
-                    else if (xvel > 15) {
-                        if (ActionState::p_astate->xcont < 0) {
-                            xforce += 2.0*98 * mass * ActionState::p_astate->xcont;
+                    if(yforce < 0) {
+                        yforce = 0;
+                    }
+                }
+                //friction
+                double friction_force  = ((0.0 > xvel) - (xvel > 0.0))
+                    *fabs(normal)*10.0;
+                if (fabs(friction_force) > fabs(xvel)*mass/mod_dt*1000.0) {
+                    friction_force = -xvel*mass/mod_dt*1000.0; //should set vel to zero
+                }
+                xforce += friction_force;
+            }
+
+            else if(fabs(closest->x1 - closest->x2) < DBL_EPSILON) {
+                double normal = -xforce;
+                xvel  = 0;
+
+                if(x < closest->x1) {
+                    x = closest->x1 - width / 2;
+
+                    if(xforce > 0) {
+                        xforce = 0;
+                    }
+                }
+                else {
+                    x = closest->x1 + width / 2;
+
+                    if(xforce < 0) {
+                        xforce = 0;
+                    }
+                }
+
+                double friction_force  = ((0.0 > yvel) - (yvel > 0.0))
+                    *fabs(normal)*10.0;
+                if (fabs(friction_force) > fabs(yvel)*mass/mod_dt*1000.0) {
+                    friction_force = -yvel*mass/mod_dt*1000.0; //should set vel to zero
+                }
+                xforce += friction_force;
+            }
+            else {
+                // Rotate coordinate system so line is horizontal
+                double lineangle = atan2(closest->y2 - closest->y1,
+                                         closest->x2 - closest->x1);
+                double xrot = x * cos(lineangle) + y * sin(lineangle);
+                double yrot = -x * sin(lineangle) + y * cos(lineangle);
+
+                double xvrot = xvel * cos(lineangle) + yvel * sin(lineangle);
+                double yvrot = -xvel * sin(lineangle) + yvel * cos(lineangle);
+
+                double xforcerot = xforce * cos(lineangle) + yforce * sin(lineangle);
+                double yforcerot = -xforce * sin(lineangle) + yforce * cos(lineangle);
+
+                //double x1rot = closest->x1 * cos(lineangle) + closest->y1 * sin(lineangle);
+                double y1rot = -closest->x1 * sin(lineangle) + closest->y1 * cos(lineangle);
+
+                //double x2rot = closest->x2 * cos(lineangle) + closest->y2 * sin(lineangle);
+                //double y2rot = -closest->x2 * sin(lineangle) + closest->y2 * cos(lineangle);
+
+
+                double normal = -yforcerot;
+                yvrot = 0;
+
+                if(yrot < y1rot) {
+                    yrot = y1rot - height / 2;
+
+                    if(yforcerot > 0) {
+                        yforcerot = 0;
+                    }
+                }
+                else {
+                    yrot = y1rot + height / 2;
+                    if(this_a_player) {
+                        if (xvrot < -15) {
+                            if (ActionState::p_astate->xcont > 0) {
+                                xforcerot += 2.0*98 * mass * ActionState::p_astate->xcont;
+                            }
                         }
-                    }
-                    else {
-                        xforce += 2.0*98 * mass * ActionState::p_astate->xcont;
-                    }
-                }
-                if(yforce < 0) {
-                    yforce = 0;
-                }
-            }
-            //friction
-            double friction_force  = ((0.0 > xvel) - (xvel > 0.0))
-                *fabs(normal)*10.0;
-            if (fabs(friction_force) > fabs(xvel)*mass/dt*1000.0) {
-                friction_force = -xvel*mass/dt*1000.0; //should set vel to zero
-            }
-            xforce += friction_force;
-        }
-
-        else if(fabs(closest->x1 - closest->x2) < DBL_EPSILON) {
-            double normal = -xforce;
-            xvel  = 0;
-
-            if(x < closest->x1) {
-                x = closest->x1 - width / 2;
-
-                if(xforce > 0) {
-                    xforce = 0;
-                }
-            }
-            else {
-                x = closest->x1 + width / 2;
-
-                if(xforce < 0) {
-                    xforce = 0;
-                }
-            }
-
-            double friction_force  = ((0.0 > yvel) - (yvel > 0.0))
-                *fabs(normal)*10.0;
-            if (fabs(friction_force) > fabs(yvel)*mass/dt*1000.0) {
-                friction_force = -yvel*mass/dt*1000.0; //should set vel to zero
-            }
-            xforce += friction_force;
-        }
-        else {
-            // Rotate coordinate system so line is horizontal
-            double lineangle = atan2(closest->y2 - closest->y1,
-                                     closest->x2 - closest->x1);
-            double xrot = x * cos(lineangle) + y * sin(lineangle);
-            double yrot = -x * sin(lineangle) + y * cos(lineangle);
-
-            double xvrot = xvel * cos(lineangle) + yvel * sin(lineangle);
-            double yvrot = -xvel * sin(lineangle) + yvel * cos(lineangle);
-
-            double xforcerot = xforce * cos(lineangle) + yforce * sin(lineangle);
-            double yforcerot = -xforce * sin(lineangle) + yforce * cos(lineangle);
-
-            //double x1rot = closest->x1 * cos(lineangle) + closest->y1 * sin(lineangle);
-            double y1rot = -closest->x1 * sin(lineangle) + closest->y1 * cos(lineangle);
-
-            //double x2rot = closest->x2 * cos(lineangle) + closest->y2 * sin(lineangle);
-            //double y2rot = -closest->x2 * sin(lineangle) + closest->y2 * cos(lineangle);
-
-
-            double normal = -yforcerot;
-            yvrot = 0;
-
-            if(yrot < y1rot) {
-                yrot = y1rot - height / 2;
-
-                if(yforcerot > 0) {
-                    yforcerot = 0;
-                }
-            }
-            else {
-                yrot = y1rot + height / 2;
-                if(this_a_player) {
-                     if (xvrot < -15) {
-                         if (ActionState::p_astate->xcont > 0) {
+                        else if (xvrot > 15) {
+                            if (ActionState::p_astate->xcont < 0) {
+                                xforcerot += 2.0*98 * mass * ActionState::p_astate->xcont;
+                            }
+                        }
+                        else {
                             xforcerot += 2.0*98 * mass * ActionState::p_astate->xcont;
                         }
                     }
-                    else if (xvrot > 15) {
-                        if (ActionState::p_astate->xcont < 0) {
-                            xforcerot += 2.0*98 * mass * ActionState::p_astate->xcont;
-                        }
-                    }
-                    else {
-                        xforcerot += 2.0*98 * mass * ActionState::p_astate->xcont;
+                    if(yforcerot < 0) {
+                        yforcerot = 0;
                     }
                 }
-                if(yforcerot < 0) {
-                    yforcerot = 0;
+
+                double friction_force  = ((0.0 > xvrot) - (xvrot > 0.0))
+                    *fabs(normal)*10.0;
+                if (fabs(friction_force) > fabs(xvrot)*mass/mod_dt*1000.0) {
+                    friction_force = -xvrot*mass/mod_dt*1000.0; //should set vel to zero
                 }
+                xforcerot += friction_force;
+
+                if(fabs(xvrot) < mod_dt / 1000.0) {
+                    xvrot = 0.0;
+                }
+                if(fabs(yvrot) < mod_dt / 1000.0) {
+                    yvrot = 0.0;
+                }
+
+
+                x = xrot * cos(lineangle) - yrot * sin(lineangle);
+                y = xrot * sin(lineangle) + yrot * cos(lineangle);
+
+                xvel = xvrot * cos(lineangle) - yvrot * sin(lineangle);
+                yvel = xvrot * sin(lineangle) + yvrot * cos(lineangle);
+
+                xforce = xforcerot * cos(lineangle) - yforcerot * sin(lineangle);
+                yforce = xforcerot * sin(lineangle) + yforcerot * cos(lineangle);
             }
-
-            double friction_force  = ((0.0 > xvrot) - (xvrot > 0.0))
-                *fabs(normal)*10.0;
-            if (fabs(friction_force) > fabs(xvrot)*mass/dt*1000.0) {
-                friction_force = -xvrot*mass/dt*1000.0; //should set vel to zero
-            }
-            xforcerot += friction_force;
-
-            if(fabs(xvrot) < dt / 1000.0) {
-                xvrot = 0.0;
-            }
-            if(fabs(yvrot) < dt / 1000.0) {
-                yvrot = 0.0;
-            }
-
-
-            x = xrot * cos(lineangle) - yrot * sin(lineangle);
-            y = xrot * sin(lineangle) + yrot * cos(lineangle);
-
-            xvel = xvrot * cos(lineangle) - yvrot * sin(lineangle);
-            yvel = xvrot * sin(lineangle) + yvrot * cos(lineangle);
-
-            xforce = xforcerot * cos(lineangle) - yforcerot * sin(lineangle);
-            yforce = xforcerot * sin(lineangle) + yforcerot * cos(lineangle);
         }
     }
-    //Starting collisions
-    //printf("net\n");
 
-    //as written, this will only have one of the two colliders bounce off,
-    //need to bounce both off
 
 
     //Final velocity and position adjustments
@@ -334,7 +358,6 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
     }
     y += yvel * dt / 1000.0;
     x += xvel * dt / 1000.0;
-
 
     return;
 }
