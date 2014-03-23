@@ -6,6 +6,7 @@ Animation::Animation() {
     last_frame_time = 0;
     MaxFrames = 12;
     Oscillate = false;
+    still_dead = false;
 
     current_state = 0;
     mini_anim_frame = 0;
@@ -77,8 +78,12 @@ int Animation::get_next_state(int ent_type, double targetx, double targety, doub
                    double dist_to_ground, double height, double xvel,
                               double yvel, bool dead) {
     //int current_state = this->current_state;
-    if (dead) {
+    if (still_dead) {
         current_state = DEAD;
+    }
+    else if (dead) {
+        current_state = DYING;
+        still_dead = true;
     }
     if (ent_type == Entity::PLAYER) {
         if (dist_to_ground < height/2.0) {
@@ -182,7 +187,8 @@ void Animation::initialize_states_list_values() {
     states[SWING_R].beg_frame=81; states[SWING_R].maframe_lim=9;
     states[HIT_FACE_F_R].beg_frame=90; states[HIT_FACE_F_R].maframe_lim=7;
     states[HIT_FACE_F_L].beg_frame=97; states[HIT_FACE_F_L].maframe_lim=7;
-    states[DEAD].beg_frame=95; states[DEAD].maframe_lim=0;
+    states[DEAD].beg_frame=110; states[DEAD].maframe_lim=0;
+    states[DYING].beg_frame=104; states[DYING].maframe_lim=6;
 
     states[P_STAND].end_state = P_STAND;
     states[PUSH_R].end_state = PUSH_R;
@@ -219,4 +225,5 @@ void Animation::initialize_states_list_values() {
     states[HIT_FACE_F_R].end_state = P_STAND;
     states[HIT_FACE_F_L].end_state = P_STAND;
     states[DEAD].end_state = DEAD;
+    states[DYING].end_state = DEAD;
 }
