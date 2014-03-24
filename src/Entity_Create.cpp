@@ -53,6 +53,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(ent->motion_object->x, ent->motion_object->y);
+    bodyDef.fixedRotation = true;
     ent->body = Level::p_level->world.CreateBody(&bodyDef);
 
     b2PolygonShape dynamicBox;
