@@ -17,7 +17,8 @@ Mac:
 
 Clone https://github.com/google/liquidfun somewhere
 
-```cd liquidfun/liquidfun/Box2D
+```shell
+cd liquidfun/liquidfun/Box2D
 cmake .
 make
 sudo make install
