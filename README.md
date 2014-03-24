@@ -24,7 +24,8 @@ make
 sudo make install
 cp -r Box2D /usr/local/include/
 cd Box2D/Release
-cp libliquidfun.a /usr/local/lib/```
+cp libliquidfun.a /usr/local/lib/
+```
 
 Building
 --------
