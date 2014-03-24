@@ -383,8 +383,33 @@ void Motion_Calc::Calc_Motion2(Entity* this_ent, int ent_type, int dt,
                                        this_ent->body->GetWorldCenter(), true);
         }
 
+        if(fabs(this_ent->body->GetLinearVelocity().x) < 15) {
+            this_ent->body->ApplyForce(b2Vec2(ActionState::p_astate->xcont *
+                                              100, 0),
+                                       this_ent->body->GetWorldCenter(), true);
+        }
+
         Camera::camera->x = x;
         Camera::camera->zoom = y > 22 ? 10 : -fabs(y) + 32;
+    }
+    else {
+        if(ActionState::p_astate->pushing) {
+            double xp = 0;
+            double yp = 0;
+
+            for (int i =0; i< Entity::entities.size(); i++) {
+                if (Entity::entities[i]->ent_type == Entity::PLAYER) {
+                    xp = Entity::entities[i]->motion_object->x;
+                    yp = Entity::entities[i]->motion_object->y;
+                }
+            }
+
+            if(this_ent->collideline(xp, yp, targetx, targety)) {
+                this_ent->body->ApplyForce(b2Vec2(targetx * 2 * 9.8 * 10,
+                                                  targety * 2 * 9.8 * 10),
+                                       this_ent->body->GetWorldCenter(), true);
+            }
+        }
     }
 
     //printf("%g\n", angle);

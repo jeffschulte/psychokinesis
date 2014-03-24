@@ -20,8 +20,8 @@ Application::Application() {
 
     double wallwidth = 40;    // m
 
-    level.AddLine(0, 0, wallwidth, 20);
-    level.AddLine(wallwidth, 20, wallwidth, wallwidth);
+    level.AddLine(0, 0, wallwidth, 0);
+    level.AddLine(wallwidth, 0, wallwidth, wallwidth);
     level.AddLine(wallwidth, wallwidth, 0, wallwidth);
     level.AddLine(0, wallwidth, 0, 0);
 
