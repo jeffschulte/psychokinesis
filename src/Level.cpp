@@ -83,17 +83,9 @@ void Level::AddLine(double x1, double y1, double x2, double y2) {
     groundbodydef.position.Set(0, 0);
 
     b2Body* groundbody = world.CreateBody(&groundbodydef);
-
     b2EdgeShape groundbox;
-    //if(fabs(y2 - y1) < DBL_EPSILON) {
-    //    groundbox.SetAsBox(fabs(x2-x1)/2, .5);
-    //}
-    //else if(fabs(x2 - x1) < DBL_EPSILON) {
-    //    groundbox.SetAsBox(.5, fabs(y2-y1)/2);
-    //}
 
     groundbox.Set(b2Vec2(x1, y1), b2Vec2(x2, y2));
-
     groundbody->CreateFixture(&groundbox, 0);
 }
 

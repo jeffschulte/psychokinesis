@@ -373,7 +373,7 @@ void Motion_Calc::Calc_Motion2(Entity* this_ent, int ent_type, int dt,
 
     x = position.x;
     y = position.y;
-    angle = this_ent->body->GetAngle() / 3.1415927 * 180.0;
+    angle = this_ent->body->GetAngle() / -b2_pi * 180.0;
 
 
     if (this_a_player) {
