@@ -11,7 +11,7 @@ Camera::Camera() {
 }
 
 
-/// \todo Make a single transformation method for all three of these.
+/// \todo Make a single transformation method for all four of these.
 
 ///
 /// Performs same action as \c SDL_RenderCopy, but transforms to
@@ -45,6 +45,48 @@ int Camera::RenderCopy(SDL_Renderer* renderer, SDL_Texture* texture,
         transrect.h = (int)(dstrect->h * zoom);
 
         return SDL_RenderCopy(renderer, texture, srcrect, &transrect);
+    }
+}
+
+///
+/// Performs same action as \c SDL_RenderCopyEx, but transforms to
+/// screen coordinates first.
+///
+/// @param renderer the rendering context
+/// @param texture the source texture
+/// @param srcrect the source rectangle argument
+/// @param dstrect the destination rectangle in world coordinates
+/// @param angle of rotation in degrees
+/// @param point around we are rotated
+/// @param which flipping actions are performed
+///
+/// @return Returns 0 on success or a negative error code on failure
+///
+int Camera::RenderCopyEx(SDL_Renderer* renderer, SDL_Texture* texture,
+                         const SDL_Rect* srcrect,
+                         const Rect* dstrect, const double angle,
+                         const SDL_Point* center,
+                         const SDL_RendererFlip flip) {
+
+    SDL_Rect transrect;
+
+    SDL_GetRendererOutputSize(renderer, &hscreenw, &hscreenh);
+
+    hscreenw /= 2;
+    hscreenh /= 2;
+
+    if(dstrect == NULL) {
+        return SDL_RenderCopyEx(renderer, texture, srcrect, NULL, angle,
+                                center, flip);
+    }
+    else {
+        transrect.x = (int)((dstrect->x - x) * zoom) + hscreenw;
+        transrect.y = (int)((-dstrect->y + y) * zoom) + hscreenh;
+        transrect.w = (int)(dstrect->w * zoom);
+        transrect.h = (int)(dstrect->h * zoom);
+
+        return SDL_RenderCopyEx(renderer, texture, srcrect, &transrect, angle,
+                                center, flip);
     }
 }
 

@@ -22,6 +22,11 @@ class Camera {
     int RenderCopy(SDL_Renderer* renderer, SDL_Texture* texture,
                    const SDL_Rect* srcrect,
                    const Rect* dstrect);
+    int RenderCopyEx(SDL_Renderer* renderer, SDL_Texture* texture,
+                     const SDL_Rect* srcrect,
+                     const Rect* dstrect, const double angle,
+                     const SDL_Point* center,
+                     const SDL_RendererFlip flip);
     int RenderFillRect(SDL_Renderer* renderer,
                        const Rect* rect);
     int RenderDrawLine(SDL_Renderer* renderer,

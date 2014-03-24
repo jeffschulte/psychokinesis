@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL.h>
+#include <Box2D/Box2D.h>
 #include <string>
 #include <vector>
 #include "Camera.h"
@@ -31,6 +32,8 @@ class Entity {
     bool this_a_player;
     double hit_pts;
     bool dead;
+
+    b2Body* body;
 
     std::string debugname;
 

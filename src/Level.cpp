@@ -38,7 +38,7 @@ RelLineInfo EnvLine::DistToPoint(double x, double y) {
 
 Level* Level::p_level;
 
-Level::Level() {
+Level::Level() : gravity(0.0f, -10.0f), world(gravity) {
 
     Level::p_level = this;
 }
@@ -66,8 +66,18 @@ void Level::OnRender(SDL_Renderer* renderer, Camera* camera) {
     SDL_SetRenderDrawColor(renderer, 0, 128, 0, 255);
 
     for(int i = 0; i < lines.size(); i++) {
-        camera->RenderDrawLine(renderer, lines[i].x1, lines[i].y1,
-                           lines[i].x2, lines[i].y2);
+        //camera->RenderDrawLine(renderer, lines[i].x1, lines[i].y1,
+        //                   lines[i].x2, lines[i].y2);
+        if(fabs(lines[i].y2 - lines[i].y1) < DBL_EPSILON) {
+            Rect r = {lines[i].x1, lines[i].y1+.5,
+                      fabs(lines[i].x2-lines[i].x1), 1};
+            camera->RenderFillRect(renderer,&r);
+        }
+        else if(fabs(lines[i].x2 - lines[i].x1) < DBL_EPSILON) {
+            Rect r = {lines[i].x1-.5, lines[i].y1, 1,
+                      fabs(lines[i].y2-lines[i].y1)};
+            camera->RenderFillRect(renderer,&r);
+        }
     }
 
     Rect rect = {0, 34, 40, 40};
@@ -78,6 +88,21 @@ void Level::OnRender(SDL_Renderer* renderer, Camera* camera) {
 void Level::AddLine(double x1, double y1, double x2, double y2) {
 
     lines.push_back(EnvLine(x1, y1, x2, y2));
+
+    b2BodyDef groundbodydef;
+    groundbodydef.position.Set((x1+x2)/2, (y1+y2)/2);
+
+    b2Body* groundbody = world.CreateBody(&groundbodydef);
+
+    b2PolygonShape groundbox;
+    if(fabs(y2 - y1) < DBL_EPSILON) {
+        groundbox.SetAsBox(fabs(x2-x1)/2, .5);
+    }
+    else if(fabs(x2 - x1) < DBL_EPSILON) {
+        groundbox.SetAsBox(.5, fabs(y2-y1)/2);
+    }
+
+    groundbody->CreateFixture(&groundbox, 0);
 }
 
 EnvLine* Level::ClosestLine(double x, double y) {

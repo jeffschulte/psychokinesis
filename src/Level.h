@@ -3,6 +3,7 @@
 #include <vector>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <Box2D/Box2D.h>
 
 #include "Camera.h"
 #include "Logger.h"
@@ -38,6 +39,9 @@ class Level {
     static Level* p_level;
 
     EnvLine* ClosestLine(double x, double y);
+
+    b2Vec2 gravity;
+    b2World world;
 
  private:
 

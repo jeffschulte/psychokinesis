@@ -33,7 +33,8 @@ void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
                                                   motion_object->yvel,
                                                   motion_object->height,
                                                   int(ent_type),dead);
-        camera->RenderCopy(renderer, texture, &rect, &rect5);
+        camera->RenderCopyEx(renderer, texture, &rect, &rect5,
+                             motion_object->angle, NULL, SDL_FLIP_NONE);
     }
     else {
         SDL_SetRenderDrawColor(renderer, red, green, blue, 255);
@@ -45,7 +46,7 @@ void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
 // Method to check if the rectangle collides with a given line segemnt
 
 void Entity::Calculate_Motion(int dt) {
-    motion_object->Calc_Motion(this, int(ent_type), dt, this_a_player);
+    motion_object->Calc_Motion2(this, int(ent_type), dt, this_a_player);
     return;
 }
 

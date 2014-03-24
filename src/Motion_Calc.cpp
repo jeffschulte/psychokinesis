@@ -4,6 +4,7 @@ Motion_Calc::Motion_Calc(){
     x = y = xvel = yvel = 0;      // Velocity
     width = height = 0;      // Size of Entity
     mass = xforce = yforce =0;
+    angle = 0;
 }
 
 void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
@@ -362,8 +363,32 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
     return;
 }
 
+void Motion_Calc::Calc_Motion2(Entity* this_ent, int ent_type, int dt,
+                              bool this_a_player) {
+
+    double targetx = ActionState::p_astate->targetx;
+    double targety = ActionState::p_astate->targety;
+
+    b2Vec2 position = this_ent->body->GetPosition();
+
+    x = position.x;
+    y = position.y;
+    angle = this_ent->body->GetAngle() / 3.1415927 * 180.0;
 
 
+    if (this_a_player) {
+        if(ActionState::p_astate->pushing) {
+            this_ent->body->ApplyForce(b2Vec2(-targetx * 2 * 9.8 * 10,
+                                              -targety * 2 * 9.8 * 10),
+                                       this_ent->body->GetWorldCenter(), true);
+        }
+
+        Camera::camera->x = x;
+        Camera::camera->zoom = y > 22 ? 10 : -fabs(y) + 32;
+    }
+
+    //printf("%g\n", angle);
+}
     // if(this_a_player) {
     //     printf("%d: %g, %g; %g, %g\n", dt, xvel, yvel, x, y);
     // }

@@ -47,6 +47,25 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             }
             break;
     }
+
+    // Create its counterpart in the world
+
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.position.Set(ent->motion_object->x, ent->motion_object->y);
+    ent->body = Level::p_level->world.CreateBody(&bodyDef);
+
+    b2PolygonShape dynamicBox;
+    dynamicBox.SetAsBox(ent->motion_object->width / 2,
+                        ent->motion_object->height / 2);
+
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &dynamicBox;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.3f;
+
+    ent->body->CreateFixture(&fixtureDef);
+
     entities.push_back(ent);
     return ent;
 }
