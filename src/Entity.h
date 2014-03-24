@@ -5,13 +5,10 @@
 #include <string>
 #include <vector>
 #include "Camera.h"
-#include "Motion_Calc.h"
 #include "Animation.h"
 #include "Logger.h"
 
-
 class Animation;
-class Motion_Calc;
 
 class Entity {
 
@@ -22,12 +19,14 @@ class Entity {
     static Entity* Create(SDL_Renderer* renderer,
                           EntType type,double x, double y);
 
+    double x, y;            // Position of Entity (CoM)
+    double xforce, yforce;
+    double xvel, yvel;      // Velocity
+    double width, height;   // Size of Entity
+    double angle;           // Angle in degrees
+    double mass;
 
-    /* double x, y;            // Position of Entity (CoM) */
-    /* double xvel, yvel;      // Velocity */
 
-    /* double width, height;      // Size of Entity */
-    //double mass = 150;
     EntType ent_type;
     bool this_a_player;
     double hit_pts;
@@ -45,8 +44,13 @@ class Entity {
     void OnRender(SDL_Renderer* renderer, Camera* camera);
 
     bool collideline(double x, double y, double targetx, double targety);
-    Motion_Calc* motion_object;
+
     void Calculate_Motion(int dt);
 private:
     Animation* animation_object;
 };
+
+
+#include "Player.h"
+
+/// TODO: This is ugly as hell. Fix the coupling....

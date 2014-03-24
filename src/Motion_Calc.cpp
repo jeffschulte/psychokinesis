@@ -30,10 +30,10 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
     //collisions
     for (int i=0;i<Entity::entities.size();i++) {
         if (!(this_ent == Entity::entities[i])) {
-            double x_other = Entity::entities[i]->motion_object->x;
-            double y_other = Entity::entities[i]->motion_object->y;
-            double width_other = Entity::entities[i]->motion_object->width;
-            double height_other = Entity::entities[i]->motion_object->height;
+            double x_other = Entity::entities[i]->x;
+            double y_other = Entity::entities[i]->y;
+            double width_other = Entity::entities[i]->width;
+            double height_other = Entity::entities[i]->height;
             if (fabs(x - x_other) < width/2.0 + width_other/2.0
                 && fabs(y - y_other) < height/2.0 + height_other/2.0) {
                 // printf("collision!  Between %d and %d at x,y %g,%g and x,y %g,%g\n",
@@ -42,7 +42,7 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
                 //double xb = x_other;
                 //double ya = y;
                 //double yb = y_other;
-                double mb = Entity::entities[i]->motion_object->mass;
+                double mb = Entity::entities[i]->mass;
                 //double Ia = 2*mass*(width + height)/2/5;
                 //double Ib = 2*mb*(width_other + height_other)/2/5;
                 double ratio_height_width = fabs(y-y_other)/fabs(x-x_other);
@@ -85,8 +85,8 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
                 else {
                     ra = height;
                 }
-                double xvel_other = Entity::entities[i]->motion_object->xvel;
-                double yvel_other = Entity::entities[i]->motion_object->yvel;
+                double xvel_other = Entity::entities[i]->xvel;
+                double yvel_other = Entity::entities[i]->yvel;
                 //double pi2 = 2*3.141592653589793;
                 //double error = 0;
                 //double rab = ra + rb;
@@ -145,8 +145,8 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
     else {
         for (int i =0; i< Entity::entities.size(); i++){
             if (Entity::entities[i]->ent_type == Entity::PLAYER) {
-                player_x = Entity::entities[i]->motion_object->x;
-                player_y = Entity::entities[i]->motion_object->y;
+                player_x = Entity::entities[i]->x;
+                player_y = Entity::entities[i]->y;
             }
         }
     }
@@ -363,57 +363,13 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
     return;
 }
 
-void Motion_Calc::Calc_Motion2(Entity* this_ent, int ent_type, int dt,
-                              bool this_a_player) {
-
-    double targetx = ActionState::p_astate->targetx;
-    double targety = ActionState::p_astate->targety;
-
-    b2Vec2 position = this_ent->body->GetPosition();
-
-    x = position.x;
-    y = position.y;
-    angle = this_ent->body->GetAngle() / -b2_pi * 180.0;
+//void Motion_Calc::Calc_Motion2(Entity* this_ent, int ent_type, int dt,
+//                              bool this_a_player) {
 
 
-    if (this_a_player) {
-        if(ActionState::p_astate->pushing) {
-            this_ent->body->ApplyForce(b2Vec2(-targetx * 2 * 9.8 * 10,
-                                              -targety * 2 * 9.8 * 10),
-                                       this_ent->body->GetWorldCenter(), true);
-        }
-
-        if(fabs(this_ent->body->GetLinearVelocity().x) < 15) {
-            this_ent->body->ApplyForce(b2Vec2(ActionState::p_astate->xcont *
-                                              100, 0),
-                                       this_ent->body->GetWorldCenter(), true);
-        }
-
-        Camera::camera->x = x;
-        Camera::camera->zoom = y > 22 ? 10 : -fabs(y) + 32;
-    }
-    else {
-        if(ActionState::p_astate->pushing) {
-            double xp = 0;
-            double yp = 0;
-
-            for (int i =0; i< Entity::entities.size(); i++) {
-                if (Entity::entities[i]->ent_type == Entity::PLAYER) {
-                    xp = Entity::entities[i]->motion_object->x;
-                    yp = Entity::entities[i]->motion_object->y;
-                }
-            }
-
-            if(this_ent->collideline(xp, yp, targetx, targety)) {
-                this_ent->body->ApplyForce(b2Vec2(targetx * 2 * 9.8 * 10,
-                                                  targety * 2 * 9.8 * 10),
-                                       this_ent->body->GetWorldCenter(), true);
-            }
-        }
-    }
 
     //printf("%g\n", angle);
-}
+    //}
     // if(this_a_player) {
     //     printf("%d: %g, %g; %g, %g\n", dt, xvel, yvel, x, y);
     // }

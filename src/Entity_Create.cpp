@@ -1,17 +1,17 @@
 #include "Entity.h"
+#include "Player.h"
 
 Entity* Entity::Create(SDL_Renderer* renderer,
                        EntType type, double x, double y) {
 
-    Entity* ent = new Entity();
-    ent->ent_type = type;
+    Entity* ent;
+
     switch (type) {
         case BIG_MAN:
-            ent->motion_object->x = x;
-            ent->motion_object->y = y;
-            ent->motion_object->width = 2;
-            ent->motion_object->height = 2;
-            ent->motion_object->mass = 100;
+            ent = new Entity();
+            ent->width = 2;
+            ent->height = 2;
+            ent->mass = 100;
             ent->hit_pts = 100;
             ent->debugname = "big_man";
             if((ent->texture =
@@ -20,11 +20,10 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             }
             break;
         case LITTLE_MAN:
-            ent->motion_object->x = x;
-            ent->motion_object->y = y;
-            ent->motion_object->width = 1.5;
-            ent->motion_object->height = 1.5;
-            ent->motion_object->mass = 90;
+            ent = new Entity();
+            ent->width = 1.5;
+            ent->height = 1.5;
+            ent->mass = 90;
             ent->hit_pts = 100;
             ent->debugname = "little_man";
             if((ent->texture =
@@ -33,11 +32,10 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             }
             break;
         case PLAYER:
-            ent->motion_object->x = x;
-            ent->motion_object->y = y;
-            ent->motion_object->width = 1.5;
-            ent->motion_object->height = 1.5;
-            ent->motion_object->mass = 90;
+            ent = new Entity();
+            ent->width = 1.5;
+            ent->height = 1.5;
+            ent->mass = 90;
             ent->hit_pts = 100;
             ent->debugname = "player";
             ent->this_a_player = true;
@@ -48,17 +46,20 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             break;
     }
 
+    ent->ent_type = type;
+    ent->x = x;
+    ent->y = y;
+
     // Create its counterpart in the world
 
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position.Set(ent->motion_object->x, ent->motion_object->y);
+    bodyDef.position.Set(ent->x, ent->y);
     bodyDef.fixedRotation = true;
     ent->body = Level::p_level->world.CreateBody(&bodyDef);
 
     b2PolygonShape dynamicBox;
-    dynamicBox.SetAsBox(ent->motion_object->width / 2,
-                        ent->motion_object->height / 2);
+    dynamicBox.SetAsBox(ent->width / 2, ent->height / 2);
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;

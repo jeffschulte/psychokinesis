@@ -84,8 +84,9 @@ bool Application::OnInit() {
     Entity::Create(renderer, Entity::LITTLE_MAN, 11, 10);
     Entity::Create(renderer, Entity::LITTLE_MAN, 7, 10);
 
-    //Entity::Create(renderer, Entity::LITTLE_MAN, 9, 20);
-    Entity::Create(renderer, Entity::PLAYER, 4, 20);
+    Logger::log("Creating player");
+
+    Player::Create(renderer, 4, 20);
 
     //After all Entities are loaded:
     //check to see if there is a player
@@ -99,25 +100,25 @@ bool Application::OnInit() {
         Logger::log("There is not player initialized!!!\n");
     }
     //check to see if there are overlapping starting entities
-    for (int i =0; i< Entity::entities.size(); i++){
-        double xi = Entity::entities[i]->motion_object->x;
-        double yi = Entity::entities[i]->motion_object->y;
-        double wi = Entity::entities[i]->motion_object->width;
-        double hi = Entity::entities[i]->motion_object->height;
-        for (int j = i+1; j< Entity::entities.size(); j++){
-            double xj = Entity::entities[j]->motion_object->x;
-            double yj = Entity::entities[j]->motion_object->y;
-            double wj = Entity::entities[j]->motion_object->width;
-            double hj = Entity::entities[j]->motion_object->height;
-            if (fabs(xi - xj) < (wi+wj)/2.0 && fabs(yi - yj) < (hi+hj)/2.0) {
-                std::ostringstream message;
-                message << "There are overlapping starting entities at x,y "
-                        << xi << "," << yi << " and " << xj << "," << yj << "\n";
-                Logger::log(message.str());
-                exit(1);
-            }
-        }
-    }
+    // for (int i =0; i< Entity::entities.size(); i++){
+    //     double xi = Entity::entities[i]->motion_object->x;
+    //     double yi = Entity::entities[i]->motion_object->y;
+    //     double wi = Entity::entities[i]->motion_object->width;
+    //     double hi = Entity::entities[i]->motion_object->height;
+    //     for (int j = i+1; j< Entity::entities.size(); j++){
+    //         double xj = Entity::entities[j]->motion_object->x;
+    //         double yj = Entity::entities[j]->motion_object->y;
+    //         double wj = Entity::entities[j]->motion_object->width;
+    //         double hj = Entity::entities[j]->motion_object->height;
+    //         if (fabs(xi - xj) < (wi+wj)/2.0 && fabs(yi - yj) < (hi+hj)/2.0) {
+    //             std::ostringstream message;
+    //             message << "There are overlapping starting entities at x,y "
+    //                     << xi << "," << yi << " and " << xj << "," << yj << "\n";
+    //             Logger::log(message.str());
+    //             exit(1);
+    //         }
+    //     }
+    // }
 
     if(level.LoadAssets(renderer, "art_assets/sky2.png",
                         "art_assets/grass.png") == NULL) {

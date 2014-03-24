@@ -6,7 +6,6 @@ std::vector<Entity*> Entity::entities;
 Entity::Entity() {
     texture = NULL;
     animation_object = new Animation();
-    motion_object = new Motion_Calc();
     this_a_player = false;
     hit_pts = 0;
     dead = false;
@@ -20,21 +19,15 @@ SDL_Texture* Entity::LoadTexture(const char* File, SDL_Renderer* renderer) {
 
 
 void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
-    double x = motion_object->x;
-    double y = motion_object->y;
-    double width = motion_object->width;
-    double height = motion_object->height;
+
     Rect rect5 = {x - width / 2, y + height / 2, width, height};
     if (texture != NULL) {
         SDL_Rect rect =
-            animation_object->Get_Frame_to_Render(motion_object->x,
-                                                  motion_object->y,
-                                                  motion_object->xvel,
-                                                  motion_object->yvel,
-                                                  motion_object->height,
-                                                  int(ent_type),dead);
+            animation_object->Get_Frame_to_Render(x, y, xvel, yvel,
+                                                  height,
+                                                  int(ent_type), dead);
         camera->RenderCopyEx(renderer, texture, &rect, &rect5,
-                             motion_object->angle, NULL, SDL_FLIP_NONE);
+                             angle, NULL, SDL_FLIP_NONE);
     }
     else {
         SDL_SetRenderDrawColor(renderer, red, green, blue, 255);
@@ -46,8 +39,46 @@ void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
 // Method to check if the rectangle collides with a given line segemnt
 
 void Entity::Calculate_Motion(int dt) {
-    motion_object->Calc_Motion2(this, int(ent_type), dt, this_a_player);
-    return;
+
+    double targetx = ActionState::p_astate->targetx;
+    double targety = ActionState::p_astate->targety;
+
+    b2Vec2 position = body->GetPosition();
+    b2Vec2 velocity = body->GetLinearVelocity();
+
+    x = position.x;
+    y = position.y;
+    angle = body->GetAngle() / -b2_pi * 180.0;
+    xvel = velocity.x;
+    yvel = velocity.y;
+
+
+    if (this_a_player) {
+        if(ActionState::p_astate->pushing) {
+            body->ApplyForce(b2Vec2(-targetx * 2 * 9.8 * 10,
+                                    -targety * 2 * 9.8 * 10),
+                             body->GetWorldCenter(), true);
+        }
+
+        if(fabs(xvel) < 15) {
+            body->ApplyForce(b2Vec2(ActionState::p_astate->xcont * 100, 0),
+                                       body->GetWorldCenter(), true);
+        }
+
+        Camera::camera->x = x;
+        Camera::camera->zoom = y > 22 ? 10 : -fabs(y) + 32;
+    }
+    else {
+        if(ActionState::p_astate->pushing) {
+
+            if(collideline(Player::player->x, Player::player->y,
+                                     targetx, targety)) {
+                body->ApplyForce(b2Vec2(targetx * 2 * 9.8 * 10,
+                                        targety * 2 * 9.8 * 10),
+                                 body->GetWorldCenter(), true);
+            }
+        }
+    }
 }
 
 
@@ -56,10 +87,6 @@ bool Entity::collideline(double xp, double yp, double targetx, double targety) {
     double m = targety / targetx;
     double b = yp - m * xp;
 
-    double x = motion_object->x;
-    double y = motion_object->y;
-    double width = motion_object->width;
-    double height = motion_object->height;
     // Equation for the line is given in y = mx + b form
     // First check the vertical, and see if it is in bounds
 

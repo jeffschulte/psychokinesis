@@ -9,6 +9,7 @@
 #include "Level.h"
 #include "Camera.h"
 #include "ActionState.h"
+#include "Player.h"
 
 
 class Application {

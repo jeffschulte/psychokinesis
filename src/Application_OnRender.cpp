@@ -10,20 +10,21 @@ void Application::OnRender() {
     SDL_RenderClear(renderer);
 
     // Draw some rectangles for the outside level
+
     level.OnRender(renderer, &camera);
+
+    // Render all entities
+
     for (int i=0;i<Entity::entities.size();i++) {
         Entity::entities[i]->OnRender(renderer, &camera);
-        if (Entity::entities[i]->this_a_player) {
-            mainhud.OnRender(renderer, &camera,
-                             Entity::entities[i]->motion_object->x,
-                             Entity::entities[i]->motion_object->y,
-                             astate.targetx, astate.targety);
-        }
     }
-    // Render the player
 
+    // Render the player hud
 
-    // Targeting line for push direction
+    mainhud.OnRender(renderer, &camera,
+                     Player::player->x,
+                     Player::player->y,
+                     astate.targetx, astate.targety);
 
     SDL_RenderPresent(renderer);
 }
