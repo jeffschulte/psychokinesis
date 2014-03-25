@@ -61,6 +61,11 @@ void Entity::Calculate_Motion(int dt) {
             body->ApplyForce(b2Vec2(ActionState::p_astate->xcont * 100, 0),
                                        body->GetWorldCenter(), true);
         }
+        else if ( (ActionState::p_astate->xcont > 0.0 && xvel < 0.0) ||
+                  (ActionState::p_astate->xcont < 0.0 && xvel > 0.0) ) {
+            body->ApplyForce(b2Vec2(ActionState::p_astate->xcont * 100, 0),
+                             body->GetWorldCenter(), true);
+        }
 
         Camera::camera->x = x;
         Camera::camera->zoom = y > 22 ? 10 : -fabs(y) + 32;
