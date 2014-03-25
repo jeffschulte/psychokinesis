@@ -35,9 +35,6 @@ void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
     }
 }
 
-
-// Method to check if the rectangle collides with a given line segemnt
-
 void Entity::Calculate_Motion(int dt) {
 
     double targetx = ActionState::p_astate->targetx;
@@ -81,6 +78,7 @@ void Entity::Calculate_Motion(int dt) {
     }
 }
 
+// Method to check if the rectangle collides with a given line segment
 
 bool Entity::collideline(double xp, double yp, double targetx, double targety) {
 
