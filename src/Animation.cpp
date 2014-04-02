@@ -7,6 +7,8 @@ Animation::Animation() {
     MaxFrames = 12;
     Oscillate = false;
     still_dead = false;
+    hit_face_r = false;
+    hit_face_l = false;
 
     current_state = 0;
     mini_anim_frame = 0;
@@ -84,6 +86,14 @@ int Animation::get_next_state(int ent_type, double targetx, double targety, doub
     else if (dead) {
         current_state = DYING;
         still_dead = true;
+    }
+    else if (hit_face_l) {
+        current_state = HIT_FACE_F_L;
+        hit_face_l = false;
+    }
+    else if (hit_face_r) {
+        current_state = HIT_FACE_F_R;
+        hit_face_r = false;
     }
     if (ent_type == Entity::PLAYER) {
         if (dist_to_ground < height/2.0) {

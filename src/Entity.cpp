@@ -49,6 +49,9 @@ void Entity::Calculate_Motion(int dt) {
     xvel = velocity.x;
     yvel = velocity.y;
 
+    if (this->hit_pts < 0.0) {
+        this->dead = true;
+    }
 
     if (this_a_player) {
         if(ActionState::p_astate->pushing) {

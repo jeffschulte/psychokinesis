@@ -46,7 +46,7 @@ class Entity {
     bool collideline(double x, double y, double targetx, double targety);
 
     void Calculate_Motion(int dt);
-private:
+
     Animation* animation_object;
 };
 

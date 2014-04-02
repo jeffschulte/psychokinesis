@@ -25,6 +25,8 @@ class Animation {
     int mini_anim_frame;
     int current_state;
     bool still_dead;
+    bool hit_face_r;
+    bool hit_face_l;
     enum player_states {P_STAND, PUSH_R, PUSH_L, PUSH_U, PUSH_D,
                         PUSH_R_F_STAND, STAND_F_PUSH_R, PUSH_L_F_STAND,
                         STAND_F_PUSH_L, PUSH_U_F_STAND, STAND_F_PUSH_U,
