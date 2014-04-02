@@ -10,11 +10,15 @@
 #include "Camera.h"
 #include "ActionState.h"
 #include "Player.h"
-
+#include "Contact_Listener.h"
 
 class Application {
  private:
     bool Running;
+
+    b2Contact* contact;
+
+    ContactListener myContactListenerInstance;
 
     int render_rate; //milliseconds
 
