@@ -6,9 +6,11 @@
 #include <vector>
 #include "Camera.h"
 #include "Animation.h"
+#include "Artificial_Intel.h"
 #include "Logger.h"
 
 class Animation;
+class AI;
 
 class Entity {
 
@@ -46,7 +48,7 @@ class Entity {
     bool collideline(double x, double y, double targetx, double targety);
 
     void Calculate_Motion(int dt);
-
+    AI* AI_object;
     Animation* animation_object;
 };
 

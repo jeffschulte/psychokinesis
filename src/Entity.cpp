@@ -6,6 +6,7 @@ std::vector<Entity*> Entity::entities;
 Entity::Entity() {
     texture = NULL;
     animation_object = new Animation();
+    AI_object = new AI();
     this_a_player = false;
     hit_pts = 0;
     dead = false;
@@ -74,6 +75,20 @@ void Entity::Calculate_Motion(int dt) {
         Camera::camera->zoom = y > 22 ? 10 : -fabs(y) + 32;
     }
     else {
+        AI_object->Calculate_Action(x,y);
+        if(fabs(xvel) < 15) {
+            body->ApplyForce(b2Vec2(AI_object->xrun * 100, 0),
+                             body->GetWorldCenter(), true);
+        }
+        else if ( (AI_object->xrun > 0.0 && xvel < 0.0) ||
+                  (AI_object->xrun < 0.0 && xvel > 0.0) ) {
+            body->ApplyForce(b2Vec2(AI_object->xrun * 100, 0),
+                             body->GetWorldCenter(), true);
+        }
+        if(fabs(yvel) < 15) {
+            body->ApplyForce(b2Vec2(0,AI_object->yrun * 100),
+                             body->GetWorldCenter(), true);
+        }
         if(ActionState::p_astate->pushing) {
 
             if(collideline(Player::player->x, Player::player->y,
