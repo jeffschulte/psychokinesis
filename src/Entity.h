@@ -15,7 +15,7 @@ class AI;
 class Entity {
 
  public:
-    enum EntType {BIG_MAN,LITTLE_MAN,PLAYER};
+    enum EntType {BIG_MAN,LITTLE_MAN,PLAYER,HIT_PTS_METER};
 
     static std::vector<Entity*> entities;
     static Entity* Create(SDL_Renderer* renderer,

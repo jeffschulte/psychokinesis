@@ -24,7 +24,8 @@ void Application::OnRender() {
     mainhud.OnRender(renderer, &camera,
                      Player::player->x,
                      Player::player->y,
-                     astate.targetx, astate.targety);
+                     astate.targetx, astate.targety,
+                     Player::player->hit_pts);
 
     SDL_RenderPresent(renderer);
 }

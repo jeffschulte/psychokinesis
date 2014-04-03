@@ -61,7 +61,6 @@ bool Application::OnInit() {
 
     effect_id = SDL_HapticNewEffect(haptic, &effect);
 
-
     if(Mix_OpenAudio(22050, AUDIO_S16, 2, 4096) < 0) {
         return false;
     }
@@ -70,14 +69,14 @@ bool Application::OnInit() {
     //below variables = renderer, entype, xpos, ypos
     // Entity::Create(renderer, Entity::LITTLE_MAN, 21, 20);
     // Entity::Create(renderer, Entity::BIG_MAN, 21, 16);
-    // Entity::Create(renderer, Entity::BIG_MAN, 21, 24);
-    // Entity::Create(renderer, Entity::BIG_MAN, 21, 28);
-    // Entity::Create(renderer, Entity::BIG_MAN, 21, 32);
-    // Entity::Create(renderer, Entity::BIG_MAN, 21, 12);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 21, 27);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 25, 27);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 28, 27);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 16, 25);
+    Entity::Create(renderer, Entity::BIG_MAN, 21, 24);
+    Entity::Create(renderer, Entity::BIG_MAN, 21, 28);
+    Entity::Create(renderer, Entity::BIG_MAN, 21, 32);
+    Entity::Create(renderer, Entity::BIG_MAN, 21, 12);
+    // Entity::Create(renderer, Entity::LITTLE_MAN, 21, 27);
+    // Entity::Create(renderer, Entity::LITTLE_MAN, 25, 27);
+    // Entity::Create(renderer, Entity::LITTLE_MAN, 28, 27);
+    // Entity::Create(renderer, Entity::LITTLE_MAN, 16, 25);
     // Entity::Create(renderer, Entity::LITTLE_MAN, 11, 25);
     // Entity::Create(renderer, Entity::BIG_MAN, 7, 25);
     // Entity::Create(renderer, Entity::LITTLE_MAN, 16, 10);
@@ -119,6 +118,9 @@ bool Application::OnInit() {
     //         }
     //     }
     // }
+
+    mainhud.Hud_Load_Hit_Pts_Texture("art_assets/hit_pts_meter.png", renderer,
+                                     Player::player->hit_pts);
 
 
     if(level.LoadAssets(renderer, "art_assets/sky2.png",

@@ -36,7 +36,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             ent->width = 1.5;
             ent->height = 1.5;
             ent->mass = 90;
-            ent->hit_pts = 100;
+            ent->hit_pts = 200;
             ent->debugname = "player";
             ent->this_a_player = true;
             if((ent->texture =
