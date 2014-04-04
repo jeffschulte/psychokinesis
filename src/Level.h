@@ -39,6 +39,7 @@ class Level {
     static Level* p_level;
 
     EnvLine* ClosestLine(double x, double y);
+    EnvLine* SecondClosestLine(double x, double y, EnvLine* closest);
 
     b2Vec2 gravity;
     b2World world;

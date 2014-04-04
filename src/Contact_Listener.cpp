@@ -13,7 +13,6 @@ void ContactListener::BeginContact(b2Contact* contact) {
     //dont know how to get the entity when I have a pointer to the body:
     for (int i =0; i< Entity::entities.size(); i++){
         if (Entity::entities[i]->body == bodyA) {
-        printf("speedA = %g and speedB = %g\n",speedA*massA,speedB*massB);
             if (speedB*massB > 10.0) {
                     Entity::entities[i]->hit_pts -= .5*(speedB*massB);
                     if (velB.x > 0.0) {

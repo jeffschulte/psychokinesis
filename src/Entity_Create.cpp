@@ -64,7 +64,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1.0f;
-    fixtureDef.friction = 3;
+    fixtureDef.friction = 2;
 
     ent->body->CreateFixture(&fixtureDef);
 

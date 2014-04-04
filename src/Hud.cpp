@@ -45,7 +45,7 @@ void Hud::OnRender(SDL_Renderer* renderer, Camera* camera,
                             player_y + 3 * targety / mag + 10 * targety);
     }
     //hit_pts_meter_stuff
-    if (fabs(player_hit_pts - player_starting_hit_pts) < .00001) {
+    if (fabs(player_hit_pts - player_starting_hit_pts) < DBL_EPSILON) {
         SDL_RenderCopy(renderer, hit_pts_texture, &hit_pts_fill_rect, &hit_pts_dst_rect);
     }
     else {

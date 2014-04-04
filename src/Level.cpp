@@ -104,3 +104,19 @@ EnvLine* Level::ClosestLine(double x, double y) {
 
     return closest;
 }
+
+EnvLine* Level::SecondClosestLine(double x, double y, EnvLine* closest) {
+
+    double dist = 1.0/0.0;     // Infinity
+    EnvLine* second_closest = NULL;
+
+    for(int i = 0; i < lines.size(); i++) {
+        if( (lines[i].DistToPoint(x,y).dist_to_pt < dist)
+           && (&lines[i] != closest) ) {
+            second_closest = &lines[i];
+            dist = lines[i].DistToPoint(x,y).dist_to_pt;
+        }
+    }
+
+    return second_closest;
+}

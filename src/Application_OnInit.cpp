@@ -70,18 +70,18 @@ bool Application::OnInit() {
     // Entity::Create(renderer, Entity::LITTLE_MAN, 21, 20);
     // Entity::Create(renderer, Entity::BIG_MAN, 21, 16);
     // Entity::Create(renderer, Entity::BIG_MAN, 21, 24);
-    // Entity::Create(renderer, Entity::BIG_MAN, 21, 28);
-    // Entity::Create(renderer, Entity::BIG_MAN, 21, 32);
-    // Entity::Create(renderer, Entity::BIG_MAN, 21, 12);
-    // Entity::Create(renderer, Entity::LITTLE_MAN, 21, 27);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 35, 27);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 38, 27);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 26, 25);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 21, 25);
-    Entity::Create(renderer, Entity::BIG_MAN, 17, 25);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 26, 10);
+    // Entity::Create(renderer, Entity::BIG_MAN, 41, 28);
+    // Entity::Create(renderer, Entity::BIG_MAN, 41, 32);
+    // Entity::Create(renderer, Entity::BIG_MAN, 41, 12);
+    // Entity::Create(renderer, Entity::LITTLE_MAN, 41, 27);
+    // Entity::Create(renderer, Entity::LITTLE_MAN, 35, 27);
+    // Entity::Create(renderer, Entity::LITTLE_MAN, 38, 27);
+    // Entity::Create(renderer, Entity::LITTLE_MAN, 26, 25);
+    // Entity::Create(renderer, Entity::LITTLE_MAN, 21, 25);
+    // Entity::Create(renderer, Entity::BIG_MAN, 17, 25);
+    // Entity::Create(renderer, Entity::LITTLE_MAN, 26, 10);
     // Entity::Create(renderer, Entity::LITTLE_MAN, 11, 10);
-    // Entity::Create(renderer, Entity::LITTLE_MAN, 7, 10);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 7, 10);
 
     Logger::log("Creating player");
 
