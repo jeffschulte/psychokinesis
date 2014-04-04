@@ -73,13 +73,13 @@ bool Application::OnInit() {
     Entity::Create(renderer, Entity::BIG_MAN, 21, 28);
     Entity::Create(renderer, Entity::BIG_MAN, 21, 32);
     Entity::Create(renderer, Entity::BIG_MAN, 21, 12);
-    // Entity::Create(renderer, Entity::LITTLE_MAN, 21, 27);
-    // Entity::Create(renderer, Entity::LITTLE_MAN, 25, 27);
-    // Entity::Create(renderer, Entity::LITTLE_MAN, 28, 27);
-    // Entity::Create(renderer, Entity::LITTLE_MAN, 16, 25);
-    // Entity::Create(renderer, Entity::LITTLE_MAN, 11, 25);
-    // Entity::Create(renderer, Entity::BIG_MAN, 7, 25);
-    // Entity::Create(renderer, Entity::LITTLE_MAN, 16, 10);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 21, 27);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 25, 27);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 28, 27);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 16, 25);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 11, 25);
+    Entity::Create(renderer, Entity::BIG_MAN, 7, 25);
+    Entity::Create(renderer, Entity::LITTLE_MAN, 16, 10);
     // Entity::Create(renderer, Entity::LITTLE_MAN, 11, 10);
     // Entity::Create(renderer, Entity::LITTLE_MAN, 7, 10);
 
