@@ -12,7 +12,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             ent->width = 2;
             ent->height = 2;
             ent->mass = 100;
-            ent->hit_pts = 100;
+            ent->hit_pts = 300;
             ent->debugname = "big_man";
             if((ent->texture =
                 ent->LoadTexture("art_assets/stickman4sword.png", renderer)) == NULL) {
@@ -24,7 +24,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             ent->width = 1.5;
             ent->height = 1.5;
             ent->mass = 90;
-            ent->hit_pts = 100;
+            ent->hit_pts = 300;
             ent->debugname = "little_man";
             if((ent->texture =
                 ent->LoadTexture("art_assets/stickman4sword.png", renderer)) == NULL) {
@@ -36,7 +36,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             ent->width = 1.5;
             ent->height = 1.5;
             ent->mass = 90;
-            ent->hit_pts = 200;
+            ent->hit_pts = 500;
             ent->debugname = "player";
             ent->this_a_player = true;
             if((ent->texture =

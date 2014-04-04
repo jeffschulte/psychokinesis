@@ -52,6 +52,7 @@ void Entity::Calculate_Motion(int dt) {
 
     if (this->hit_pts < 0.0) {
         this->dead = true;
+        return;
     }
 
     if (this_a_player) {
