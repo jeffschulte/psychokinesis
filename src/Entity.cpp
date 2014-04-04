@@ -38,11 +38,6 @@ void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
 
 void Entity::Calculate_Motion(int dt) {
 
-    if (this->hit_pts < 0.0) {
-        this->dead = true;
-        return;
-    }
-
     double targetx = ActionState::p_astate->targetx;
     double targety = ActionState::p_astate->targety;
 
@@ -76,44 +71,52 @@ void Entity::Calculate_Motion(int dt) {
             /(second_closest->x2 - second_closest->x1);
     }
 
+    if (this->hit_pts < 0.0) {
+        this->dead = true;
+    }
+
     if (this_a_player) {
-        if(ActionState::p_astate->pushing) {
-            body->ApplyForce(b2Vec2(-targetx * 2 * 9.8 * 10,
-                                    -targety * 2 * 9.8 * 10),
-                             body->GetWorldCenter(), true);
-        }
-        if (closest->DistToPoint(x,y).dist_to_pt < height
-            && (fabs(tan_theta_closest) < .3 || fabs(tan_theta_second_closest) < .3)) {
-            if(fabs(xvel) < 15) {
-                body->ApplyForce(b2Vec2(ActionState::p_astate->xcont * 100, 0),
+        if (!dead) {
+            if(ActionState::p_astate->pushing) {
+                body->ApplyForce(b2Vec2(-targetx * 2 * 9.8 * 10,
+                                        -targety * 2 * 9.8 * 10),
                                  body->GetWorldCenter(), true);
             }
-            else if ( (ActionState::p_astate->xcont > 0.0 && xvel < 0.0) ||
-                      (ActionState::p_astate->xcont < 0.0 && xvel > 0.0) ) {
-                body->ApplyForce(b2Vec2(ActionState::p_astate->xcont * 100, 0),
-                                 body->GetWorldCenter(), true);
+            if (closest->DistToPoint(x,y).dist_to_pt < height
+                && (fabs(tan_theta_closest) < .3 || fabs(tan_theta_second_closest) < .3)) {
+                if(fabs(xvel) < 15) {
+                    body->ApplyForce(b2Vec2(ActionState::p_astate->xcont * 100, 0),
+                                     body->GetWorldCenter(), true);
+                }
+                else if ( (ActionState::p_astate->xcont > 0.0 && xvel < 0.0) ||
+                          (ActionState::p_astate->xcont < 0.0 && xvel > 0.0) ) {
+                    body->ApplyForce(b2Vec2(ActionState::p_astate->xcont * 100, 0),
+                                     body->GetWorldCenter(), true);
+                }
             }
+            Camera::camera->x = x;
+            Camera::camera->zoom = y > 22 ? 10 : -fabs(y) + 32;
         }
-        Camera::camera->x = x;
-        Camera::camera->zoom = y > 22 ? 10 : -fabs(y) + 32;
     }
     else {
-        AI_object->Calculate_Action(x,y);
-        if (closest->DistToPoint(x,y).dist_to_pt < height
-            && (fabs(tan_theta_closest) < .3 || fabs(tan_theta_second_closest) < .3)) {
-            if(fabs(xvel) < 15) {
-                body->ApplyForce(b2Vec2(AI_object->xrun * 100, 0),
-                                 body->GetWorldCenter(), true);
+        if (!dead) {
+            AI_object->Calculate_Action(x,y);
+            if (closest->DistToPoint(x,y).dist_to_pt < height
+                && (fabs(tan_theta_closest) < .3 || fabs(tan_theta_second_closest) < .3)) {
+                if(fabs(xvel) < 15) {
+                    body->ApplyForce(b2Vec2(AI_object->xrun * 100, 0),
+                                     body->GetWorldCenter(), true);
+                }
+                else if ( (AI_object->xrun > 0.0 && xvel < 0.0) ||
+                          (AI_object->xrun < 0.0 && xvel > 0.0) ) {
+                    body->ApplyForce(b2Vec2(AI_object->xrun * 100, 0),
+                                     body->GetWorldCenter(), true);
+                }
+                // if(fabs(yvel) < 15) {
+                //     body->ApplyForce(b2Vec2(0,AI_object->yrun * 100),
+                //                      body->GetWorldCenter(), true);
+                // }
             }
-            else if ( (AI_object->xrun > 0.0 && xvel < 0.0) ||
-                      (AI_object->xrun < 0.0 && xvel > 0.0) ) {
-                body->ApplyForce(b2Vec2(AI_object->xrun * 100, 0),
-                                 body->GetWorldCenter(), true);
-            }
-            // if(fabs(yvel) < 15) {
-            //     body->ApplyForce(b2Vec2(0,AI_object->yrun * 100),
-            //                      body->GetWorldCenter(), true);
-            // }
         }
         if(ActionState::p_astate->pushing) {
             if(collideline(Player::player->x, Player::player->y,
