@@ -33,6 +33,8 @@ class Entity {
     bool this_a_player;
     double hit_pts;
     bool dead;
+    bool swing_right;
+    bool swing_left;
 
     b2Body* body;
 

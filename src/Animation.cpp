@@ -31,7 +31,8 @@ SDL_Texture* Animation::Animation_Load_Texture(const char* File, SDL_Renderer* r
 
 SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
                                         double yvel, double height,
-                                        int ent_type,bool dead) {
+                                        int ent_type,bool dead, bool swing_right,
+                                        bool swing_left) {
     if(SDL_GetTicks() - last_frame_time < anim_frame_rate){
         SDL_Rect rect =  {68,22+(current_frame)*70,60,60};
         return rect;
@@ -47,7 +48,7 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
             //why this goes down to 2.5 at the ground and stops there.
             current_state = get_next_state(ent_type, targetx, targety,
                                            xcont, dist_to_ground, height,
-                                           xvel,yvel,dead);
+                                           xvel,yvel,dead,swing_right,swing_left);
             if (current_state == P_STAND || current_state == PUSH_R ||
                 current_state == PUSH_L || current_state == PUSH_U ||
                 current_state == PUSH_D || current_state == FREE_U ||
@@ -78,7 +79,8 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
 
 int Animation::get_next_state(int ent_type, double targetx, double targety, double xcont,
                    double dist_to_ground, double height, double xvel,
-                              double yvel, bool dead) {
+                              double yvel, bool dead, bool swing_right,
+                              bool swing_left) {
     //int current_state = this->current_state;
     if (still_dead) {
         current_state = DEAD;
@@ -94,6 +96,12 @@ int Animation::get_next_state(int ent_type, double targetx, double targety, doub
     else if (hit_face_r) {
         current_state = HIT_FACE_F_R;
         hit_face_r = false;
+    }
+    if (swing_right == true) {
+        current_state = SWING_R;
+    }
+    else if (swing_left == true) {
+        current_state = SWING_L;
     }
     if (ent_type == Entity::PLAYER) {
         if (dist_to_ground < height/2.0) {

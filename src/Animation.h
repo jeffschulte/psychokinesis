@@ -42,11 +42,12 @@ class Animation {
     Animation();
     SDL_Texture* Animation_Load_Texture(const char* File, SDL_Renderer* renderer);
     SDL_Rect Get_Frame_to_Render(double x, double y, double xvel, double yvel,
-                                 double height, int ent_type, bool dead);
+                                 double height, int ent_type, bool dead,
+                                 bool swin_right, bool swing_left);
  private:
     int get_next_state(int ent_type, double targetx, double targety, double xcont,
                        double dist_to_ground, double height, double xvel,
-                       double yvel,bool dead);
+                       double yvel,bool dead, bool swing_right, bool swing_left);
     states_struct states[DYING+1];
     void initialize_states_list_values();
 };

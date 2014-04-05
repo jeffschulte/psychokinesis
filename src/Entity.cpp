@@ -24,9 +24,9 @@ void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
     Rect rect5 = {x - width / 2, y + height / 2, width, height};
     if (texture != NULL) {
         SDL_Rect rect =
-            animation_object->Get_Frame_to_Render(x, y, xvel, yvel,
-                                                  height,
-                                                  int(ent_type), dead);
+            animation_object->Get_Frame_to_Render(x, y, xvel, yvel, height,
+                                                  int(ent_type), dead,
+                                                  swing_right, swing_left);
         camera->RenderCopyEx(renderer, texture, &rect, &rect5,
                              angle, NULL, SDL_FLIP_NONE);
     }

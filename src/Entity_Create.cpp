@@ -49,7 +49,8 @@ Entity* Entity::Create(SDL_Renderer* renderer,
     ent->ent_type = type;
     ent->x = x;
     ent->y = y;
-
+    ent->swing_right = false;
+    ent->swing_left = false;
     // Create its counterpart in the world
 
     b2BodyDef bodyDef;

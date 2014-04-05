@@ -72,23 +72,45 @@ void Application::OnEvent(SDL_Event* Event) {
         }
     }
 
+    // ref for below:
+    //     jbutton.button 0 = A
+    //     jbutton.button 1 = B
+    //     jbutton.button 2 = X
+    //     jbutton.button 3 = Y
+    //     jbutton.button 4 = left bump
+    //     jbutton.button 5 = right bump
 
-    if(Event->type == SDL_JOYBUTTONDOWN) {
+    if (Event->type == SDL_JOYBUTTONDOWN) {
+        if (Event->jbutton.button == 0) {
+            astate.pushing = true;
 
-        astate.pushing = true;
-
-        if (haptic != NULL) {
-            SDL_HapticRunEffect(haptic, effect_id, SDL_HAPTIC_INFINITY);
+            if (haptic != NULL) {
+                SDL_HapticRunEffect(haptic, effect_id, SDL_HAPTIC_INFINITY);
+            }
         }
-
+        else if (Event->jbutton.button == 4) {
+            if (ActionState::p_astate->xcont >= 0.0) {
+                Player::player->swing_right = true;
+            }
+            else {
+                Player::player->swing_left = true;
+            }
+        }
     }
 
-    if(Event->type == SDL_JOYBUTTONUP) {
+    if (Event->type == SDL_JOYBUTTONUP) {
+        if (Event->jbutton.button == 0) {
 
-        astate.pushing = false;
+            astate.pushing = false;
 
-        if (haptic != NULL) {
-            SDL_HapticStopEffect(haptic, effect_id);
+            if (haptic != NULL) {
+                SDL_HapticStopEffect(haptic, effect_id);
+            }
+        }
+        else if (Event->jbutton.button == 4) {
+            printf("here\n");
+            Player::player->swing_right = false;
+            Player::player->swing_left = false;
         }
     }
 }
