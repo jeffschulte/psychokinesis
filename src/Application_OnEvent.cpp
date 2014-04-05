@@ -9,7 +9,7 @@ void Application::OnEvent(SDL_Event* Event) {
 
     if(Event->type == SDL_JOYAXISMOTION) {
 
-        if(Event->jaxis.axis == 3) {
+        if(Event->jaxis.axis == 0) {
             if(Event->jaxis.value > 5000 || Event->jaxis.value < -5000) {
                 astate.xcont = (double) Event->jaxis.value / 32767.0;
             }
@@ -19,10 +19,10 @@ void Application::OnEvent(SDL_Event* Event) {
         }
 
 
-        if(Event->jaxis.axis == 0) {
+        if(Event->jaxis.axis == 3) {
             astate.targetx = (double) Event->jaxis.value / 32767.0;
         }
-        if(Event->jaxis.axis == 1) {
+        if(Event->jaxis.axis == 4) {
             astate.targety = -(double) Event->jaxis.value / 32767.0;
         }
     }
@@ -81,14 +81,14 @@ void Application::OnEvent(SDL_Event* Event) {
     //     jbutton.button 5 = right bump
 
     if (Event->type == SDL_JOYBUTTONDOWN) {
-        if (Event->jbutton.button == 0) {
+        if (Event->jbutton.button == 4) {
             astate.pushing = true;
 
             if (haptic != NULL) {
                 SDL_HapticRunEffect(haptic, effect_id, SDL_HAPTIC_INFINITY);
             }
         }
-        else if (Event->jbutton.button == 4) {
+        else if (Event->jbutton.button == 2) {
             if (ActionState::p_astate->xcont >= 0.0) {
                 Player::player->swing_right = true;
             }
@@ -99,17 +99,13 @@ void Application::OnEvent(SDL_Event* Event) {
     }
 
     if (Event->type == SDL_JOYBUTTONUP) {
-        if (Event->jbutton.button == 0) {
+        if (Event->jbutton.button == 4) {
 
             astate.pushing = false;
 
             if (haptic != NULL) {
                 SDL_HapticStopEffect(haptic, effect_id);
             }
-        }
-        else if (Event->jbutton.button == 4) {
-            Player::player->swing_right = false;
-            Player::player->swing_left = false;
         }
     }
 }

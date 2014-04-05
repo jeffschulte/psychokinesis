@@ -85,8 +85,8 @@ void Entity::Calculate_Motion(int dt) {
                 swing_left = false;
             }
             if(ActionState::p_astate->pushing) {
-                body->ApplyForce(b2Vec2(-targetx * 2 * 9.8 * 10,
-                                        -targety * 2 * 9.8 * 10),
+                body->ApplyForce(b2Vec2(-targetx * 2 * 9.8 * 3,
+                                        -targety * 2 * 9.8 * 3),
                                  body->GetWorldCenter(), true);
             }
             if (closest->DistToPoint(x,y).dist_to_pt < height
