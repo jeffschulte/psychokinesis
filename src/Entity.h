@@ -25,6 +25,7 @@ class Entity {
     double xforce, yforce;
     double xvel, yvel;      // Velocity
     double width, height;   // Size of Entity
+    double anim_width, anim_height; //width and height of animated box
     double angle;           // Angle in degrees
     double mass;
 

@@ -108,7 +108,6 @@ void Application::OnEvent(SDL_Event* Event) {
             }
         }
         else if (Event->jbutton.button == 4) {
-            printf("here\n");
             Player::player->swing_right = false;
             Player::player->swing_left = false;
         }

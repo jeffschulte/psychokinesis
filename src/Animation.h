@@ -27,6 +27,8 @@ class Animation {
     bool still_dead;
     bool hit_face_r;
     bool hit_face_l;
+    bool anim_swing_r;
+    bool anim_swing_l;
     enum player_states {P_STAND, PUSH_R, PUSH_L, PUSH_U, PUSH_D,
                         PUSH_R_F_STAND, STAND_F_PUSH_R, PUSH_L_F_STAND,
                         STAND_F_PUSH_L, PUSH_U_F_STAND, STAND_F_PUSH_U,
@@ -42,12 +44,11 @@ class Animation {
     Animation();
     SDL_Texture* Animation_Load_Texture(const char* File, SDL_Renderer* renderer);
     SDL_Rect Get_Frame_to_Render(double x, double y, double xvel, double yvel,
-                                 double height, int ent_type, bool dead,
-                                 bool swin_right, bool swing_left);
+                                 double height, int ent_type, bool dead);
  private:
     int get_next_state(int ent_type, double targetx, double targety, double xcont,
                        double dist_to_ground, double height, double xvel,
-                       double yvel,bool dead, bool swing_right, bool swing_left);
+                       double yvel,bool dead);
     states_struct states[DYING+1];
     void initialize_states_list_values();
 };

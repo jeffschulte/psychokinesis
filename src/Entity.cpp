@@ -21,12 +21,11 @@ SDL_Texture* Entity::LoadTexture(const char* File, SDL_Renderer* renderer) {
 
 void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
 
-    Rect rect5 = {x - width / 2, y + height / 2, width, height};
+    Rect rect5 = {x - anim_width / 2, y + anim_height / 2, anim_width, anim_height};
     if (texture != NULL) {
         SDL_Rect rect =
             animation_object->Get_Frame_to_Render(x, y, xvel, yvel, height,
-                                                  int(ent_type), dead,
-                                                  swing_right, swing_left);
+                                                  int(ent_type), dead);
         camera->RenderCopyEx(renderer, texture, &rect, &rect5,
                              angle, NULL, SDL_FLIP_NONE);
     }
@@ -77,6 +76,8 @@ void Entity::Calculate_Motion(int dt) {
 
     if (this_a_player) {
         if (!dead) {
+            if (swing_right == true) animation_object->anim_swing_r = true;
+            if (swing_left == true) animation_object->anim_swing_l = true;
             if(ActionState::p_astate->pushing) {
                 body->ApplyForce(b2Vec2(-targetx * 2 * 9.8 * 10,
                                         -targety * 2 * 9.8 * 10),
@@ -100,6 +101,20 @@ void Entity::Calculate_Motion(int dt) {
     }
     else {
         if (!dead) {
+            if (fabs(Player::player->x - x)
+                < 1.2*(width/2.0 + Player::player->width/2.0)
+                && fabs(Player::player->y - y) < height) {
+                if (Player::player->swing_right
+                    && (Player::player->x - x) < 0.0) {
+                    animation_object->hit_face_l = true;
+                    hit_pts -= 20;
+                }
+                else if (Player::player->swing_left
+                         && (Player::player->x - x) > 0.0) {
+                    animation_object->hit_face_r = true;
+                    hit_pts -= 20;
+                }
+            }
             AI_object->Calculate_Action(x,y);
             if (closest->DistToPoint(x,y).dist_to_pt < height
                 && (fabs(tan_theta_closest) < .3 || fabs(tan_theta_second_closest) < .3)) {
