@@ -15,7 +15,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             ent->hit_pts = 200;
             ent->debugname = "big_man";
             if((ent->texture =
-                ent->LoadTexture("art_assets/stickman4sword.png", renderer)) == NULL) {
+                ent->LoadTexture("art_assets/stickman5sword.png", renderer)) == NULL) {
                 Logger::log("Problem loading texture in Entity_Create");
             }
             break;
@@ -27,7 +27,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             ent->hit_pts = 200;
             ent->debugname = "little_man";
             if((ent->texture =
-                ent->LoadTexture("art_assets/stickman4sword.png", renderer)) == NULL) {
+                ent->LoadTexture("art_assets/stickman5sword.png", renderer)) == NULL) {
                 Logger::log("Problem loading texture in Entity_Create");
             }
             break;
@@ -40,7 +40,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             ent->debugname = "player";
             ent->this_a_player = true;
             if((ent->texture =
-                ent->LoadTexture("art_assets/stickman4sword.png", renderer)) == NULL) {
+                ent->LoadTexture("art_assets/stickman5sword.png", renderer)) == NULL) {
                 Logger::log("Problem loading texture in Entity_Create");
             }
             break;
@@ -52,8 +52,8 @@ Entity* Entity::Create(SDL_Renderer* renderer,
     ent->swing_right = false;
     ent->swing_left = false;
     //the following so there is a small amount of overlap between characters
-    ent->anim_width = 1.5*(ent->width);
-    ent->anim_height = 1.5*(ent->height);
+    ent->anim_width = 1.3*(ent->width);
+    ent->anim_height = 1.0*(ent->height);
     // Create its counterpart in the world
 
     b2BodyDef bodyDef;

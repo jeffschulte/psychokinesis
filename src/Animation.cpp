@@ -33,7 +33,7 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
                                         double yvel, double height,
                                         int ent_type,bool dead) {
     if(SDL_GetTicks() - last_frame_time < anim_frame_rate){
-        SDL_Rect rect =  {68,22+(current_frame)*70,60,60};
+        SDL_Rect rect =  {57,29+(current_frame)*70,74,60};
         return rect;
     }
     else {
@@ -69,7 +69,7 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
                 current_state = states[current_state].end_state;
             }
         }
-        SDL_Rect rect =  {68,22+(current_frame)*70,60,60};
+        SDL_Rect rect =  {57,29+(current_frame)*70,74,60};
         return rect;
     }
 }
