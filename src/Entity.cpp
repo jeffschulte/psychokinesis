@@ -76,8 +76,14 @@ void Entity::Calculate_Motion(int dt) {
 
     if (this_a_player) {
         if (!dead) {
-            if (swing_right == true) animation_object->anim_swing_r = true;
-            if (swing_left == true) animation_object->anim_swing_l = true;
+            if (swing_right == true) {
+                animation_object->anim_swing_r = true;
+                swing_right = false;
+            }
+            if (swing_left == true) {
+                animation_object->anim_swing_l = true;
+                swing_left = false;
+            }
             if(ActionState::p_astate->pushing) {
                 body->ApplyForce(b2Vec2(-targetx * 2 * 9.8 * 10,
                                         -targety * 2 * 9.8 * 10),
@@ -107,12 +113,12 @@ void Entity::Calculate_Motion(int dt) {
                 if (Player::player->swing_right
                     && (Player::player->x - x) < 0.0) {
                     animation_object->hit_face_l = true;
-                    hit_pts -= 20;
+                    hit_pts -= 50;
                 }
                 else if (Player::player->swing_left
                          && (Player::player->x - x) > 0.0) {
                     animation_object->hit_face_r = true;
-                    hit_pts -= 20;
+                    hit_pts -= 50;
                 }
             }
             AI_object->Calculate_Action(x,y);

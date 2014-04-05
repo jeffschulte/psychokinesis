@@ -9,8 +9,8 @@ Entity* Entity::Create(SDL_Renderer* renderer,
     switch (type) {
         case BIG_MAN:
             ent = new Entity();
-            ent->width = 1.8;
-            ent->height = 1.8;
+            ent->width = 1.5;
+            ent->height = 2.0;
             ent->mass = 100;
             ent->hit_pts = 200;
             ent->debugname = "big_man";
@@ -22,7 +22,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
         case LITTLE_MAN:
             ent = new Entity();
             ent->width = 1.0;
-            ent->height = 1.3;
+            ent->height = 1.5;
             ent->mass = 90;
             ent->hit_pts = 200;
             ent->debugname = "little_man";
@@ -33,8 +33,8 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             break;
         case PLAYER:
             ent = new Entity();
-            ent->width = 1.3;
-            ent->height = 1.3;
+            ent->width = 1.0;
+            ent->height = 1.5;
             ent->mass = 90;
             ent->hit_pts = 500;
             ent->debugname = "player";
@@ -52,7 +52,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
     ent->swing_right = false;
     ent->swing_left = false;
     //the following so there is a small amount of overlap between characters
-    ent->anim_width = 1.3*(ent->width);
+    ent->anim_width = 1.7*(ent->width);
     ent->anim_height = 1.0*(ent->height);
     // Create its counterpart in the world
 
@@ -68,7 +68,7 @@ Entity* Entity::Create(SDL_Renderer* renderer,
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1.0f;
-    fixtureDef.friction = 2;
+    fixtureDef.friction = 3;
 
     ent->body->CreateFixture(&fixtureDef);
 
