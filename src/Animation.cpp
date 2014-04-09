@@ -9,6 +9,10 @@ Animation::Animation() {
     still_dead = false;
     hit_face_r = false;
     hit_face_l = false;
+    anim_swing_r = false;
+    anim_swing_l = false;
+    anim_shoot_r = false;
+    anim_shoot_l = false;
 
     current_state = 0;
     mini_anim_frame = 0;
@@ -33,7 +37,7 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
                                         double yvel, double height,
                                         int ent_type,bool dead) {
     if(SDL_GetTicks() - last_frame_time < anim_frame_rate){
-        SDL_Rect rect =  {57,29+(current_frame)*70,74,60};
+        SDL_Rect rect =  {397,21+(current_frame)*70,74,60};
         return rect;
     }
     else {
@@ -69,7 +73,7 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
                 current_state = states[current_state].end_state;
             }
         }
-        SDL_Rect rect =  {57,29+(current_frame)*70,74,60};
+        SDL_Rect rect =  {397,21+(current_frame)*70,74,60};
         return rect;
     }
 }
@@ -95,13 +99,21 @@ int Animation::get_next_state(int ent_type, double targetx, double targety, doub
         current_state = HIT_FACE_F_R;
         hit_face_r = false;
     }
-    if (anim_swing_r == true) {
+    else if (anim_swing_r == true) {
         current_state = SWING_R;
         anim_swing_r = false;
     }
-    else if (anim_swing_l == true) {
+    else if (anim_shoot_l == true) {
         current_state = SWING_L;
         anim_swing_l = false;
+    }
+    else if (anim_shoot_r == true) {
+        current_state = SHOOT_R;
+        anim_shoot_r = false;
+    }
+    else if (anim_shoot_l == true) {
+        current_state = SHOOT_L;
+        anim_shoot_l = false;
     }
     if (ent_type == Entity::PLAYER) {
         if (dist_to_ground < height/2.0) {
@@ -207,6 +219,8 @@ void Animation::initialize_states_list_values() {
     states[HIT_FACE_F_L].beg_frame=97; states[HIT_FACE_F_L].maframe_lim=7;
     states[DEAD].beg_frame=110; states[DEAD].maframe_lim=0;
     states[DYING].beg_frame=104; states[DYING].maframe_lim=6;
+    states[SHOOT_L].beg_frame=120; states[SHOOT_L].maframe_lim=9;
+    states[SHOOT_R].beg_frame=111; states[SHOOT_R].maframe_lim=9;
 
     states[P_STAND].end_state = P_STAND;
     states[PUSH_R].end_state = PUSH_R;
@@ -244,4 +258,6 @@ void Animation::initialize_states_list_values() {
     states[HIT_FACE_F_L].end_state = P_STAND;
     states[DEAD].end_state = DEAD;
     states[DYING].end_state = DEAD;
+    states[SHOOT_R].end_state = P_STAND;
+    states[SHOOT_L].end_state = P_STAND;
 }

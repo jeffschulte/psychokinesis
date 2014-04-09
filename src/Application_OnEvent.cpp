@@ -96,7 +96,17 @@ void Application::OnEvent(SDL_Event* Event) {
                 Player::player->swing_left = true;
             }
         }
-    }
+        else if (Event->jbutton.button == 3) {
+            if (ActionState::p_astate->xcont >= 0.0) {
+                Player::player->Shoot(renderer, 0, 0, true);
+                Player::player->shoot_right = true;
+            }
+            else {
+                Player::player->Shoot(renderer, 0, 0, false);
+                Player::player->shoot_left = true;
+            }
+        }
+}
 
     if (Event->type == SDL_JOYBUTTONUP) {
         if (Event->jbutton.button == 4) {

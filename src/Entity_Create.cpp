@@ -13,9 +13,10 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             ent->height = 2.0;
             ent->mass = 100;
             ent->hit_pts = 200;
+            ent->proj_shoot_type=0;
             ent->debugname = "big_man";
             if((ent->texture =
-                ent->LoadTexture("art_assets/stickman5sword.png", renderer)) == NULL) {
+                ent->LoadTexture("art_assets/stickman6sword.png", renderer)) == NULL) {
                 Logger::log("Problem loading texture in Entity_Create");
             }
             break;
@@ -25,9 +26,10 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             ent->height = 1.5;
             ent->mass = 90;
             ent->hit_pts = 200;
+            ent->proj_shoot_type=0;
             ent->debugname = "little_man";
             if((ent->texture =
-                ent->LoadTexture("art_assets/stickman5sword.png", renderer)) == NULL) {
+                ent->LoadTexture("art_assets/stickman6sword.png", renderer)) == NULL) {
                 Logger::log("Problem loading texture in Entity_Create");
             }
             break;
@@ -37,10 +39,11 @@ Entity* Entity::Create(SDL_Renderer* renderer,
             ent->height = 1.5;
             ent->mass = 90;
             ent->hit_pts = 500;
+            ent->proj_shoot_type=0;
             ent->debugname = "player";
             ent->this_a_player = true;
             if((ent->texture =
-                ent->LoadTexture("art_assets/stickman5sword.png", renderer)) == NULL) {
+                ent->LoadTexture("art_assets/stickman6sword.png", renderer)) == NULL) {
                 Logger::log("Problem loading texture in Entity_Create");
             }
             break;
@@ -51,6 +54,8 @@ Entity* Entity::Create(SDL_Renderer* renderer,
     ent->y = y;
     ent->swing_right = false;
     ent->swing_left = false;
+    ent->shoot_right = false;
+    ent->shoot_left = false;
     //the following so there is a small amount of overlap between characters
     ent->anim_width = 1.7*(ent->width);
     ent->anim_height = 1.0*(ent->height);

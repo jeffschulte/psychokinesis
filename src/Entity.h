@@ -8,6 +8,7 @@
 #include "Animation.h"
 #include "Artificial_Intel.h"
 #include "Logger.h"
+#include "Projectile.h"
 
 class Animation;
 class AI;
@@ -28,7 +29,8 @@ class Entity {
     double anim_width, anim_height; //width and height of animated box
     double angle;           // Angle in degrees
     double mass;
-
+    //ref enum ProjType {BULLET}
+    int proj_shoot_type;
 
     EntType ent_type;
     bool this_a_player;
@@ -36,6 +38,8 @@ class Entity {
     bool dead;
     bool swing_right;
     bool swing_left;
+    bool shoot_right;
+    bool shoot_left;
 
     b2Body* body;
 
@@ -49,6 +53,10 @@ class Entity {
     void OnRender(SDL_Renderer* renderer, Camera* camera);
 
     bool collideline(double x, double y, double targetx, double targety);
+
+    void Shoot(SDL_Renderer* renderer, double pr_xvel,
+               double pr_yvel, bool dir_right);
+
 
     void Calculate_Motion(int dt);
     AI* AI_object;

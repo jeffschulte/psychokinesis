@@ -18,6 +18,9 @@ void Application::OnRender() {
     for (int i=0;i<Entity::entities.size();i++) {
         Entity::entities[i]->OnRender(renderer, &camera);
     }
+    for (int i=0;i<Project::projects.size();i++) {
+        Project::projects[i]->OnRender(renderer, &camera);
+    }
 
     // Render the player hud
 

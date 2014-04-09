@@ -4,6 +4,7 @@
 #include <SDL_mixer.h>
 #include <string>
 #include "Entity.h"
+#include "Projectile.h"
 #include "Hud.h"
 #include "Logger.h"
 #include "Level.h"

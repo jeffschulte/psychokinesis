@@ -29,6 +29,8 @@ class Animation {
     bool hit_face_l;
     bool anim_swing_r;
     bool anim_swing_l;
+    bool anim_shoot_r;
+    bool anim_shoot_l;
     enum player_states {P_STAND, PUSH_R, PUSH_L, PUSH_U, PUSH_D,
                         PUSH_R_F_STAND, STAND_F_PUSH_R, PUSH_L_F_STAND,
                         STAND_F_PUSH_L, PUSH_U_F_STAND, STAND_F_PUSH_U,
@@ -38,7 +40,8 @@ class Animation {
                         FREE_D_F_STAND, STAND_F_FREE_D, H_WALL_L,
                         H_WALL_R, H_WALL_L_F_STAND, STAND_F_H_WALL_L,
                         H_WALL_R_F_STAND, STAND_F_H_WALL_R, SWING_L,
-                        SWING_R,HIT_FACE_F_R,HIT_FACE_F_L,DEAD,DYING};
+                        SWING_R,HIT_FACE_F_R,HIT_FACE_F_L,DEAD,DYING,
+                        SHOOT_L,SHOOT_R};
 
 
     Animation();
@@ -49,6 +52,6 @@ class Animation {
     int get_next_state(int ent_type, double targetx, double targety, double xcont,
                        double dist_to_ground, double height, double xvel,
                        double yvel,bool dead);
-    states_struct states[DYING+1];
+    states_struct states[SHOOT_R+1];
     void initialize_states_list_values();
 };

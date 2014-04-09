@@ -35,6 +35,18 @@ void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
     }
 }
 
+void Entity::Shoot(SDL_Renderer* renderer, double pr_xvel, double pr_yvel, bool dir_right) {
+    if (dir_right) {
+        Project::Create(renderer, proj_shoot_type, x + 1.1*width/2.0,
+                        y, 100+xvel, yvel);
+    }
+    else {
+        Project::Create(renderer, proj_shoot_type, x - 1.1*width/2.0,
+                        y, -100+xvel, yvel);
+    }
+};
+
+
 void Entity::Calculate_Motion(int dt) {
 
     double targetx = ActionState::p_astate->targetx;
@@ -83,6 +95,14 @@ void Entity::Calculate_Motion(int dt) {
             if (swing_left == true) {
                 animation_object->anim_swing_l = true;
                 swing_left = false;
+            }
+            if (shoot_right == true) {
+                animation_object->anim_shoot_r = true;
+                shoot_right = false;
+            }
+            if (shoot_left == true) {
+                animation_object->anim_shoot_l = true;
+                shoot_left = false;
             }
             if(ActionState::p_astate->pushing) {
                 body->ApplyForce(b2Vec2(-targetx * 2 * 9.8 * 3,
