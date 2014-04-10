@@ -103,7 +103,7 @@ int Animation::get_next_state(int ent_type, double targetx, double targety, doub
         current_state = SWING_R;
         anim_swing_r = false;
     }
-    else if (anim_shoot_l == true) {
+    else if (anim_swing_l == true) {
         current_state = SWING_L;
         anim_swing_l = false;
     }

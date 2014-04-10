@@ -27,7 +27,7 @@ class Project {
     double anim_width, anim_height; //width and height of animated box
     double angle;           // Angle in degrees
     double mass;
-
+    int stationary_count; //bullet expires when stationary for 3 time steps
 
     int proj_type;
 
