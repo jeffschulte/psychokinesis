@@ -44,7 +44,7 @@ Project* Project::Create(SDL_Renderer* renderer,
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(proj->x, proj->y);
     bodyDef.linearVelocity.Set(proj->xvel, proj->yvel);
-    //    bodyDef.bullet = true;
+    bodyDef.bullet = true;
     bodyDef.fixedRotation = true;
     proj->body = Level::p_level->world.CreateBody(&bodyDef);
 
@@ -53,7 +53,7 @@ Project* Project::Create(SDL_Renderer* renderer,
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
-    fixtureDef.density = 1.0f;
+    fixtureDef.density = 50.0f;
     fixtureDef.friction = 3;
 
     proj->body->CreateFixture(&fixtureDef);
@@ -77,7 +77,7 @@ SDL_Texture* Project::LoadTexture(const char* File, SDL_Renderer* renderer) {
 
 
 void Project::OnRender(SDL_Renderer* renderer, Camera* camera) {
-    printf("hello x = %g and y = %g\n",x,y);
+
     Rect rect5 = {x - anim_width / 2, y + anim_height / 2, anim_width, anim_height};
     if (texture != NULL) {
         SDL_Rect rect =  {0,0,500,200};

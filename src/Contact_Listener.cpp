@@ -34,7 +34,7 @@ void ContactListener::BeginContact(b2Contact* contact) {
                         Entity::entities[i]->animation_object->hit_face_r = true;
                     }
             //printf("num %d hit_pts = %g\n",i,Entity::entities[i]->hit_pts);
-                }
+            }
         }
     }
 };
