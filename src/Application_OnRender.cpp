@@ -14,10 +14,10 @@ void Application::OnRender() {
     level.OnRender(graphics.renderer, graphics.camera);
 
     // Render all entities
-    /*
-    for (int i=0;i<Entity::entities.size();i++) {
-        Entity::entities[i]->OnRender(renderer, &camera);
-        }*/
+
+    for (int i=0;i<entities.size();i++) {
+        entities[i]->update(graphics);
+    }
     for (int i=0;i<Project::projects.size();i++) {
         Project::projects[i]->OnRender(graphics.renderer, graphics.camera);
     }

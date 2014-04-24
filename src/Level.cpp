@@ -12,7 +12,9 @@ RelLineInfo EnvLine::DistToPoint(double x, double y) {
     RelLineInfo closest_pt;
     double lengthsq = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
 
-    double t = ((x - x1) * (x2 - x1) + (y - y1) * (y2 - y1)) / lengthsq;//dot product
+    //dot product
+
+    double t = ((x - x1) * (x2 - x1) + (y - y1) * (y2 - y1)) / lengthsq;
 
     //below is if x,y is to the left or right of both line end points
     if(t < 0.0) {
@@ -26,12 +28,13 @@ RelLineInfo EnvLine::DistToPoint(double x, double y) {
         closest_pt.y_to_pt = y2 - y;
     }
     else {
-    //the proj point is the closest on the line to the x,y point
-    double projx = x1 + t * (x2 - x1);
-    double projy = y1 + t * (y2 - y1);
-    closest_pt.x_to_pt = projx - x;
-    closest_pt.y_to_pt = projy - y;
-    closest_pt.dist_to_pt = sqrt((x - projx) * (x - projx) + (y - projy) * (y - projy));
+        //the proj point is the closest on the line to the x,y point
+        double projx = x1 + t * (x2 - x1);
+        double projy = y1 + t * (y2 - y1);
+        closest_pt.x_to_pt = projx - x;
+        closest_pt.y_to_pt = projy - y;
+        closest_pt.dist_to_pt = sqrt((x - projx) * (x - projx)
+                                     + (y - projy) * (y - projy));
     }
     return closest_pt;
 }

@@ -41,8 +41,9 @@ void Animation::update(Entity& ent, Graphics& graphics) {
 
 SDL_Texture* Animation::Animation_Load_Texture(const char* File,
                                                SDL_Renderer* renderer) {
-    SDL_Texture* texture;
-    if((texture = IMG_LoadTexture(renderer, File)) == NULL) {
+    SDL_Texture* texturel;
+    if((texturel = IMG_LoadTexture(renderer, File)) == NULL) {
+        Logger::log("Error loading texture from file");
         return NULL;
     }
     char message[100];
@@ -50,7 +51,7 @@ SDL_Texture* Animation::Animation_Load_Texture(const char* File,
     strcat (message,File);
     Logger::log(message);
 
-    return texture;
+    return texturel;
 }
 
 SDL_Rect Animation::Get_Frame_to_Render(Entity& ent) {

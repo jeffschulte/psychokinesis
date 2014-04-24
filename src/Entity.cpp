@@ -20,7 +20,7 @@ void Entity::update(Graphics& graphics) {
 CopyPhysicsComponent::CopyPhysicsComponent(b2World* worldc)
     : world(worldc) {
 
-    body == NULL;
+    body = NULL;
 }
 
 void CopyPhysicsComponent::update(Entity& ent) {
@@ -33,6 +33,7 @@ void CopyPhysicsComponent::update(Entity& ent) {
         bodyDef.type = b2_dynamicBody;
         bodyDef.position.Set(ent.x, ent.y);
         bodyDef.fixedRotation = true;
+        bodyDef.userData = &ent;
         body = world->CreateBody(&bodyDef);
 
         b2PolygonShape dynamicBox;
@@ -45,7 +46,7 @@ void CopyPhysicsComponent::update(Entity& ent) {
 
         body->CreateFixture(&fixtureDef);
     }
-    /*
+
     b2Vec2 position = body->GetPosition();
     b2Vec2 velocity = body->GetLinearVelocity();
 
@@ -54,7 +55,7 @@ void CopyPhysicsComponent::update(Entity& ent) {
     ent.angle = body->GetAngle() / -b2_pi * 180.0;
     ent.xvel = velocity.x;
     ent.yvel = velocity.y;
-    */
+
 }
 
 void NullInputComponent::update(Entity& ent) {}
