@@ -5,6 +5,7 @@
 #include <SDL_image.h>
 #include "Logger.h"
 #include "Entity.h"
+#include "Graphics.h"
 #include "Level.h"
 #include "ActionState.h"
 
@@ -15,7 +16,7 @@ struct states_struct {
     int end_state;
 };
 
-class Animation {
+class Animation : public RenderComponent {
  public:
     int anim_frame_rate;
     int MaxFrames;
@@ -43,15 +44,19 @@ class Animation {
                         SWING_R,HIT_FACE_F_R,HIT_FACE_F_L,DEAD,DYING,
                         SHOOT_L,SHOOT_R};
 
+    Uint8 red, green, blue;
 
-    Animation();
-    SDL_Texture* Animation_Load_Texture(const char* File, SDL_Renderer* renderer);
-    SDL_Rect Get_Frame_to_Render(double x, double y, double xvel, double yvel,
-                                 double height, int ent_type, bool dead);
+    SDL_Texture* texture;
+
+    Animation(const char* File,
+              SDL_Renderer* renderer);
+    void update(Entity& ent, Graphics& graphics);
+    SDL_Texture* Animation_Load_Texture(const char* File,
+                                        SDL_Renderer* renderer);
+    SDL_Rect Get_Frame_to_Render(Entity& ent);
  private:
-    int get_next_state(int ent_type, double targetx, double targety, double xcont,
-                       double dist_to_ground, double height, double xvel,
-                       double yvel,bool dead);
+    int get_next_state(Entity& ent, double targetx, double targety,
+                       double xcont, double dist_to_ground);
     states_struct states[SHOOT_R+1];
     void initialize_states_list_values();
 };

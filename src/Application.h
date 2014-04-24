@@ -3,6 +3,7 @@
 #include <SDL.h>
 #include <SDL_mixer.h>
 #include <string>
+#include <vector>
 #include "Entity.h"
 #include "Projectile.h"
 #include "Hud.h"
@@ -12,6 +13,7 @@
 #include "ActionState.h"
 #include "Player.h"
 #include "Contact_Listener.h"
+#include "Graphics.h"
 
 class Application {
  private:
@@ -23,7 +25,6 @@ class Application {
 
     int render_rate; //milliseconds
 
-    SDL_Renderer* renderer;
     SDL_Haptic *haptic;
     int effect_id;
     SDL_Joystick *joystick;
@@ -33,12 +34,15 @@ class Application {
     int screenw, screenh;
 
     Level level;
-    Camera camera;
     ActionState astate;
+
+    Graphics graphics;
 
     Hud mainhud;
 
     int oldtime, dt, frametime;
+
+    std::vector<Entity*> entities;
 
  public:
     Application();
@@ -50,4 +54,7 @@ class Application {
     void OnLoop();
     void OnRender();
     void OnCleanup();
+
+    Entity* Create(Graphics& graphics,
+                       Entity::EntType type, double x, double y);
 };

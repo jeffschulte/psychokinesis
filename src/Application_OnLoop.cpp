@@ -4,8 +4,8 @@ void Application::OnLoop() {
 
     Level::p_level->world.Step((double) dt / 1000.0, 6, 2);
 
-    for (int i=0;i<Entity::entities.size();i++) {
-        Entity::entities[i]->Calculate_Motion(dt);
+    for (int i=0;i<entities.size();i++) {
+        entities[i]->update(graphics);
     }
     for (int i=0;i<Project::projects.size();i++) {
         Project::projects[i]->Calculate_Motion(dt);

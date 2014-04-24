@@ -5,6 +5,7 @@
 #include <SDL_image.h>
 #include "Logger.h"
 #include "Entity.h"
+#include "Player.h"
 #include "Level.h"
 
 class AI {

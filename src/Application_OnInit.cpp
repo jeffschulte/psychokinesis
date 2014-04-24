@@ -19,7 +19,7 @@ bool Application::OnInit() {
         return false;
     }
 
-    if((renderer = SDL_CreateRenderer(screen, -1, 0)) == NULL) {
+    if((graphics.renderer = SDL_CreateRenderer(screen, -1, 0)) == NULL) {
         Logger::log("SDL_CreateRenderer failure");
         return false;
     }
@@ -66,79 +66,45 @@ bool Application::OnInit() {
     }
 
     // Test blocks to shove around
-    //below variables = renderer, entype, xpos, ypos
-    // Entity::Create(renderer, Entity::LITTLE_MAN, 21, 20);
-    // Entity::Create(renderer, Entity::BIG_MAN, 21, 16);
-    // Entity::Create(renderer, Entity::BIG_MAN, 21, 24);
-  //   Entity::Create(renderer, Entity::BIG_MAN, 21, 48);
-  //   Entity::Create(renderer, Entity::BIG_MAN, 21, 42);
-  //   Entity::Create(renderer, Entity::BIG_MAN, 21, 42);
-  //   Entity::Create(renderer, Entity::LITTLE_MAN, 41, 27);
-  //   Entity::Create(renderer, Entity::LITTLE_MAN, 35, 27);
-  //   Entity::Create(renderer, Entity::LITTLE_MAN, 38, 27);
-  //   Entity::Create(renderer, Entity::LITTLE_MAN, 26, 25);
-  //   Entity::Create(renderer, Entity::LITTLE_MAN, 21, 25);
-  //   Entity::Create(renderer, Entity::BIG_MAN, 17, 25);
-  //   Entity::Create(renderer, Entity::LITTLE_MAN, 26, 10);
-  //   Entity::Create(renderer, Entity::LITTLE_MAN, 11, 10);
-  //   Entity::Create(renderer, Entity::LITTLE_MAN, 7, 10);
-   Entity::Create(renderer, Entity::LITTLE_MAN, 26, 25);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 21, 25);
-    Entity::Create(renderer, Entity::BIG_MAN, 17, 25);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 26, 20);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 11, 20);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 7, 20);
-  Entity::Create(renderer, Entity::LITTLE_MAN, 26, 35);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 21, 35);
-    Entity::Create(renderer, Entity::BIG_MAN, 17, 35);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 26, 30);
-    Entity::Create(renderer, Entity::LITTLE_MAN, 11, 30);
-   Entity::Create(renderer, Entity::LITTLE_MAN, 7, 30);
 
+    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 26, 25));
+    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 21, 25));
+    entities.push_back(Create(graphics, Entity::BIG_MAN, 17, 25));
+    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 26, 20));
+    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 11, 20));
+    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 7, 20));
+    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 26, 35));
+    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 21, 35));
+    entities.push_back(Create(graphics, Entity::BIG_MAN, 17, 35));
+    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 26, 30));
+    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 11, 30));
+    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 7, 30));
 
-   Project::Create(renderer, Project::BULLET, 20, 30, 20, 0);
+   Project::Create(graphics.renderer, Project::BULLET, 20, 30, 20, 0);
 
    Logger::log("Creating player");
 
-   Player::Create(renderer, 4, 20);
+   entities.push_back(Create(graphics, Entity::PLAYER, 4, 20));
 
     //After all Entities are loaded:
     //check to see if there is a player
     bool there_is_a_player = false;
-    for (int i =0; i< Entity::entities.size(); i++){
-        if (Entity::entities[i]->ent_type == Entity::PLAYER) {
+    for (int i =0; i< entities.size(); i++){
+        if (entities[i]->ent_type == Entity::PLAYER) {
             there_is_a_player = true;
+            Player::player = entities[i];
         }
     }
     if (!there_is_a_player) {
         Logger::log("There is not player initialized!!!\n");
     }
-    //check to see if there are overlapping starting entities
-    // for (int i =0; i< Entity::entities.size(); i++){
-    //     double xi = Entity::entities[i]->motion_object->x;
-    //     double yi = Entity::entities[i]->motion_object->y;
-    //     double wi = Entity::entities[i]->motion_object->width;
-    //     double hi = Entity::entities[i]->motion_object->height;
-    //     for (int j = i+1; j< Entity::entities.size(); j++){
-    //         double xj = Entity::entities[j]->motion_object->x;
-    //         double yj = Entity::entities[j]->motion_object->y;
-    //         double wj = Entity::entities[j]->motion_object->width;
-    //         double hj = Entity::entities[j]->motion_object->height;
-    //         if (fabs(xi - xj) < (wi+wj)/2.0 && fabs(yi - yj) < (hi+hj)/2.0) {
-    //             std::ostringstream message;
-    //             message << "There are overlapping starting entities at x,y "
-    //                     << xi << "," << yi << " and " << xj << "," << yj << "\n";
-    //             Logger::log(message.str());
-    //             exit(1);
-    //         }
-    //     }
-    // }
 
-    mainhud.Hud_Load_Hit_Pts_Texture("art_assets/hit_pts_meter.png", renderer,
+    mainhud.Hud_Load_Hit_Pts_Texture("art_assets/hit_pts_meter.png",
+                                     graphics.renderer,
                                      Player::player->hit_pts);
 
 
-    if(level.LoadAssets(renderer, "art_assets/sky2.png",
+    if(level.LoadAssets(graphics.renderer, "art_assets/sky2.png",
                         "art_assets/grass.png") == NULL) {
         Logger::log("Level loading failure: " + std::string(SDL_GetError()));
     }

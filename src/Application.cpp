@@ -2,7 +2,6 @@
 
 
 Application::Application() {
-    renderer = NULL;
     haptic = NULL;
     joystick = NULL;
 

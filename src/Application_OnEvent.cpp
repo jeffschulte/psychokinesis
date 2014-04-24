@@ -88,7 +88,7 @@ void Application::OnEvent(SDL_Event* Event) {
                 SDL_HapticRunEffect(haptic, effect_id, SDL_HAPTIC_INFINITY);
             }
         }
-        else if (Event->jbutton.button == 2) {
+        /*else if (Event->jbutton.button == 2) {
             if (ActionState::p_astate->xcont >= 0.0) {
                 Player::player->swing_right = true;
             }
@@ -105,7 +105,7 @@ void Application::OnEvent(SDL_Event* Event) {
                 Player::player->Shoot(renderer, 0, 0, false);
                 Player::player->shoot_left = true;
             }
-        }
+            }*/
 }
 
     if (Event->type == SDL_JOYBUTTONUP) {

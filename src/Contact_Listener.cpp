@@ -11,6 +11,7 @@ void ContactListener::BeginContact(b2Contact* contact) {
     double massA = bodyA->GetMass();
     double massB = bodyB->GetMass();
     //dont know how to get the entity when I have a pointer to the body:
+    /*
     for (int i =0; i< Entity::entities.size(); i++){
         if (Entity::entities[i]->body == bodyA) {
             if (speedB*massB > 10.0) {
@@ -37,4 +38,5 @@ void ContactListener::BeginContact(b2Contact* contact) {
             }
         }
     }
+    */ // Temp taken out to find a better way to get back to the entity
 };

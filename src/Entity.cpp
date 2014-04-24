@@ -1,6 +1,65 @@
 #include "Entity.h"
 
 
+Entity::Entity(InputComponent* inputc, PhysicsComponent* physicsc,
+       RenderComponent* renderc)
+    : input(inputc), physics(physicsc), render(renderc) {}
+
+
+void Entity::update(Graphics& graphics) {
+
+    input->update(*this);
+    physics->update(*this);
+    render->update(*this, graphics);
+}
+
+
+// This class directly copies the values from the b2body calculation
+// onto the local state of the object
+
+CopyPhysicsComponent::CopyPhysicsComponent(b2World* worldc)
+    : world(worldc) {
+
+    body == NULL;
+}
+
+void CopyPhysicsComponent::update(Entity& ent) {
+
+    if(body == NULL) {
+
+        // Create its counterpart in the world
+
+        b2BodyDef bodyDef;
+        bodyDef.type = b2_dynamicBody;
+        bodyDef.position.Set(ent.x, ent.y);
+        bodyDef.fixedRotation = true;
+        body = world->CreateBody(&bodyDef);
+
+        b2PolygonShape dynamicBox;
+        dynamicBox.SetAsBox(ent.width / 2, ent.height / 2);
+
+        b2FixtureDef fixtureDef;
+        fixtureDef.shape = &dynamicBox;
+        fixtureDef.density = 1.0f;
+        fixtureDef.friction = 3;
+
+        body->CreateFixture(&fixtureDef);
+    }
+    /*
+    b2Vec2 position = body->GetPosition();
+    b2Vec2 velocity = body->GetLinearVelocity();
+
+    ent.x = position.x;
+    ent.y = position.y;
+    ent.angle = body->GetAngle() / -b2_pi * 180.0;
+    ent.xvel = velocity.x;
+    ent.yvel = velocity.y;
+    */
+}
+
+void NullInputComponent::update(Entity& ent) {}
+
+/*
 std::vector<Entity*> Entity::entities;
 
 Entity::Entity() {
@@ -16,23 +75,6 @@ SDL_Texture* Entity::LoadTexture(const char* File, SDL_Renderer* renderer) {
 
     texture = animation_object->Animation_Load_Texture(File,renderer);
     return texture;
-}
-
-
-void Entity::OnRender(SDL_Renderer* renderer, Camera* camera) {
-
-    Rect rect5 = {x - anim_width / 2, y + anim_height / 2, anim_width, anim_height};
-    if (texture != NULL) {
-        SDL_Rect rect =
-            animation_object->Get_Frame_to_Render(x, y, xvel, yvel, height,
-                                                  int(ent_type), dead);
-        camera->RenderCopyEx(renderer, texture, &rect, &rect5,
-                             angle, NULL, SDL_FLIP_NONE);
-    }
-    else {
-        SDL_SetRenderDrawColor(renderer, red, green, blue, 255);
-        camera->RenderFillRect(renderer, &rect5);
-    }
 }
 
 void Entity::Shoot(SDL_Renderer* renderer, double pr_xvel, double pr_yvel, bool dir_right) {
@@ -218,3 +260,4 @@ bool Entity::collideline(double xp, double yp, double targetx, double targety) {
 
     return false;
 }
+*/

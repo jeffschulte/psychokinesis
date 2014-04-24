@@ -3,47 +3,112 @@
 #include <SDL.h>
 #include <Box2D/Box2D.h>
 #include <string>
-#include <vector>
-#include "Camera.h"
-#include "Animation.h"
-#include "Artificial_Intel.h"
+#include "Graphics.h"
 #include "Logger.h"
-#include "Projectile.h"
+#include "Level.h"
 
-class Animation;
-class AI;
+class Entity;
+
+// These are general components that can be swapped in for the
+// different types of entities
+
+class InputComponent
+{
+public:
+  virtual ~InputComponent() {}
+  virtual void update(Entity& ent) = 0;
+};
+
+class PhysicsComponent
+{
+public:
+  virtual ~PhysicsComponent() {}
+  virtual void update(Entity& ent) = 0;
+};
+
+class RenderComponent
+{
+public:
+  virtual ~RenderComponent() {}
+  virtual void update(Entity& ent, Graphics& graphics) = 0;
+};
 
 class Entity {
 
  public:
+
     enum EntType {BIG_MAN,LITTLE_MAN,PLAYER,HIT_PTS_METER};
 
-    static std::vector<Entity*> entities;
-    static Entity* Create(SDL_Renderer* renderer,
-                          EntType type,double x, double y);
+    Entity(InputComponent* inputc,
+           PhysicsComponent* physicsc,
+           RenderComponent* renderc);
 
-    double x, y;            // Position of Entity (CoM)
-    double xforce, yforce;
-    double xvel, yvel;      // Velocity
-    double width, height;   // Size of Entity
-    double anim_width, anim_height; //width and height of animated box
-    double angle;           // Angle in degrees
-    double mass;
-    //ref enum ProjType {BULLET}
-    int proj_shoot_type;
+    void update(Graphics& graphics);
 
-    EntType ent_type;
-    bool this_a_player;
-    double hit_pts;
+    double x, y, xvel, yvel, width, height, angle, hit_pts;
     bool dead;
+
+    bool this_a_player;
+
+
     bool swing_right;
     bool swing_left;
     bool shoot_right;
     bool shoot_left;
 
-    b2Body* body;
+    EntType ent_type;
+    double mass;
+     int proj_shoot_type;
+
 
     std::string debugname;
+
+    double anim_width, anim_height;
+
+ private:
+
+    InputComponent* input;
+    PhysicsComponent* physics;
+    RenderComponent* render;
+
+};
+
+
+// Next are general components that are applied to everything at the
+// moment
+
+class CopyPhysicsComponent : public PhysicsComponent {
+
+ public:
+
+    CopyPhysicsComponent(b2World* worldc);
+    virtual void update(Entity& ent);
+
+ private:
+
+    b2World * world;
+    b2Body* body;
+};
+
+class NullInputComponent : public InputComponent {
+
+ public:
+    virtual void update(Entity& ent);
+};
+
+
+    /*
+
+
+    static
+
+    double xforce, yforce;
+     //width and height of animated box
+    double angle;           // Angle in degrees
+   
+
+
+
 
     Uint8 red, green, blue;
     SDL_Texture* texture;
@@ -61,9 +126,11 @@ class Entity {
     void Calculate_Motion(int dt);
     AI* AI_object;
     Animation* animation_object;
+
 };
 
 
 #include "Player.h"
 
 /// TODO: This is ugly as hell. Fix the coupling....
+*/

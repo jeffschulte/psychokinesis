@@ -9,7 +9,7 @@ Motion_Calc::Motion_Calc(){
 
 void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
                               bool this_a_player) {
-
+    /*
     EnvLine* closest  = Level::p_level->ClosestLine(x, y);
     double close_line_x = closest->DistToPoint(x,y).x_to_pt;
     double close_line_y = closest->DistToPoint(x,y).y_to_pt;
@@ -400,7 +400,7 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
        @param vector vbf final velocity of centre of mass on object a
        @param vector waf final angular velocity of object a
        @param vector wbf final angular velocity of object b
-    */
+    
     //     double k=1/(ma*ma)+ 2/(ma*mb) +1/(mb*mb) - ra.x*ra.x/(ma*Ia) - rb.x*rb.x/(ma*Ib)  - ra.y*ra.y/(ma*Ia)
     //         - ra.y*ra.y/(mb*Ia) - ra.x*ra.x/(mb*Ia) - rb.x*rb.x/(mb*Ib) - rb.y*rb.y/(ma*Ib)
     //         - rb.y*rb.y/(mb*Ib) + ra.y*ra.y*rb.x*rb.x/(Ia*Ib) + ra.x*ra.x*rb.y*rb.y/(Ia*Ib) - 2*ra.x*ra.y*rb.x*rb.y/(Ia*Ib);
@@ -413,3 +413,5 @@ void Motion_Calc::Calc_Motion(Entity* this_ent, int ent_type, int dt,
     //     wbf.x = wbi.x - (Jx*rb.y - Jy*rb.x) /Ib;
     //     wbf.y = wbi.y - (Jx*rb.y - Jy*rb.x) /Ib;
     // }
+*/
+}
