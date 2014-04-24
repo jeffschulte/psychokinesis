@@ -24,6 +24,8 @@ bool Application::OnInit() {
         return false;
     }
 
+    graphics.camera = new Camera();
+
     std::stringstream ss;
     ss << SDL_NumJoysticks() << " joysticks were found";
     Logger::log(ss.str());

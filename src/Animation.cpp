@@ -30,8 +30,8 @@ void Animation::update(Entity& ent, Graphics& graphics) {
         if(texture != NULL) {
             SDL_Rect rects = Get_Frame_to_Render(ent);
             graphics.camera->RenderCopyEx(graphics.renderer, texture,
-                                          &rects, &rectw, ent.angle, NULL,
-                                          SDL_FLIP_NONE);
+                                         &rects, &rectw, ent.angle, NULL,
+                                         SDL_FLIP_NONE);
         }
         else {
             SDL_SetRenderDrawColor(graphics.renderer, red, green, blue, 255);
@@ -39,7 +39,8 @@ void Animation::update(Entity& ent, Graphics& graphics) {
         }
     }
 
-SDL_Texture* Animation::Animation_Load_Texture(const char* File, SDL_Renderer* renderer) {
+SDL_Texture* Animation::Animation_Load_Texture(const char* File,
+                                               SDL_Renderer* renderer) {
     SDL_Texture* texture;
     if((texture = IMG_LoadTexture(renderer, File)) == NULL) {
         return NULL;
