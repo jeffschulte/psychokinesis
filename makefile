@@ -2,7 +2,8 @@
 
 WFLAGS=-Weverything -Wno-padded -Wno-documentation \
 	-Wno-disabled-macro-expansion -Wno-sign-compare -Wno-sign-conversion
-SDLFLAGS=-lSDL2_image -lSDL2_mixer `sdl2-config --cflags --libs` -lliquidfun
+SDLFLAGS=`sdl2-config --cflags`
+LIBS=`sdl2-config --libs` -lSDL2_image -lSDL2_mixer -lliquidfun
 CC=clang++
 
 srcs=$(wildcard src/*.cpp)
@@ -18,7 +19,7 @@ build/%.o: src/%.cpp $(heads)
 	$(CC) -c $< $(WFLAGS) $(SDLFLAGS) -o $@
 
 bin/psycho: $(objs)
-	$(CC) $(objs) $(WFLAGS) $(SDLFLAGS) -o bin/psycho
+	$(CC) $(objs) $(WFLAGS) $(SDLFLAGS) $(LIBS) -o bin/psycho
 
 $(objs): | objdir
 
