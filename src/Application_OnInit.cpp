@@ -9,6 +9,8 @@ bool Application::OnInit() {
         return false;
     }
 
+    // Set up graphics
+
     SDL_Window *screen = SDL_CreateWindow("Psychokinesis",
                           SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED,
@@ -25,6 +27,11 @@ bool Application::OnInit() {
     }
 
     graphics.camera = new Camera();
+    entities.push_back(new Entity(new CameraControl(graphics.camera),
+                                  new NullPhysicsComponent(),
+                                  new NullRenderComponent()));
+
+    // Set up joystick controls
 
     std::stringstream ss;
     ss << SDL_NumJoysticks() << " joysticks were found";
@@ -33,21 +40,17 @@ bool Application::OnInit() {
     SDL_JoystickEventState(SDL_ENABLE);
     joystick = SDL_JoystickOpen(0);
 
-    // Open the device
+    // Set up rumble effects
 
     haptic = SDL_HapticOpen( 0 );
     if (haptic == NULL) {
         Logger::log("SDL_HapticOpen failure");
-        // return false;
     }
 
-    // Initialize simple rumble
-
     if (haptic != NULL && SDL_HapticRumbleInit( haptic ) != 0) {
-
-        Logger::log("SDL_HapticRumbleInit failure: " + std::string(SDL_GetError()));
+        Logger::log("SDL_HapticRumbleInit failure: " +
+                    std::string(SDL_GetError()));
         haptic = NULL;
-        // return false;
     }
 
     SDL_HapticEffect effect;
@@ -63,15 +66,7 @@ bool Application::OnInit() {
 
     effect_id = SDL_HapticNewEffect(haptic, &effect);
 
-    if(Mix_OpenAudio(22050, AUDIO_S16, 2, 4096) < 0) {
-        return false;
-    }
 
-    // Camera control
-
-    entities.push_back(new Entity(new CameraControl(graphics.camera),
-                                  new NullPhysicsComponent(),
-                                  new NullRenderComponent()));
 
     // Test blocks to shove around
 
@@ -88,24 +83,12 @@ bool Application::OnInit() {
     Create(graphics, Entity::LITTLE_MAN, 11, 30);
     Create(graphics, Entity::LITTLE_MAN, 7, 30);
 
-   Project::Create(graphics.renderer, Project::BULLET, 20, 30, 20, 0);
+    Project::Create(graphics.renderer, Project::BULLET, 20, 30, 20, 0);
 
-   Logger::log("Creating player");
+    Logger::log("Creating player");
 
-   Create(graphics, Entity::PLAYER, 4, 20);
+    Create(graphics, Entity::PLAYER, 4, 20);
 
-    //After all Entities are loaded:
-    //check to see if there is a player
-    bool there_is_a_player = false;
-    for (int i =0; i< entities.size(); i++){
-        if (entities[i]->ent_type == Entity::PLAYER) {
-            there_is_a_player = true;
-            Player::player = entities[i];
-        }
-    }
-    if (!there_is_a_player) {
-        Logger::log("There is not player initialized!!!\n");
-    }
 
     mainhud.Hud_Load_Hit_Pts_Texture("art_assets/hit_pts_meter.png",
                                      graphics.renderer,
@@ -117,7 +100,7 @@ bool Application::OnInit() {
         Logger::log("Level loading failure: " + std::string(SDL_GetError()));
     }
 
-    Level::p_level->world.SetContactListener(&myContactListenerInstance);
+    Level::p_level->world.SetContactListener(&contactListen);
 
     oldtime = SDL_GetTicks();
     return true;

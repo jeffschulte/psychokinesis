@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SDL.h>
-#include <SDL_mixer.h>
 #include <string>
 #include <vector>
 #include "Entity.h"
@@ -20,9 +19,7 @@ class Application {
  private:
     bool Running;
 
-    b2Contact* contact;
-
-    ContactListener myContactListenerInstance;
+    ContactListener contactListen;
 
     int render_rate; //milliseconds
 
@@ -30,7 +27,6 @@ class Application {
     int effect_id;
     SDL_Joystick *joystick;
 
-    Mix_Music* music;
 
     int screenw, screenh;
 

@@ -47,13 +47,6 @@ void Application::OnEvent(SDL_Event* Event) {
             Running = false;
         }
 
-        if(Event->key.keysym.sym == SDLK_s) {
-            if(music == NULL) {
-                music = Mix_LoadMUS("sound_assets/bib.ogg");
-                printf("%s\n", Mix_GetError());
-                Mix_PlayMusic(music, 0);
-            }
-        }
     }
 
     if(Event->type == SDL_KEYUP) {
@@ -88,6 +81,9 @@ void Application::OnEvent(SDL_Event* Event) {
                 SDL_HapticRunEffect(haptic, effect_id, SDL_HAPTIC_INFINITY);
             }
         }
+
+        // TODO: Get these controls unconnected
+
         /*else if (Event->jbutton.button == 2) {
             if (ActionState::p_astate->xcont >= 0.0) {
                 Player::player->swing_right = true;

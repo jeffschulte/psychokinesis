@@ -5,8 +5,6 @@ Application::Application() {
     haptic = NULL;
     joystick = NULL;
 
-    music = NULL;
-
     Running = true;
 
     oldtime = SDL_GetTicks();

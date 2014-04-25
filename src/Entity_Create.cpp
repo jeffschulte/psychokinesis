@@ -49,6 +49,7 @@ Entity* Application::Create(Graphics& graphics,
             ent->proj_shoot_type=0;
             ent->debugname = "player";
             ent->this_a_player = true;
+            Player::player = ent;
             break;
     }
 
