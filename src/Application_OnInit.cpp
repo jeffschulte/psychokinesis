@@ -69,24 +69,24 @@ bool Application::OnInit() {
 
     // Test blocks to shove around
 
-    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 26, 25));
-    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 21, 25));
-    entities.push_back(Create(graphics, Entity::BIG_MAN, 17, 25));
-    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 26, 20));
-    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 11, 20));
-    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 7, 20));
-    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 26, 35));
-    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 21, 35));
-    entities.push_back(Create(graphics, Entity::BIG_MAN, 17, 35));
-    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 26, 30));
-    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 11, 30));
-    entities.push_back(Create(graphics, Entity::LITTLE_MAN, 7, 30));
+    Create(graphics, Entity::LITTLE_MAN, 26, 25);
+    Create(graphics, Entity::LITTLE_MAN, 21, 25);
+    Create(graphics, Entity::BIG_MAN, 17, 25);
+    Create(graphics, Entity::LITTLE_MAN, 26, 20);
+    Create(graphics, Entity::LITTLE_MAN, 11, 20);
+    Create(graphics, Entity::LITTLE_MAN, 7, 20);
+    Create(graphics, Entity::LITTLE_MAN, 26, 35);
+    Create(graphics, Entity::LITTLE_MAN, 21, 35);
+    Create(graphics, Entity::BIG_MAN, 17, 35);
+    Create(graphics, Entity::LITTLE_MAN, 26, 30);
+    Create(graphics, Entity::LITTLE_MAN, 11, 30);
+    Create(graphics, Entity::LITTLE_MAN, 7, 30);
 
    Project::Create(graphics.renderer, Project::BULLET, 20, 30, 20, 0);
 
    Logger::log("Creating player");
 
-   entities.push_back(Create(graphics, Entity::PLAYER, 4, 20));
+   Create(graphics, Entity::PLAYER, 4, 20);
 
     //After all Entities are loaded:
     //check to see if there is a player

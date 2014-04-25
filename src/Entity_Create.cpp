@@ -47,5 +47,7 @@ Entity* Application::Create(Graphics& graphics,
     ent->anim_width = 1.7*(ent->width);
     ent->anim_height = 1.0*(ent->height);
 
+    entities.push_back(ent);
+
     return ent;
 }
