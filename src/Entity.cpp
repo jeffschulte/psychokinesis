@@ -67,9 +67,10 @@ void CopyPhysicsComponent::ApplyForce(double x, double y) {
     body->ApplyForce(b2Vec2(x, y), body->GetWorldCenter(), true);
 }
 
-void NullInputComponent::update(Entity& ent) {}
-void NullPhysicsComponent::update(Entity& ent) {}
-void NullRenderComponent::update(Entity& ent, Graphics& graphics) {}
+void NullInputComponent::update(__attribute__((unused)) Entity& ent) {}
+void NullPhysicsComponent::update(__attribute__((unused)) Entity& ent) {}
+void NullRenderComponent::update(__attribute__((unused)) Entity& ent,
+                                 __attribute__((unused)) Graphics& graphics) {}
 
 
 
