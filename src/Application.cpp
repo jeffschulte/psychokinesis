@@ -55,7 +55,6 @@ int Application::OnExecute() {
         dt = SDL_GetTicks() - oldtime;
         if(dt > frametime) {
             oldtime = SDL_GetTicks();
-            OnLoop();
             OnRender();
         }
     }

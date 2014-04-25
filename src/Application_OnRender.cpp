@@ -1,8 +1,9 @@
 #include "Application.h"
-#include <math.h>
 
 
 void Application::OnRender() {
+
+    Level::p_level->world.Step((double) dt / 1000.0, 6, 2);
 
     // Clear everything
 
@@ -13,14 +14,12 @@ void Application::OnRender() {
 
     level.OnRender(graphics.renderer, graphics.camera);
 
-    // Render all entities
+    // Update all entities
 
     for (int i=0;i<entities.size();i++) {
         entities[i]->update(graphics);
     }
-    for (int i=0;i<Project::projects.size();i++) {
-        Project::projects[i]->OnRender(graphics.renderer, graphics.camera);
-    }
+
 
     // Render the player hud
 

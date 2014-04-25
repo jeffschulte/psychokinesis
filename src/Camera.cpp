@@ -10,7 +10,7 @@ Camera::Camera() {
 
 CameraControl::CameraControl(Camera* cam) : camera(cam) {}
 
-void CameraControl::update(Entity& ent) {
+void CameraControl::update(__attribute__((unused)) Entity& ent) {
 
     camera->x = Player::player->x;
     camera->zoom = Player::player->y > 22 ? 10 : -fabs(Player::player->y) + 32;

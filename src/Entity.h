@@ -83,12 +83,15 @@ class CopyPhysicsComponent : public PhysicsComponent {
     CopyPhysicsComponent(b2World* worldc);
     virtual void update(Entity& ent);
     void ApplyForce(double x, double y);
+    b2Body* getBody() { return body; }
 
  private:
 
     b2World * world;
     b2Body* body;
 };
+
+
 
 class NullInputComponent : public InputComponent {
 

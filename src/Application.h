@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include "Entity.h"
-#include "Projectile.h"
+#include "Bullet.h"
 #include "Hud.h"
 #include "Logger.h"
 #include "Level.h"
