@@ -35,4 +35,7 @@ void ContactListener::BeginContact(b2Contact* contact) {
         //     Entity::entities[i]->animation_object->hit_face_r = true;
         // }
     }
+
+
+    // TODO: Check the enttype for different bullet effects
 }
