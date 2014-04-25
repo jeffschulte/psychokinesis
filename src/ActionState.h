@@ -1,8 +1,24 @@
 #pragma once
 
 #include <stdio.h>
+#include <Box2D/Box2D.h>
 #include "Entity.h"
 #include "Animation.h"
+
+class ActionState;
+
+class PushCallback : public b2RayCastCallback {
+
+ public:
+    virtual float32 ReportFixture(b2Fixture* fixture, const b2Vec2 & point,
+                                  const b2Vec2 & normal, float32 fraction);
+    PushCallback(ActionState* state);
+
+ private:
+    ActionState* astate;
+
+};
+
 
 class ActionState : public InputComponent {
 
@@ -19,4 +35,5 @@ class ActionState : public InputComponent {
 
     Animation* playerAnim;
     CopyPhysicsComponent* playerPhys;
+    PushCallback pushcall;
 };

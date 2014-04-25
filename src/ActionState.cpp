@@ -3,7 +3,7 @@
 
 ActionState::ActionState(Animation* anim, CopyPhysicsComponent* phys)
     : playerAnim(anim), playerPhys(phys), xcont(0),
-      targetx(0), targety(0), pushing(false) {}
+      targetx(0), targety(0), pushing(false), pushcall(this) {}
 
 void ActionState::update(Entity& ent) {
 
@@ -57,6 +57,10 @@ void ActionState::update(Entity& ent) {
     if(pushing) {
         playerPhys->ApplyForce(-targetx * 2 * 9.8 * 3,
                                -targety * 2 * 9.8 * 3);
+
+        b2Vec2 p1(ent.x, ent.y);
+        b2Vec2 p2 = p1 + b2Vec2(targetx, targety);
+        Level::p_level->world.RayCast(&pushcall, p1, p2);
     }
 
     if (closest->DistToPoint(ent.x,ent.y).dist_to_pt < ent.height
@@ -70,5 +74,24 @@ void ActionState::update(Entity& ent) {
                   (xcont < 0.0 && ent.xvel > 0.0) ) {
             playerPhys->ApplyForce(xcont * 100, 0);
         }
+    }
+}
+
+PushCallback::PushCallback(ActionState* state) : astate(state) {}
+
+float32 PushCallback::ReportFixture(b2Fixture* fixture, const b2Vec2 & point,
+                                    const b2Vec2 & normal, float32 fraction) {
+
+    b2Body* body = fixture->GetBody();
+
+    if(body->GetUserData() == NULL) {
+        return -1;  // Continue the ray cast
+    }
+    else {
+        body->ApplyForce(b2Vec2(astate->targetx * 2 * 9.8 * 3,
+                                astate->targety * 2 * 9.8 * 3),
+                         body->GetWorldCenter(), true);
+
+        return 0;  // Terminate the cast
     }
 }

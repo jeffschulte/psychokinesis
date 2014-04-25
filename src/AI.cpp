@@ -71,20 +71,10 @@ void AI::update(Entity& ent) {
         //                      body->GetWorldCenter(), true);
         // }
     }
-
-    // TODO: Figure out this coupling as well
-
-    // if(ActionState::p_astate->pushing) {
-    //     if(collideline(Player::player->x, Player::player->y,
-    //                    targetx, targety)) {
-    //         body->ApplyForce(b2Vec2(targetx * 2 * 9.8 * 10,
-    //                                 targety * 2 * 9.8 * 10),
-    //                          body->GetWorldCenter(), true);
-    //     }
-    // }
 }
 
 // Method to check if the rectangle collides with a given line segment
+// TODO: This probably isn't needed
 
 bool AI::collideline(Entity& ent, double xp, double yp,
                      double targetx, double targety) {

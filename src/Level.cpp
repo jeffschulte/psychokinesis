@@ -73,7 +73,7 @@ void Level::OnRender(SDL_Renderer* renderer, Camera* camera) {
                                lines[i].x2, lines[i].y2);
     }
 
-    Rect rect = {0, 34, 40, 40};
+    //Rect rect = {0, 34, 40, 40};
     //camera->RenderCopy(renderer, fg, NULL, &rect);
 
 }
