@@ -83,3 +83,55 @@ void AI::update(Entity& ent) {
     //     }
     // }
 }
+
+// Method to check if the rectangle collides with a given line segment
+
+bool AI::collideline(Entity& ent, double xp, double yp,
+                     double targetx, double targety) {
+
+    double m = targety / targetx;
+    double b = yp - m * xp;
+
+    // Equation for the line is given in y = mx + b form
+    // First check the vertical, and see if it is in bounds
+
+    double vertcoor = m * (ent.x - ent.width / 2) + b;
+
+    if(vertcoor >= ent.y - ent.height / 2 &&
+       vertcoor <= ent.y + ent.height / 2) {
+        if((vertcoor > yp && targety > 0) || (vertcoor < yp && targety < 0) ) {
+            return true;
+        }
+    }
+
+    vertcoor = m * (ent.x + ent.width / 2) + b;
+
+    if(vertcoor >= ent.y - ent.height / 2 &&
+       vertcoor <= ent.y + ent.height / 2) {
+        if((vertcoor > yp && targety > 0) || (vertcoor < yp && targety < 0) ) {
+            return true;
+        }
+    }
+
+    // Next see if it goes through the top or bottom
+
+    double horicoor = (ent.y - ent.height / 2 - b) / m;
+
+    if(horicoor >= ent.x - ent.width / 2 && horicoor <= ent.x + ent.width / 2) {
+        if((horicoor > xp && targetx > 0) || (horicoor < xp && targetx < 0) ) {
+            return true;
+        }
+    }
+
+    horicoor = (ent.y + ent.height / 2 - b) / m;
+
+    if(horicoor >= ent.x - ent.width / 2 && horicoor <= ent.x + ent.width / 2) {
+        if((horicoor > xp && targetx > 0) || (horicoor < xp && targetx < 0) ) {
+            return true;
+        }
+    }
+
+    // None of these, then we missed
+
+    return false;
+}

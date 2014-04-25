@@ -17,5 +17,11 @@ void Application::OnLoop() {
    //if (haptic != NULL && SDL_HapticRumblePlay( haptic, 0.5, 1000 ) != 0){
         //    Logger::log("RumblePlay Fail: " + std::string(SDL_GetError()));
         //}
+
+    // TODO: Update the camera position
+
+    // Camera::camera->x = x;
+    // Camera::camera->zoom = y > 22 ? 10 : -fabs(y) + 32;
+
     return;
 }

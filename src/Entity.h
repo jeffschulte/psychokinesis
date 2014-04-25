@@ -48,8 +48,9 @@ class Entity {
     double x, y, xvel, yvel, width, height, angle, hit_pts;
     bool dead;
 
-    bool this_a_player;
+    // TODO: Move these someplace less general
 
+    bool this_a_player;
 
     bool swing_right;
     bool swing_left;
@@ -95,42 +96,3 @@ class NullInputComponent : public InputComponent {
  public:
     virtual void update(Entity& ent);
 };
-
-
-    /*
-
-
-    static
-
-    double xforce, yforce;
-     //width and height of animated box
-    double angle;           // Angle in degrees
-   
-
-
-
-
-    Uint8 red, green, blue;
-    SDL_Texture* texture;
-    Entity();
-
-    SDL_Texture* LoadTexture(const char* File,SDL_Renderer* renderer);
-    void OnRender(SDL_Renderer* renderer, Camera* camera);
-
-    bool collideline(double x, double y, double targetx, double targety);
-
-    void Shoot(SDL_Renderer* renderer, double pr_xvel,
-               double pr_yvel, bool dir_right);
-
-
-    void Calculate_Motion(int dt);
-    AI* AI_object;
-    Animation* animation_object;
-
-};
-
-
-#include "Player.h"
-
-/// TODO: This is ugly as hell. Fix the coupling....
-*/

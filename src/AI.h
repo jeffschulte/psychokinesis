@@ -17,5 +17,9 @@ class AI : public InputComponent {
     virtual void update(Entity& ent);
 
  private:
+
+    bool collideline(Entity& ent, double xp, double yp,
+                     double targetx, double targety);
+
     CopyPhysicsComponent* entPhys;
 };
