@@ -58,6 +58,15 @@ void CopyPhysicsComponent::update(Entity& ent) {
 
 }
 
+void CopyPhysicsComponent::ApplyForce(double x, double y) {
+
+    if(body == NULL) {
+        return;
+    }
+
+    body->ApplyForce(b2Vec2(x, y), body->GetWorldCenter(), true);
+}
+
 void NullInputComponent::update(Entity& ent) {}
 
 /*

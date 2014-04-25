@@ -1,15 +1,22 @@
 #pragma once
 
 #include <stdio.h>
+#include "Entity.h"
+#include "Animation.h"
 
-class ActionState {
+class ActionState : public InputComponent {
 
  public:
     double xcont;
     bool pushing;
 
     double targetx, targety;
-    static ActionState* p_astate;
 
-    ActionState();
+    ActionState(Animation* anim, CopyPhysicsComponent* phys);
+    virtual void update(Entity& ent);
+
+ private:
+
+    Animation* playerAnim;
+    CopyPhysicsComponent* playerPhys;
 };

@@ -14,6 +14,7 @@
 #include "Player.h"
 #include "Contact_Listener.h"
 #include "Graphics.h"
+#include "AI.h"
 
 class Application {
  private:
@@ -34,7 +35,8 @@ class Application {
     int screenw, screenh;
 
     Level level;
-    ActionState astate;
+
+    ActionState* astate;
 
     Graphics graphics;
 

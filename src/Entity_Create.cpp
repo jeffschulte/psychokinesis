@@ -3,10 +3,26 @@
 Entity* Application::Create(Graphics& graphics,
                             Entity::EntType type, double x, double y) {
 
-    Entity* ent = new Entity(new NullInputComponent(),
-                             new CopyPhysicsComponent(&Level::p_level->world),
-                             new Animation("art_assets/stickman6sword.png",
-                                           graphics.renderer));
+    Entity* ent;
+
+    if(type == Entity::PLAYER) {
+        Animation* playerAnim = new Animation("art_assets/stickman6sword.png",
+                                   graphics.renderer);
+        CopyPhysicsComponent* playerPhys =
+            new CopyPhysicsComponent(&Level::p_level->world);
+        astate = new ActionState(playerAnim, playerPhys);
+        ent = new Entity(astate,
+                         playerPhys,
+                         playerAnim);
+    }
+    else {
+        CopyPhysicsComponent* entPhys =
+            new CopyPhysicsComponent(&Level::p_level->world);
+        ent = new Entity(new AI(entPhys),
+                         entPhys,
+                         new Animation("art_assets/stickman6sword.png",
+                                       graphics.renderer));
+    }
 
     switch (type) {
     case Entity::BIG_MAN:

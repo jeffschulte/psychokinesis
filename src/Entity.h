@@ -58,8 +58,7 @@ class Entity {
 
     EntType ent_type;
     double mass;
-     int proj_shoot_type;
-
+    int proj_shoot_type;
 
     std::string debugname;
 
@@ -83,6 +82,7 @@ class CopyPhysicsComponent : public PhysicsComponent {
 
     CopyPhysicsComponent(b2World* worldc);
     virtual void update(Entity& ent);
+    void ApplyForce(double x, double y);
 
  private:
 

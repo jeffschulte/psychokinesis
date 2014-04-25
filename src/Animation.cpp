@@ -62,12 +62,19 @@ SDL_Rect Animation::Get_Frame_to_Render(Entity& ent) {
     else {
         last_frame_time = SDL_GetTicks();
         if (mini_anim_frame == 0) {
-            double targetx = ActionState::p_astate->targetx;
-            double targety = ActionState::p_astate->targety;
-            double xcont = ActionState::p_astate->xcont;
+            // TODO: Figure out how to uncouple these, we'll likely
+            // want to have a subclass of animation that works for the
+            // player and references the input state
+
+            double targetx = 0; // ActionState::p_astate->targetx;
+            double targety = 0; // ActionState::p_astate->targety;
+            double xcont = 0; // ActionState::p_astate->xcont;
+
             EnvLine* line  = Level::p_level->ClosestLine(ent.x, ent.y);
-            double dist_to_ground = line->DistToPoint(ent.x, ent.y).dist_to_pt - 2.5; //dont understand
-            //why this goes down to 2.5 at the ground and stops there.
+            double dist_to_ground =
+                line->DistToPoint(ent.x, ent.y).dist_to_pt - 2.5;
+            // dont understand why this goes down to 2.5 at the ground
+            // and stops there.
             current_state = get_next_state(ent, targetx, targety,
                                            xcont, dist_to_ground);
             if (current_state == P_STAND || current_state == PUSH_R ||
