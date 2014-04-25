@@ -70,24 +70,24 @@ bool Application::OnInit() {
 
     // Test blocks to shove around
 
-    Create(graphics, Entity::LITTLE_MAN, 26, 25);
-    Create(graphics, Entity::LITTLE_MAN, 21, 25);
-    Create(graphics, Entity::BIG_MAN, 17, 25);
-    Create(graphics, Entity::LITTLE_MAN, 26, 20);
-    Create(graphics, Entity::LITTLE_MAN, 11, 20);
-    Create(graphics, Entity::LITTLE_MAN, 7, 20);
-    Create(graphics, Entity::LITTLE_MAN, 26, 35);
-    Create(graphics, Entity::LITTLE_MAN, 21, 35);
-    Create(graphics, Entity::BIG_MAN, 17, 35);
-    Create(graphics, Entity::LITTLE_MAN, 26, 30);
-    Create(graphics, Entity::LITTLE_MAN, 11, 30);
-    Create(graphics, Entity::LITTLE_MAN, 7, 30);
+    Create(Entity::LITTLE_MAN, 26, 25);
+    Create(Entity::LITTLE_MAN, 21, 25);
+    Create(Entity::BIG_MAN, 17, 25);
+    Create(Entity::LITTLE_MAN, 26, 20);
+    Create(Entity::LITTLE_MAN, 11, 20);
+    Create(Entity::LITTLE_MAN, 7, 20);
+    Create(Entity::LITTLE_MAN, 26, 35);
+    Create(Entity::LITTLE_MAN, 21, 35);
+    Create(Entity::BIG_MAN, 17, 35);
+    Create(Entity::LITTLE_MAN, 26, 30);
+    Create(Entity::LITTLE_MAN, 11, 30);
+    Create(Entity::LITTLE_MAN, 7, 30);
 
     Project::Create(graphics.renderer, Project::BULLET, 20, 30, 20, 0);
 
     Logger::log("Creating player");
 
-    Create(graphics, Entity::PLAYER, 4, 20);
+    Create(Entity::PLAYER, 4, 20);
 
 
     mainhud.Hud_Load_Hit_Pts_Texture("art_assets/hit_pts_meter.png",

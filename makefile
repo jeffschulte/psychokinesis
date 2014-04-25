@@ -1,7 +1,8 @@
 # Very basic makefile for the time being
 
 WFLAGS=-Weverything -Wno-padded -Wno-documentation \
-	-Wno-disabled-macro-expansion -Wno-sign-compare -Wno-sign-conversion
+	-Wno-disabled-macro-expansion -Wno-sign-compare -Wno-sign-conversion \
+	-Wno-conversion
 SDLFLAGS=`sdl2-config --cflags`
 LIBS=`sdl2-config --libs` -lSDL2_image -lSDL2_mixer -lliquidfun
 CC=clang++

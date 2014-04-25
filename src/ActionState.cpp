@@ -2,8 +2,8 @@
 
 
 ActionState::ActionState(Animation* anim, CopyPhysicsComponent* phys)
-    : playerAnim(anim), playerPhys(phys), xcont(0),
-      targetx(0), targety(0), pushing(false), pushcall(this) {}
+    : xcont(0), pushing(false), targetx(0), targety(0),
+      playerAnim(anim), playerPhys(phys), pushcall(this) {}
 
 void ActionState::update(Entity& ent) {
 

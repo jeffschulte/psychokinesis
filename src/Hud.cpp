@@ -1,9 +1,9 @@
 #include "Hud.h"
 
 
-SDL_Texture* Hud::Hud_Load_Hit_Pts_Texture(const char* File, SDL_Renderer* renderer,
+SDL_Texture* Hud::Hud_Load_Hit_Pts_Texture(const char* File,
+                                           SDL_Renderer* renderer,
                                            double player_hit_pts) {
-    SDL_Texture* texture;
     if((hit_pts_texture = IMG_LoadTexture(renderer, File)) == NULL) {
         return NULL;
     }
@@ -46,11 +46,13 @@ void Hud::OnRender(SDL_Renderer* renderer, Camera* camera,
     }
     //hit_pts_meter_stuff
     if (fabs(player_hit_pts - player_starting_hit_pts) < DBL_EPSILON) {
-        SDL_RenderCopy(renderer, hit_pts_texture, &hit_pts_fill_rect, &hit_pts_dst_rect);
+        SDL_RenderCopy(renderer, hit_pts_texture, &hit_pts_fill_rect,
+                       &hit_pts_dst_rect);
     }
     else {
         //each color change for bar is 110 down from last
-        SDL_RenderCopy(renderer, hit_pts_texture, &hit_pts_outline_rect, &hit_pts_dst_rect);
+        SDL_RenderCopy(renderer, hit_pts_texture, &hit_pts_outline_rect,
+                       &hit_pts_dst_rect);
         if (player_hit_pts/player_starting_hit_pts < .35) {
             hit_pts_fill_rect.y = 464.95;
         }
@@ -64,11 +66,13 @@ void Hud::OnRender(SDL_Renderer* renderer, Camera* camera,
         double fill_width;
         double fill_dst_width;
         fill_width = .97*(377)*player_hit_pts/player_starting_hit_pts;
-        fill_dst_width = .97*(hit_pts_meter_width)*player_hit_pts/player_starting_hit_pts;
+        fill_dst_width = .97*(hit_pts_meter_width) * player_hit_pts /
+            player_starting_hit_pts;
         hit_pts_fill_rect.w = fill_width;
         hit_pts_dst_rect.w = fill_dst_width;
 
-        SDL_RenderCopy(renderer, hit_pts_texture, &hit_pts_fill_rect, &hit_pts_dst_rect);
+        SDL_RenderCopy(renderer, hit_pts_texture, &hit_pts_fill_rect,
+                       &hit_pts_dst_rect);
         hit_pts_dst_rect.w = hit_pts_meter_width;
     }
 }

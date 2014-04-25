@@ -13,30 +13,30 @@ class Entity;
 
 class InputComponent
 {
-public:
-  virtual ~InputComponent() {}
-  virtual void update(Entity& ent) = 0;
+ public:
+    virtual ~InputComponent() {}
+    virtual void update(Entity& ent) = 0;
 };
 
 class PhysicsComponent
 {
-public:
-  virtual ~PhysicsComponent() {}
-  virtual void update(Entity& ent) = 0;
+ public:
+    virtual ~PhysicsComponent() {}
+    virtual void update(Entity& ent) = 0;
 };
 
 class RenderComponent
 {
-public:
-  virtual ~RenderComponent() {}
-  virtual void update(Entity& ent, Graphics& graphics) = 0;
+ public:
+    virtual ~RenderComponent() {}
+    virtual void update(Entity& ent, Graphics& graphics) = 0;
 };
 
 class Entity {
 
  public:
 
-    enum EntType {BIG_MAN,LITTLE_MAN,PLAYER,HIT_PTS_METER};
+    enum EntType {BIG_MAN,LITTLE_MAN,PLAYER};
 
     Entity(InputComponent* inputc,
            PhysicsComponent* physicsc,

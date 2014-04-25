@@ -1,7 +1,6 @@
 #include "Application.h"
 
-Entity* Application::Create(Graphics& graphics,
-                            Entity::EntType type, double x, double y) {
+Entity* Application::Create(Entity::EntType type, double x, double y) {
 
     Entity* ent;
 

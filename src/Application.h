@@ -53,6 +53,5 @@ class Application {
     void OnRender();
     void OnCleanup();
 
-    Entity* Create(Graphics& graphics,
-                       Entity::EntType type, double x, double y);
+    Entity* Create(Entity::EntType type, double x, double y);
 };
