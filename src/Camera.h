@@ -1,6 +1,8 @@
 #pragma once
 
 #include <SDL.h>
+#include "Entity.h"
+#include "Player.h"
 
 class Rect {
 
@@ -35,7 +37,16 @@ class Camera {
                            double x2,
                            double y2);
 
-    static Camera* camera;
  private:
     int hscreenw, hscreenh;
+};
+
+class CameraControl : public InputComponent {
+
+ public:
+    CameraControl(Camera* cam);
+    virtual void update(Entity& ent);
+
+ private:
+    Camera* camera;
 };

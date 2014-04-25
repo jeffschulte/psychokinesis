@@ -5,7 +5,6 @@
 #include <string>
 #include "Graphics.h"
 #include "Logger.h"
-#include "Level.h"
 
 class Entity;
 
@@ -95,4 +94,16 @@ class NullInputComponent : public InputComponent {
 
  public:
     virtual void update(Entity& ent);
+};
+
+class NullPhysicsComponent : public PhysicsComponent {
+
+ public:
+    virtual void update(Entity& ent);
+};
+
+class NullRenderComponent : public RenderComponent {
+
+ public:
+    virtual void update(Entity& ent, Graphics& graphics);
 };

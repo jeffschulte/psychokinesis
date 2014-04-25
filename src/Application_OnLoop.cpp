@@ -18,10 +18,5 @@ void Application::OnLoop() {
         //    Logger::log("RumblePlay Fail: " + std::string(SDL_GetError()));
         //}
 
-    // TODO: Update the camera position
-
-    // Camera::camera->x = x;
-    // Camera::camera->zoom = y > 22 ? 10 : -fabs(y) + 32;
-
     return;
 }

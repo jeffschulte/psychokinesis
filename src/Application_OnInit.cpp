@@ -67,6 +67,12 @@ bool Application::OnInit() {
         return false;
     }
 
+    // Camera control
+
+    entities.push_back(new Entity(new CameraControl(graphics.camera),
+                                  new NullPhysicsComponent(),
+                                  new NullRenderComponent()));
+
     // Test blocks to shove around
 
     Create(graphics, Entity::LITTLE_MAN, 26, 25);

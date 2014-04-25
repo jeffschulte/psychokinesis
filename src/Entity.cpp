@@ -68,6 +68,10 @@ void CopyPhysicsComponent::ApplyForce(double x, double y) {
 }
 
 void NullInputComponent::update(Entity& ent) {}
+void NullPhysicsComponent::update(Entity& ent) {}
+void NullRenderComponent::update(Entity& ent, Graphics& graphics) {}
+
+
 
 // TODO: Put this somewhere less general than entity
 
