@@ -8,12 +8,6 @@
 #include "Camera.h"
 #include "Logger.h"
 
-struct RelLineInfo {
-    double dist_to_pt;
-    double x_to_pt;
-    double y_to_pt;
-};
-
 class EnvLine {
 
 public:
@@ -21,7 +15,7 @@ public:
 
     EnvLine(double ix1, double iy1, double ix2, double iy2);
 
-    RelLineInfo DistToPoint(double x, double y);
+    //RelLineInfo DistToPoint(double x, double y);
 };
 
 
@@ -37,9 +31,6 @@ class Level {
     void AddLine(double x1, double y1, double x2, double y2);
     Level();
     static Level* p_level;
-
-    EnvLine* ClosestLine(double x, double y);
-    EnvLine* SecondClosestLine(double x, double y, EnvLine* closest);
 
     b2Vec2 gravity;
     b2World world;

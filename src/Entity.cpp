@@ -18,7 +18,7 @@ void Entity::update(Graphics& graphics) {
 // onto the local state of the object
 
 CopyPhysicsComponent::CopyPhysicsComponent(b2World* worldc)
-    : world(worldc) {
+    : world(worldc), floorContacts(0) {
 
     body = NULL;
 }
@@ -45,7 +45,17 @@ void CopyPhysicsComponent::update(Entity& ent) {
         fixtureDef.friction = 3;
 
         body->CreateFixture(&fixtureDef);
-    }
+
+        // Attach another smaller fixture for ground detection
+
+        dynamicBox.SetAsBox(ent.width / 6, ent.height / 6,
+                            b2Vec2(0, -ent.height / 2), 0);
+        fixtureDef.isSensor = true;
+        b2Fixture* footsensor = body->CreateFixture(&fixtureDef);
+        footsensor->SetUserData(this);
+
+        // TODO: Fix this userdata to be something predictable
+}
 
     b2Vec2 position = body->GetPosition();
     b2Vec2 velocity = body->GetLinearVelocity();
@@ -65,6 +75,15 @@ void CopyPhysicsComponent::ApplyForce(double x, double y) {
     }
 
     body->ApplyForce(b2Vec2(x, y), body->GetWorldCenter(), true);
+}
+
+void CopyPhysicsComponent::Walk(double force, Entity& ent) {
+
+    if(floorContacts >= 1
+       && (fabs(ent.xvel) < 15 || force*ent.xvel < 0.0)) {
+
+        ApplyForce(force, 0);
+    }
 }
 
 

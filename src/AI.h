@@ -19,8 +19,5 @@ class AI : public InputComponent {
 
  private:
 
-    bool collideline(Entity& ent, double xp, double yp,
-                     double targetx, double targety);
-
     CopyPhysicsComponent* entPhys;
 };

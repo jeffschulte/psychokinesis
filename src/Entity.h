@@ -84,6 +84,9 @@ class CopyPhysicsComponent : public PhysicsComponent {
     virtual void update(Entity& ent);
     void ApplyForce(double x, double y);
     b2Body* getBody() { return body; }
+    void Walk(double force, Entity& ent);
+
+    int floorContacts;
 
  private:
 

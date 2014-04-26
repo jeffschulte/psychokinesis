@@ -3,6 +3,18 @@
 
 void ContactListener::BeginContact(b2Contact* contact) {
 
+    CopyPhysicsComponent* physA =
+        (CopyPhysicsComponent*) contact->GetFixtureA()->GetUserData();
+    CopyPhysicsComponent* physB =
+        (CopyPhysicsComponent*) contact->GetFixtureB()->GetUserData();
+
+    if(physA != NULL) {
+        physA->floorContacts++;
+    }
+    if(physB != NULL) {
+        physB->floorContacts++;
+    }
+
     b2Body* bodyA = contact->GetFixtureA()->GetBody();
     b2Body* bodyB = contact->GetFixtureB()->GetBody();
     b2Vec2 velA = bodyA->GetLinearVelocity();
@@ -38,4 +50,20 @@ void ContactListener::BeginContact(b2Contact* contact) {
 
 
     // TODO: Check the enttype for different bullet effects
+}
+
+
+void ContactListener::EndContact(b2Contact* contact) {
+
+    CopyPhysicsComponent* physA =
+        (CopyPhysicsComponent*) contact->GetFixtureA()->GetUserData();
+    CopyPhysicsComponent* physB =
+        (CopyPhysicsComponent*) contact->GetFixtureB()->GetUserData();
+
+    if(physA != NULL) {
+        physA->floorContacts--;
+    }
+    if(physB != NULL) {
+        physB->floorContacts--;
+    }
 }

@@ -70,9 +70,9 @@ SDL_Rect Animation::Get_Frame_to_Render(Entity& ent) {
             double targety = 0; // ActionState::p_astate->targety;
             double xcont = 0; // ActionState::p_astate->xcont;
 
-            EnvLine* line  = Level::p_level->ClosestLine(ent.x, ent.y);
-            double dist_to_ground =
-                line->DistToPoint(ent.x, ent.y).dist_to_pt - 2.5;
+            //EnvLine* line  = Level::p_level->ClosestLine(ent.x, ent.y);
+            double dist_to_ground = 0;
+            //    line->DistToPoint(ent.x, ent.y).dist_to_pt - 2.5;
             // dont understand why this goes down to 2.5 at the ground
             // and stops there.
             current_state = get_next_state(ent, targetx, targety,
