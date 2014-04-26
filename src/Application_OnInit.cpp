@@ -67,6 +67,9 @@ bool Application::OnInit() {
     effect_id = SDL_HapticNewEffect(haptic, &effect);
 
 
+    Logger::log("Creating player");
+
+    Create(Entity::PLAYER, 4, 20);
 
     // Test blocks to shove around
 
@@ -87,11 +90,6 @@ bool Application::OnInit() {
 
     entities.push_back(Bullet::Create(&Level::p_level->world, graphics,
                                       20, 30, 20, 0));
-
-
-    Logger::log("Creating player");
-
-    Create(Entity::PLAYER, 4, 20);
 
 
     mainhud.Hud_Load_Hit_Pts_Texture("art_assets/hit_pts_meter.png",
