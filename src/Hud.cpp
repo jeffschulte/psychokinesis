@@ -8,10 +8,7 @@ SDL_Texture* Hud::Hud_Load_Hit_Pts_Texture(const char* File,
         return NULL;
     }
 
-    char message[100];
-    strcpy (message,"Loaded hit pts from ");
-    strcat (message,File);
-    Logger::log(message);
+    Logger::log("Loaded hit pts from " + std::string(File));
 
     //each color change for bar is 110 down from last
     hit_pts_outline_rect.x = 17; hit_pts_outline_rect.y = 353;

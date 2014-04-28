@@ -46,10 +46,8 @@ SDL_Texture* Animation::Animation_Load_Texture(const char* File,
         Logger::log("Error loading texture from file");
         return NULL;
     }
-    char message[100];
-    strcpy (message,"Loaded Entity from ");
-    strcat (message,File);
-    Logger::log(message);
+
+    Logger::log("Loaded Entity from " + std::string(File));
 
     return texturel;
 }
