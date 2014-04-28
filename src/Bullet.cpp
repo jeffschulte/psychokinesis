@@ -64,3 +64,11 @@ StaticRenderComponent::StaticRenderComponent(const char* File,
     texture = IMG_LoadTexture(graphics.renderer, File);
     Logger::log("Loaded Projectile from " + std::string(File));
 }
+
+StaticRenderComponent::~StaticRenderComponent() {
+
+    /// \todo Keep textures around so it doesn't have to be reloaded
+    /// each time (static reference perhaps)
+
+    SDL_DestroyTexture(texture);
+}

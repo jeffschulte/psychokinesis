@@ -13,6 +13,13 @@ void Entity::update(Graphics& graphics) {
     render->update(*this, graphics);
 }
 
+Entity::~Entity() {
+
+    delete input;
+    delete physics;
+    delete render;
+}
+
 
 // This class directly copies the values from the b2body calculation
 // onto the local state of the object
@@ -84,6 +91,11 @@ void CopyPhysicsComponent::Walk(double force, Entity& ent) {
 
         ApplyForce(force, 0);
     }
+}
+
+CopyPhysicsComponent::~CopyPhysicsComponent() {
+
+    world->DestroyBody(body);
 }
 
 

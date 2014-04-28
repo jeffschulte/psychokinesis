@@ -41,6 +41,7 @@ class Entity {
     Entity(InputComponent* inputc,
            PhysicsComponent* physicsc,
            RenderComponent* renderc);
+    ~Entity();
 
     void update(Graphics& graphics);
 
@@ -81,6 +82,7 @@ class CopyPhysicsComponent : public PhysicsComponent {
  public:
 
     CopyPhysicsComponent(b2World* worldc);
+    ~CopyPhysicsComponent();
     virtual void update(Entity& ent);
     void ApplyForce(double x, double y);
     b2Body* getBody() { return body; }

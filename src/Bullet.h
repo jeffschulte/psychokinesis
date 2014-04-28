@@ -19,6 +19,7 @@ class StaticRenderComponent : public RenderComponent {
  public:
     virtual void update(Entity& ent, Graphics& graphics);
     StaticRenderComponent(const char* File, Graphics& graphics);
+    ~StaticRenderComponent();
 
  private:
     SDL_Texture* texture;
