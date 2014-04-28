@@ -9,7 +9,9 @@
 #include "Level.h"
 
 
-struct states_struct {
+class states_struct {
+
+ public:
     int beg_frame;
     int maframe_lim;
     int end_state;
