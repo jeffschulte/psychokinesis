@@ -54,7 +54,7 @@ void CopyPhysicsComponent::update(Entity& ent) {
         b2Fixture* footsensor = body->CreateFixture(&fixtureDef);
         footsensor->SetUserData(this);
 
-        // TODO: Fix this userdata to be something predictable
+        /// \todo Fix this userdata to be something predictable
 }
 
     b2Vec2 position = body->GetPosition();
@@ -95,7 +95,7 @@ void NullRenderComponent::update(__attribute__((unused)) Entity& ent,
 
 
 
-// TODO: Put this somewhere less general than entity
+/// \todo Put this somewhere less general than entity
 
 // void Entity::Shoot(SDL_Renderer* renderer, double pr_xvel, double pr_yvel, bool dir_right) {
 //     if (dir_right) {

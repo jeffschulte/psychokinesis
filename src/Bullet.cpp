@@ -25,8 +25,8 @@ Entity* Bullet::Create(b2World* worldc, Graphics& graphics, double x, double y,
     proj->xvel = xvel;
     proj->yvel = yvel;
 
-    // TODO: Figure out a better solution to copy params over for
-    // initial b2Body, doing a manual update is awful
+    /// \todo Figure out a better solution to copy params over for
+    /// initial b2Body, doing a manual update is awful
 
     proj->update(graphics);
     bulletPhys->getBody()->SetBullet(true);

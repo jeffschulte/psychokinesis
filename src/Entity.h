@@ -47,7 +47,7 @@ class Entity {
     double x, y, xvel, yvel, width, height, angle, hit_pts;
     bool dead;
 
-    // TODO: Move these someplace less general
+    /// \todo Move these someplace less general
 
     bool this_a_player;
 

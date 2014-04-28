@@ -62,9 +62,9 @@ SDL_Rect Animation::Get_Frame_to_Render(Entity& ent) {
     else {
         last_frame_time = SDL_GetTicks();
         if (mini_anim_frame == 0) {
-            // TODO: Figure out how to uncouple these, we'll likely
-            // want to have a subclass of animation that works for the
-            // player and references the input state
+            /// \todo Figure out how to uncouple these, we'll likely
+            /// want to have a subclass of animation that works for
+            /// the player and references the input state
 
             double targetx = 0; // ActionState::p_astate->targetx;
             double targety = 0; // ActionState::p_astate->targety;

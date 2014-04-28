@@ -86,7 +86,7 @@ bool Application::OnInit() {
     Create(Entity::LITTLE_MAN, 11, 30);
     Create(Entity::LITTLE_MAN, 7, 30);
 
-    // TODO: Make the bullet factory manage its own list
+    /// \todo Make the bullet factory manage its own list
 
     entities.push_back(Bullet::Create(&Level::p_level->world, graphics,
                                       20, 30, 20, 0));

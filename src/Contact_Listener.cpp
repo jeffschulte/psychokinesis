@@ -49,7 +49,7 @@ void ContactListener::BeginContact(b2Contact* contact) {
     }
 
 
-    // TODO: Check the enttype for different bullet effects
+    /// \todo Check the enttype for different bullet effects
 }
 
 

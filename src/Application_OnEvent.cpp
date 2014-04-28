@@ -82,7 +82,7 @@ void Application::OnEvent(SDL_Event* Event) {
             }
         }
 
-        // TODO: Get these controls unconnected
+        /// \todo Get these controls unconnected
 
         /*else if (Event->jbutton.button == 2) {
             if (ActionState::p_astate->xcont >= 0.0) {
