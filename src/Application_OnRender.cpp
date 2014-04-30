@@ -17,7 +17,15 @@ void Application::OnRender() {
     // Update all entities
 
     for (int i=0;i<entities.size();i++) {
+
         entities[i]->update(graphics);
+
+        /// \todo Again, this is messy
+
+        if(entities[i]->removed == true) {
+            delete entities[i];
+            entities.erase(entities.begin()+i);
+        }
     }
 
 

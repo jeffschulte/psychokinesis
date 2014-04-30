@@ -33,14 +33,28 @@ void ActionState::update(Entity& ent) {
     }
 
     if(pushing) {
-        playerPhys->ApplyForce(-targetx * 2 * 9.8 * 3,
-                               -targety * 2 * 9.8 * 3);
+        playerPhys->ApplyForce(-targetx * 9.8 * 20,
+                               -targety * 9.8 * 20);
 
         b2Vec2 p1(ent.x, ent.y);
         b2Vec2 p2 = p1 + b2Vec2(targetx, targety) * 1000;
         //Logger::log(std::to_string(p1.x) + " " + std::to_string(p1.y) + " " +
         //            std::to_string(p2.x) + " " + std::to_string(p2.y));
-        Level::p_level->world.RayCast(&pushcall, p1, p2);
+
+        // Instead of a single ray (which is difficult to aim), try a
+        // large group of them going out in parallel
+
+        for(double offset = -ent.height / 2; offset <= ent.height / 2;
+            offset += ent.height / 10) {
+
+            // The offset is applied along the normal of the original
+            // line
+
+            b2Vec2 dir = b2Vec2(targety, -targetx);
+
+            Level::p_level->world.RayCast(&pushcall, p1 + offset*dir,
+                                          p2 + offset*dir);
+        }
     }
 
     playerPhys->Walk(xcont * 100, ent);
@@ -53,14 +67,16 @@ float32 PushCallback::ReportFixture(b2Fixture* fixture, const b2Vec2 & point,
 
     //Logger::log("Raycast callback");
 
+    /// \todo Make this ignore the player entity
+
     b2Body* body = fixture->GetBody();
 
     if(body->GetUserData() == NULL) {
         return 1;  // Continue the ray cast
     }
     else {
-        body->ApplyForce(b2Vec2(astate->targetx * 2 * 9.8 * 3,
-                                astate->targety * 2 * 9.8 * 3),
+        body->ApplyForce(b2Vec2(astate->targetx * 9.8,
+                                astate->targety * 9.8),
                          body->GetWorldCenter(), true);
 
         //Logger::log("Raycast hit");

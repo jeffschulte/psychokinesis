@@ -22,6 +22,7 @@ Entity* Bullet::Create(b2World* worldc, Graphics& graphics, double x, double y,
     else {
         proj->x = x - proj->width/2.0;
     }
+
     proj->xvel = xvel;
     proj->yvel = yvel;
 
@@ -29,6 +30,8 @@ Entity* Bullet::Create(b2World* worldc, Graphics& graphics, double x, double y,
     /// initial b2Body, doing a manual update is awful
 
     proj->update(graphics);
+    bulletPhys->getBody()->SetFixedRotation(false);
+    bulletPhys->getBody()->SetTransform(b2Vec2(x,y), atan2(yvel, xvel));
     bulletPhys->getBody()->SetBullet(true);
 
     return proj;
@@ -41,16 +44,9 @@ void StaticRenderComponent::update(Entity& ent, Graphics& graphics) {
                   ent.width, ent.height};
     if (texture != NULL) {
         SDL_Rect rects =  {0,0,500,200};
-        if (ent.xvel >= 0) {
-            graphics.camera->RenderCopyEx(graphics.renderer, texture,
-                                          &rects, &rectw,
-                                          ent.angle, NULL, SDL_FLIP_NONE);
-        }
-        else {
-            graphics.camera->RenderCopyEx(graphics.renderer, texture,
-                                          &rects, &rectw,
-                                          ent.angle, NULL, SDL_FLIP_HORIZONTAL);
-        }
+        graphics.camera->RenderCopyEx(graphics.renderer, texture,
+                                      &rects, &rectw,
+                                      ent.angle, NULL, SDL_FLIP_NONE);
     }
     else {
         SDL_SetRenderDrawColor(graphics.renderer, 0, 255, 0, 255);

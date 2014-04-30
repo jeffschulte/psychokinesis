@@ -45,8 +45,8 @@ class Entity {
 
     void update(Graphics& graphics);
 
-    double x, y, xvel, yvel, width, height, angle, hit_pts;
-    bool dead;
+    double x = 0, y = 0, xvel = 0, yvel = 0, width, height, angle, hit_pts;
+    bool dead = false, removed = false;
 
     /// \todo Move these someplace less general
 

@@ -39,6 +39,7 @@ void CopyPhysicsComponent::update(Entity& ent) {
         b2BodyDef bodyDef;
         bodyDef.type = b2_dynamicBody;
         bodyDef.position.Set(ent.x, ent.y);
+        bodyDef.linearVelocity.Set(ent.xvel, ent.yvel);
         bodyDef.fixedRotation = true;
         bodyDef.userData = &ent;
         body = world->CreateBody(&bodyDef);

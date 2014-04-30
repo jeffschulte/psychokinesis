@@ -27,6 +27,17 @@ void ContactListener::BeginContact(b2Contact* contact) {
     Entity* entA = (Entity*)bodyA->GetUserData();
     Entity* entB = (Entity*)bodyB->GetUserData();
 
+
+    /// \todo Seriously figure out a clean way to do this
+
+    if(entA != NULL && bodyA->IsFixedRotation() == false) {
+        entA->removed = true;
+    }
+    if(entB != NULL && bodyB->IsFixedRotation() == false) {
+        entB->removed = true;
+    }
+
+
     if(entA != NULL && speedB*massB > 10.0) {
         entA->hit_pts -= .5*(speedB*massB);
 

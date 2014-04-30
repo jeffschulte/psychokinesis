@@ -81,6 +81,12 @@ void Application::OnEvent(SDL_Event* Event) {
                 SDL_HapticRunEffect(haptic, effect_id, SDL_HAPTIC_INFINITY);
             }
         }
+        else if (Event->jbutton.button == 3) {
+            entities.push_back(Bullet::Create(&Level::p_level->world, graphics,
+                                              4, 20, (Player::player->x-4)*10,
+                                              (Player::player->y-20)*10));
+        }
+
 
         /// \todo Get these controls unconnected
 
@@ -102,7 +108,7 @@ void Application::OnEvent(SDL_Event* Event) {
                 Player::player->shoot_left = true;
             }
             }*/
-}
+    }
 
     if (Event->type == SDL_JOYBUTTONUP) {
         if (Event->jbutton.button == 4) {

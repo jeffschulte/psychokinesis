@@ -17,8 +17,8 @@ Entity* Application::Create(Entity::EntType type, double x, double y) {
     else {
         CopyPhysicsComponent* entPhys =
             new CopyPhysicsComponent(&Level::p_level->world);
-        ent = new Entity(new AI(entPhys),
-                         //new NullInputComponent,
+        ent = new Entity(//new AI(entPhys),
+                         new NullInputComponent,
                          entPhys,
                          new Animation("art_assets/stickman6sword.png",
                                        graphics.renderer));
