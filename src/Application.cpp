@@ -1,6 +1,13 @@
 #include "Application.h"
 
 
+void Addbump (double bump_width, double bump_height,
+              double* p_current_x, double* p_current_y, Level* level){
+    level->AddLine(p_current_x, p_current_y, 0, bump_height);
+    level->AddLine(p_current_x, p_current_y, bump_width, 0);
+    level->AddLine(p_current_x, p_current_y, 0,-bump_height);
+}
+
 Application::Application() {
     renderer = NULL;
     haptic = NULL;
@@ -17,6 +24,8 @@ Application::Application() {
     screenh = 720;
 
     // Set up the wall objects
+    double current_x = 0;
+    double current_y = 0;
 
     double wallwidth = 60;    // m
     double bump_x = wallwidth/2.0;
@@ -25,20 +34,14 @@ Application::Application() {
     double pit_x = 3.0*wallwidth/4.0;
     double pit_width = bump_width;
     double pit_height = wallwidth/2.0;
-
-    level.AddLine(0, 0, bump_x, 0);
-    level.AddLine(bump_x, 0, bump_x, bump_height);
-    level.AddLine(bump_x, bump_height, bump_x+bump_width, bump_height);
-    level.AddLine(bump_x+bump_width, bump_height, bump_x+bump_width, 0);
-    level.AddLine(bump_x+bump_height, 0, pit_x, 0);
-    level.AddLine(pit_x, 0, pit_x, -pit_height);
-    level.AddLine(pit_x, -pit_height, pit_x+pit_width, -pit_height);
-    level.AddLine(pit_x+pit_width, -pit_height, pit_x+pit_width, 0);
-    level.AddLine(pit_x+pit_width, 0, wallwidth, 0);
-    level.AddLine(wallwidth, 0, wallwidth, wallwidth);
-    level.AddLine(wallwidth, wallwidth, 0, wallwidth);
-    level.AddLine(0, wallwidth, 0, 0);
-
+    level.AddLine(&current_x,&current_y, 20,0);
+    Addbump(bump_width, bump_height, &current_x, &current_y, &level);
+    level.AddLine(&current_x,&current_y, 20,0);
+    Addbump(bump_width, bump_height, &current_x, &current_y, &level);
+    level.AddLine(&current_x,&current_y, 20,0);
+    level.AddLine(&current_x,&current_y, 0,30);
+    level.AddLine(&current_x,&current_y, -current_x,0);
+    level.AddLine(&current_x,&current_y, 0,-current_y);
     frametime = 20;        // ms
 }
 

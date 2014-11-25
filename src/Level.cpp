@@ -75,9 +75,10 @@ void Level::OnRender(SDL_Renderer* renderer, Camera* camera) {
 
 }
 
-void Level::AddLine(double x1, double y1, double x2, double y2) {
+void Level::AddLine(double* current_x, double* current_y, double x, double y) {
 
-    lines.push_back(EnvLine(x1, y1, x2, y2));
+    lines.push_back(EnvLine(*current_x, *current_y,
+                            *current_x + x, *current_y + y));
 
     b2BodyDef groundbodydef;
     groundbodydef.position.Set(0, 0);
@@ -85,8 +86,11 @@ void Level::AddLine(double x1, double y1, double x2, double y2) {
     b2Body* groundbody = world.CreateBody(&groundbodydef);
     b2EdgeShape groundbox;
 
-    groundbox.Set(b2Vec2(x1, y1), b2Vec2(x2, y2));
+    groundbox.Set(b2Vec2(*current_x, *current_y),
+                  b2Vec2(*current_x + x, *current_y + y));
     groundbody->CreateFixture(&groundbox, 0);
+    *current_x += x;
+    *current_y += y;
 }
 
 EnvLine* Level::ClosestLine(double x, double y) {

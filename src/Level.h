@@ -34,7 +34,8 @@ class Level {
                             const char* foreground);
 
     void OnRender(SDL_Renderer* renderer, Camera* camera);
-    void AddLine(double x1, double y1, double x2, double y2);
+    void AddLine(double* current_x, double* current_y,
+                 double x, double y);
     Level();
     static Level* p_level;
 
