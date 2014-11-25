@@ -9,11 +9,8 @@ void Addbump (double bump_width, double bump_height,
 }
 
 Application::Application() {
-    renderer = NULL;
     haptic = NULL;
     joystick = NULL;
-
-    music = NULL;
 
     Running = true;
 
@@ -61,7 +58,6 @@ int Application::OnExecute() {
         dt = SDL_GetTicks() - oldtime;
         if(dt > frametime) {
             oldtime = SDL_GetTicks();
-            OnLoop();
             OnRender();
         }
     }

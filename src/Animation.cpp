@@ -1,6 +1,6 @@
 #include "Animation.h"
 
-Animation::Animation() {
+Animation::Animation(const char* File, SDL_Renderer* renderer) {
     anim_frame_rate = 30; //milliseconds
     current_frame = 0;
     last_frame_time = 0;
@@ -18,24 +18,41 @@ Animation::Animation() {
     mini_anim_frame = 0;
     //enum frames {STAND = 0, IN_AIR = 1, HIT_GROUND = 5, GET_UP =8};
     initialize_states_list_values();
+
+    texture = Animation_Load_Texture(File, renderer);
 }
 
-SDL_Texture* Animation::Animation_Load_Texture(const char* File, SDL_Renderer* renderer) {
-    SDL_Texture* texture;
-    if((texture = IMG_LoadTexture(renderer, File)) == NULL) {
+void Animation::update(Entity& ent, Graphics& graphics) {
+
+        Rect rectw = {ent.x - ent.width / 2, ent.y + ent.height / 2,
+                      ent.width, ent.height};
+
+        if(texture != NULL) {
+            SDL_Rect rects = Get_Frame_to_Render(ent);
+            graphics.camera->RenderCopyEx(graphics.renderer, texture,
+                                         &rects, &rectw, ent.angle, NULL,
+                                         SDL_FLIP_NONE);
+        }
+        else {
+            SDL_SetRenderDrawColor(graphics.renderer, red, green, blue, 255);
+            graphics.camera->RenderFillRect(graphics.renderer, &rectw);
+        }
+    }
+
+SDL_Texture* Animation::Animation_Load_Texture(const char* File,
+                                               SDL_Renderer* renderer) {
+    SDL_Texture* texturel;
+    if((texturel = IMG_LoadTexture(renderer, File)) == NULL) {
+        Logger::log("Error loading texture from file");
         return NULL;
     }
-    char message[100];
-    strcpy (message,"Loaded Entity from ");
-    strcat (message,File);
-    Logger::log(message);
 
-    return texture;
+    Logger::log("Loaded Entity from " + std::string(File));
+
+    return texturel;
 }
 
-SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
-                                        double yvel, double height,
-                                        int ent_type,bool dead) {
+SDL_Rect Animation::Get_Frame_to_Render(Entity& ent) {
     if(SDL_GetTicks() - last_frame_time < anim_frame_rate){
         SDL_Rect rect =  {397,21+(current_frame)*70,74,60};
         return rect;
@@ -43,15 +60,21 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
     else {
         last_frame_time = SDL_GetTicks();
         if (mini_anim_frame == 0) {
-            double targetx = ActionState::p_astate->targetx;
-            double targety = ActionState::p_astate->targety;
-            double xcont = ActionState::p_astate->xcont;
-            EnvLine* line  = Level::p_level->ClosestLine(x, y);
-            double dist_to_ground = line->DistToPoint(x, y).dist_to_pt - 2.5; //dont understand
-            //why this goes down to 2.5 at the ground and stops there.
-            current_state = get_next_state(ent_type, targetx, targety,
-                                           xcont, dist_to_ground, height,
-                                           xvel,yvel,dead);
+            /// \todo Figure out how to uncouple these, we'll likely
+            /// want to have a subclass of animation that works for
+            /// the player and references the input state
+
+            double targetx = 0; // ActionState::p_astate->targetx;
+            double targety = 0; // ActionState::p_astate->targety;
+            double xcont = 0; // ActionState::p_astate->xcont;
+
+            //EnvLine* line  = Level::p_level->ClosestLine(ent.x, ent.y);
+            double dist_to_ground = 0;
+            //    line->DistToPoint(ent.x, ent.y).dist_to_pt - 2.5;
+            // dont understand why this goes down to 2.5 at the ground
+            // and stops there.
+            current_state = get_next_state(ent, targetx, targety,
+                                           xcont, dist_to_ground);
             if (current_state == P_STAND || current_state == PUSH_R ||
                 current_state == PUSH_L || current_state == PUSH_U ||
                 current_state == PUSH_D || current_state == FREE_U ||
@@ -80,14 +103,13 @@ SDL_Rect Animation::Get_Frame_to_Render(double x, double y, double xvel,
 
 
 
-int Animation::get_next_state(int ent_type, double targetx, double targety, double xcont,
-                              double dist_to_ground, double height, double xvel,
-                              double yvel, bool dead) {
+int Animation::get_next_state(Entity& ent, double targetx, double targety,
+                              double xcont, double dist_to_ground) {
     //int current_state = this->current_state;
     if (still_dead) {
         current_state = DEAD;
     }
-    else if (dead) {
+    else if (ent.dead) {
         current_state = DYING;
         still_dead = true;
     }
@@ -115,9 +137,9 @@ int Animation::get_next_state(int ent_type, double targetx, double targety, doub
         current_state = SHOOT_L;
         anim_shoot_l = false;
     }
-    if (ent_type == Entity::PLAYER) {
-        if (dist_to_ground < height/2.0) {
-            if (yvel < -20) {
+    if (ent.ent_type == Entity::PLAYER) {
+        if (dist_to_ground < ent.height/2.0) {
+            if (ent.yvel < -20) {
                 current_state = HG_FREE_D;
             }
         }
@@ -155,10 +177,10 @@ int Animation::get_next_state(int ent_type, double targetx, double targety, doub
                 else if (targety < -.1) {
                     current_state = PUSH_D_F_STAND;
                 }
-                else if (dist_to_ground < height && xcont > .1) {
+                else if (dist_to_ground < ent.height && xcont > .1) {
                     current_state = RUN_R_F_STAND;
                 }
-                else if (dist_to_ground < height && xcont < -.1) {
+                else if (dist_to_ground < ent.height && xcont < -.1) {
                     current_state = RUN_L_F_STAND;
                 }
                 else {

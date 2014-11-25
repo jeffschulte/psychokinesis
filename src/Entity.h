@@ -3,67 +3,115 @@
 #include <SDL.h>
 #include <Box2D/Box2D.h>
 #include <string>
-#include <vector>
-#include "Camera.h"
-#include "Animation.h"
-#include "Artificial_Intel.h"
+#include "Graphics.h"
 #include "Logger.h"
-#include "Projectile.h"
 
-class Animation;
-class AI;
+class Entity;
+
+// These are general components that can be swapped in for the
+// different types of entities
+
+class InputComponent
+{
+ public:
+    virtual ~InputComponent() {}
+    virtual void update(Entity& ent) = 0;
+};
+
+class PhysicsComponent
+{
+ public:
+    virtual ~PhysicsComponent() {}
+    virtual void update(Entity& ent) = 0;
+};
+
+class RenderComponent
+{
+ public:
+    virtual ~RenderComponent() {}
+    virtual void update(Entity& ent, Graphics& graphics) = 0;
+};
 
 class Entity {
 
  public:
-    enum EntType {BIG_MAN,LITTLE_MAN,PLAYER,HIT_PTS_METER};
 
-    static std::vector<Entity*> entities;
-    static Entity* Create(SDL_Renderer* renderer,
-                          EntType type,double x, double y);
+    enum EntType {BIG_MAN,LITTLE_MAN,PLAYER};
 
-    double x, y;            // Position of Entity (CoM)
-    double xforce, yforce;
-    double xvel, yvel;      // Velocity
-    double width, height;   // Size of Entity
-    double anim_width, anim_height; //width and height of animated box
-    double angle;           // Angle in degrees
-    double mass;
-    //ref enum ProjType {BULLET}
-    int proj_shoot_type;
+    Entity(InputComponent* inputc,
+           PhysicsComponent* physicsc,
+           RenderComponent* renderc);
+    ~Entity();
 
-    EntType ent_type;
+    void update(Graphics& graphics);
+
+    double x = 0, y = 0, xvel = 0, yvel = 0, width, height, angle, hit_pts;
+    bool dead = false, removed = false;
+
+    /// \todo Move these someplace less general
+
     bool this_a_player;
-    double hit_pts;
-    bool dead;
+
     bool swing_right;
     bool swing_left;
     bool shoot_right;
     bool shoot_left;
 
-    b2Body* body;
+    EntType ent_type;
+    double mass;
+    int proj_shoot_type;
 
     std::string debugname;
 
-    Uint8 red, green, blue;
-    SDL_Texture* texture;
-    Entity();
+    double anim_width, anim_height;
 
-    SDL_Texture* LoadTexture(const char* File,SDL_Renderer* renderer);
-    void OnRender(SDL_Renderer* renderer, Camera* camera);
+ private:
 
-    bool collideline(double x, double y, double targetx, double targety);
+    InputComponent* input;
+    PhysicsComponent* physics;
+    RenderComponent* render;
 
-    void Shoot(SDL_Renderer* renderer, double pr_xvel,
-               double pr_yvel, bool dir_right);
-
-
-    void Calculate_Motion(int dt);
-    AI* AI_object;
-    Animation* animation_object;
 };
 
 
-#include "Player.h"
+// Next are general components that are applied to everything at the
+// moment
 
-/// TODO: This is ugly as hell. Fix the coupling....
+class CopyPhysicsComponent : public PhysicsComponent {
+
+ public:
+
+    CopyPhysicsComponent(b2World* worldc);
+    ~CopyPhysicsComponent();
+    virtual void update(Entity& ent);
+    void ApplyForce(double x, double y);
+    b2Body* getBody() { return body; }
+    void Walk(double force, Entity& ent);
+
+    int floorContacts;
+
+ private:
+
+    b2World * world;
+    b2Body* body;
+};
+
+
+
+class NullInputComponent : public InputComponent {
+
+ public:
+    virtual void update(Entity& ent);
+};
+
+class NullPhysicsComponent : public PhysicsComponent {
+
+ public:
+    virtual void update(Entity& ent);
+};
+
+class NullRenderComponent : public RenderComponent {
+
+ public:
+    virtual void update(Entity& ent, Graphics& graphics);
+};

@@ -27,6 +27,10 @@ cd Box2D/Release
 cp libliquidfun.a /usr/local/lib/
 ```
 
+### Other documentation deps
+
+`brew install graphviz`
+
 Building
 --------
 

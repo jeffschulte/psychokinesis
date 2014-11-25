@@ -1,15 +1,20 @@
 #include "Camera.h"
 
-Camera* Camera::camera;
 Camera::Camera() {
 
     /// \todo Put these parameters into the Level class (?)
     x = 12.0;
     y = 8.0;
     zoom = 32.0;
-    Camera::camera = this;
 }
 
+CameraControl::CameraControl(Camera* cam) : camera(cam) {}
+
+void CameraControl::update(__attribute__((unused)) Entity& ent) {
+
+    camera->x = Player::player->x;
+    camera->zoom = Player::player->y > 22 ? 10 : -fabs(Player::player->y) + 32;
+}
 
 /// \todo Make a single transformation method for all four of these.
 

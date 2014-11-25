@@ -2,12 +2,9 @@
 
 #include "Entity.h"
 
-class Player: public Entity {
+class Player {
 
  public:
     static Entity* player;
 
-    Player();
-    static Entity* Create(SDL_Renderer* renderer,
-                          double x, double y);
 };
