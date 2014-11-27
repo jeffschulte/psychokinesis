@@ -14,6 +14,8 @@ void ActionState::update(Entity& ent) {
     if (ent.hit_pts < 0.0) {
         ent.dead = true;
     }
+    playerAnim->targetx = targetx;
+    playerAnim->targety = targety;
 
     if (ent.swing_right == true) {
         playerAnim->anim_swing_r = true;
@@ -33,8 +35,8 @@ void ActionState::update(Entity& ent) {
     }
 
     if(pushing) {
-        playerPhys->ApplyForce(-targetx * 9.8 * 20,
-                               -targety * 9.8 * 20);
+        playerPhys->ApplyForce(-targetx * 9.8 * 10,
+                               -targety * 9.8 * 10);
 
         b2Vec2 p1(ent.x, ent.y);
         b2Vec2 p2 = p1 + b2Vec2(targetx, targety) * 1000;
@@ -58,6 +60,7 @@ void ActionState::update(Entity& ent) {
     }
 
     playerPhys->Walk(xcont * 100, ent);
+    playerAnim->xcont = xcont;
 }
 
 PushCallback::PushCallback(ActionState* state) : astate(state) {}

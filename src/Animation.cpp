@@ -18,6 +18,9 @@ Animation::Animation(const char* File, SDL_Renderer* renderer) {
     anim_shoot_r = false;
     anim_shoot_l = false;
 
+    targetx = 0;
+    targety = 0;
+    xcont = 0;
     //enum frames {STAND = 0, IN_AIR = 1, HIT_GROUND = 5, GET_UP =8};
     initialize_states_list_values();
 
@@ -65,10 +68,6 @@ SDL_Rect Animation::Get_Frame_to_Render(Entity& ent) {
             /// \todo Figure out how to uncouple these, we'll likely
             /// want to have a subclass of animation that works for
             /// the player and references the input state
-
-            double targetx = 0; // ActionState::p_astate->targetx;
-            double targety = 0; // ActionState::p_astate->targety;
-            double xcont = 0; // ActionState::p_astate->xcont;
 
             //EnvLine* line  = Level::p_level->ClosestLine(ent.x, ent.y);
             double dist_to_ground = 0;

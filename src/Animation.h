@@ -29,12 +29,15 @@ class Animation : public RenderComponent {
     int mini_anim_frame;
     int current_state;
 
-    bool hit_face_r = false;
-    bool hit_face_l = false;
-    bool anim_swing_r = false;
-    bool anim_swing_l = false;
-    bool anim_shoot_r = false;
-    bool anim_shoot_l = false;
+    bool hit_face_r;
+    bool hit_face_l;
+    bool anim_swing_r;
+    bool anim_swing_l;
+    bool anim_shoot_r;
+    bool anim_shoot_l;
+    double targetx; // ActionState::p_astate->targetx;
+    double targety; // ActionState::p_astate->targety;
+    double xcont; // ActionState::p_astate->xcont;
 
     enum player_states {P_STAND, PUSH_R, PUSH_L, PUSH_U, PUSH_D,
                         PUSH_R_F_STAND, STAND_F_PUSH_R, PUSH_L_F_STAND,
