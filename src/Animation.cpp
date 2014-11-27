@@ -7,6 +7,10 @@ Animation::Animation(const char* File, SDL_Renderer* renderer) {
     MaxFrames = 12;
     Oscillate = false;
     still_dead = false;
+
+    current_state = 0;
+    mini_anim_frame = 0;
+
     hit_face_r = false;
     hit_face_l = false;
     anim_swing_r = false;
@@ -14,8 +18,6 @@ Animation::Animation(const char* File, SDL_Renderer* renderer) {
     anim_shoot_r = false;
     anim_shoot_l = false;
 
-    current_state = 0;
-    mini_anim_frame = 0;
     //enum frames {STAND = 0, IN_AIR = 1, HIT_GROUND = 5, GET_UP =8};
     initialize_states_list_values();
 
@@ -24,20 +26,20 @@ Animation::Animation(const char* File, SDL_Renderer* renderer) {
 
 void Animation::update(Entity& ent, Graphics& graphics) {
 
-        Rect rectw = {ent.x - ent.width / 2, ent.y + ent.height / 2,
-                      ent.width, ent.height};
+    Rect rectw = {ent.x - ent.width / 2, ent.y + ent.height / 2,
+                  ent.width, ent.height};
 
-        if(texture != NULL) {
-            SDL_Rect rects = Get_Frame_to_Render(ent);
-            graphics.camera->RenderCopyEx(graphics.renderer, texture,
-                                         &rects, &rectw, ent.angle, NULL,
-                                         SDL_FLIP_NONE);
-        }
-        else {
-            SDL_SetRenderDrawColor(graphics.renderer, red, green, blue, 255);
-            graphics.camera->RenderFillRect(graphics.renderer, &rectw);
-        }
+    if(texture != NULL) {
+        SDL_Rect rects = Get_Frame_to_Render(ent);
+        graphics.camera->RenderCopyEx(graphics.renderer, texture,
+                                      &rects, &rectw, ent.angle, NULL,
+                                      SDL_FLIP_NONE);
     }
+    else {
+        SDL_SetRenderDrawColor(graphics.renderer, red, green, blue, 255);
+        graphics.camera->RenderFillRect(graphics.renderer, &rectw);
+    }
+}
 
 SDL_Texture* Animation::Animation_Load_Texture(const char* File,
                                                SDL_Renderer* renderer) {

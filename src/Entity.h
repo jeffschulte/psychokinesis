@@ -70,7 +70,6 @@ class Entity {
     InputComponent* input;
     PhysicsComponent* physics;
     RenderComponent* render;
-
 };
 
 
@@ -95,6 +94,20 @@ class CopyPhysicsComponent : public PhysicsComponent {
     b2World * world;
     b2Body* body;
 };
+
+/* class CopyRenderComponent : public RenderComponent { */
+
+/*  public: */
+
+/*     CopyRenderComponent(); */
+/*     ~CopyRenderComponent(); */
+/*     virtual void update(Entity& ent, const char* File, */
+/*               SDL_Renderer* renderer); */
+
+
+/*  private: */
+/*     anim */
+/* }; */
 
 
 

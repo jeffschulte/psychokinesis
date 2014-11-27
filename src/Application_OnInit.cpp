@@ -80,12 +80,12 @@ bool Application::OnInit() {
     Create(Entity::LITTLE_MAN, 11, 20);
     Create(Entity::LITTLE_MAN, 7, 20);
     Create(Entity::LITTLE_MAN, 26, 35);
-    Create(Entity::LITTLE_MAN, 21, 35);
-    Create(Entity::BIG_MAN, 17, 35);
-    Create(Entity::LITTLE_MAN, 26, 30);
-    Create(Entity::LITTLE_MAN, 11, 30);
-    Create(Entity::LITTLE_MAN, 7, 30);
-
+    // Create(Entity::LITTLE_MAN, 21, 35);
+    // Create(Entity::BIG_MAN, 17, 35);
+    // Create(Entity::LITTLE_MAN, 26, 30);
+    // Create(Entity::LITTLE_MAN, 11, 30);
+    // Create(Entity::LITTLE_MAN, 7, 30);
+    
     /// \todo Make the bullet factory manage its own list
 
     entities.push_back(Bullet::Create(&Level::p_level->world, graphics,
@@ -95,7 +95,6 @@ bool Application::OnInit() {
     mainhud.Hud_Load_Hit_Pts_Texture("art_assets/hit_pts_meter.png",
                                      graphics.renderer,
                                      Player::player->hit_pts);
-
 
     if(level.LoadAssets(graphics.renderer, "art_assets/sky2.png",
                         "art_assets/grass.png") == NULL) {

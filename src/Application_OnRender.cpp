@@ -2,9 +2,7 @@
 
 
 void Application::OnRender() {
-
     Level::p_level->world.Step((double) dt / 1000.0, 6, 2);
-
     // Clear everything
 
     SDL_SetRenderDrawColor(graphics.renderer, 0, 0, 0, 255);

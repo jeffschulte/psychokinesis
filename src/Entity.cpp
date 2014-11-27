@@ -63,7 +63,7 @@ void CopyPhysicsComponent::update(Entity& ent) {
         footsensor->SetUserData(this);
 
         /// \todo Fix this userdata to be something predictable
-}
+    }
 
     b2Vec2 position = body->GetPosition();
     b2Vec2 velocity = body->GetLinearVelocity();
@@ -98,6 +98,16 @@ CopyPhysicsComponent::~CopyPhysicsComponent() {
 
     world->DestroyBody(body);
 }
+
+
+// CopyRenderComponent::CopyRenderComponent(Entity& ent, const char* File,
+//                                          SDL_Renderer* renderer) {
+//     anim = new Animation("art_assets/stickman6sword.png",
+//                          renderer));
+// }
+
+// void CopyRenderComponent::update(Entity& ent) {
+// }
 
 
 void NullInputComponent::update(__attribute__((unused)) Entity& ent) {}

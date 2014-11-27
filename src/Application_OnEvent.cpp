@@ -74,7 +74,7 @@ void Application::OnEvent(SDL_Event* Event) {
     //     jbutton.button 5 = right bump
 
     if (Event->type == SDL_JOYBUTTONDOWN) {
-        if (Event->jbutton.button == 4) {
+        if (Event->jbutton.button == 4 || Event->jbutton.button == 5) {
             astate->pushing = true;
 
             if (haptic != NULL) {
@@ -83,35 +83,35 @@ void Application::OnEvent(SDL_Event* Event) {
         }
         else if (Event->jbutton.button == 3) {
             entities.push_back(Bullet::Create(&Level::p_level->world, graphics,
-                                              4, 20, (Player::player->x-4)*10,
-                                              (Player::player->y-20)*10));
+                                              Player::player->x +
+                                              (astate->xcont >= 0 ?
+                                               Player::player->width/1.2 : -Player::player->width/1.2),
+                                              Player::player->y,
+                                              astate->xcont >= 0 ? 100:-100,0));
+            printf("player at %g %g\n",(Player::player->x),(Player::player->y));
+                                              // (Player::player->x)*10,
+                                              // (Player::player->y)*10,4,0));
+            if (astate->xcont >= 0.0) {
+                Player::player->shoot_right = true;
+            }
+            else {
+                Player::player->shoot_left = true;
+            }
+
         }
-
-
         /// \todo Get these controls unconnected
-
-        /*else if (Event->jbutton.button == 2) {
-            if (ActionState::p_astate->xcont >= 0.0) {
+        else if (Event->jbutton.button == 2) {
+            if (astate->xcont >= 0.0) {
                 Player::player->swing_right = true;
             }
             else {
                 Player::player->swing_left = true;
             }
         }
-        else if (Event->jbutton.button == 3) {
-            if (ActionState::p_astate->xcont >= 0.0) {
-                Player::player->Shoot(renderer, 0, 0, true);
-                Player::player->shoot_right = true;
-            }
-            else {
-                Player::player->Shoot(renderer, 0, 0, false);
-                Player::player->shoot_left = true;
-            }
-            }*/
     }
 
     if (Event->type == SDL_JOYBUTTONUP) {
-        if (Event->jbutton.button == 4) {
+        if (Event->jbutton.button == 4 || Event->jbutton.button == 5) {
 
             astate->pushing = false;
 

@@ -3,7 +3,6 @@
 Entity* Application::Create(Entity::EntType type, double x, double y) {
 
     Entity* ent;
-
     if(type == Entity::PLAYER) {
         Animation* playerAnim = new Animation("art_assets/stickman6sword.png",
                                    graphics.renderer);
@@ -23,7 +22,6 @@ Entity* Application::Create(Entity::EntType type, double x, double y) {
                          new Animation("art_assets/stickman6sword.png",
                                        graphics.renderer));
     }
-
     switch (type) {
     case Entity::BIG_MAN:
             ent->width = 1.5;
@@ -63,7 +61,6 @@ Entity* Application::Create(Entity::EntType type, double x, double y) {
     //the following so there is a small amount of overlap between characters
     ent->anim_width = 1.7*(ent->width);
     ent->anim_height = 1.0*(ent->height);
-
     entities.push_back(ent);
 
     return ent;

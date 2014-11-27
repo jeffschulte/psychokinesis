@@ -19,6 +19,8 @@ class states_struct {
 
 class Animation : public RenderComponent {
  public:
+
+    bool still_dead;
     int anim_frame_rate;
     int MaxFrames;
     int Oscillate;
@@ -26,13 +28,14 @@ class Animation : public RenderComponent {
     int current_frame;
     int mini_anim_frame;
     int current_state;
-    bool still_dead;
-    bool hit_face_r;
-    bool hit_face_l;
-    bool anim_swing_r;
-    bool anim_swing_l;
-    bool anim_shoot_r;
-    bool anim_shoot_l;
+
+    bool hit_face_r = false;
+    bool hit_face_l = false;
+    bool anim_swing_r = false;
+    bool anim_swing_l = false;
+    bool anim_shoot_r = false;
+    bool anim_shoot_l = false;
+
     enum player_states {P_STAND, PUSH_R, PUSH_L, PUSH_U, PUSH_D,
                         PUSH_R_F_STAND, STAND_F_PUSH_R, PUSH_L_F_STAND,
                         STAND_F_PUSH_L, PUSH_U_F_STAND, STAND_F_PUSH_U,
@@ -49,8 +52,7 @@ class Animation : public RenderComponent {
 
     SDL_Texture* texture;
 
-    Animation(const char* File,
-              SDL_Renderer* renderer);
+    Animation(const char* File, SDL_Renderer* renderer);
     void update(Entity& ent, Graphics& graphics);
     SDL_Texture* Animation_Load_Texture(const char* File,
                                         SDL_Renderer* renderer);
