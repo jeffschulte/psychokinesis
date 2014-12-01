@@ -35,7 +35,6 @@ class Level {
 
     b2Vec2 gravity;
     b2World world;
-    double Jeff = 5;
 
  private:
 

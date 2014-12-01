@@ -39,7 +39,6 @@ void ContactListener::BeginContact(b2Contact* contact) {
 
     if(entA != NULL && speedB*massB > 10.0) {
         entA->hit_pts -= .5*(speedB*massB);
-        printf("%s A hit_pts = %g\n",entA->debugname.c_str(),entA->hit_pts);
         // if (velB.x > 0.0) {
         //     Entity::entities[i]->animation_object->hit_face_l = true;
         // }
@@ -49,7 +48,6 @@ void ContactListener::BeginContact(b2Contact* contact) {
     }
     if(entB != NULL && speedA*massA > 10.0) {
         entB->hit_pts -= .5*(speedA*massA);
-        printf("%s B hit_pts = %g\n\n",entB->debugname.c_str(),entB->hit_pts);
 
         // if (velA.x > 0.0) {
         //     Entity::entities[i]->animation_object->hit_face_l = true;

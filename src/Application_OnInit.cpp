@@ -73,19 +73,19 @@ bool Application::OnInit() {
 
     // Test blocks to shove around
 
-    Create(Entity::LITTLE_MAN, 26, 25);
-    Create(Entity::LITTLE_MAN, 21, 25);
-    Create(Entity::BIG_MAN, 17, 25);
-    Create(Entity::LITTLE_MAN, 26, 20);
-    Create(Entity::LITTLE_MAN, 11, 20);
-    Create(Entity::LITTLE_MAN, 7, 20);
-    Create(Entity::LITTLE_MAN, 26, 35);
-    // Create(Entity::LITTLE_MAN, 21, 35);
-    // Create(Entity::BIG_MAN, 17, 35);
-    // Create(Entity::LITTLE_MAN, 26, 30);
-    // Create(Entity::LITTLE_MAN, 11, 30);
-    // Create(Entity::LITTLE_MAN, 7, 30);
-    
+    // Create(Entity::LITTLE_MAN, 26, 25);
+    // Create(Entity::LITTLE_MAN, 21, 25);
+    // Create(Entity::BIG_MAN, 17, 25);
+    // Create(Entity::LITTLE_MAN, 26, 20);
+    // Create(Entity::LITTLE_MAN, 11, 20);
+    // Create(Entity::LITTLE_MAN, 7, 20);
+    // Create(Entity::LITTLE_MAN, 26, 35);
+    Create(Entity::LITTLE_MAN, 21, 35);
+    Create(Entity::BIG_MAN, 17, 35);
+    Create(Entity::LITTLE_MAN, 26, 30);
+    Create(Entity::LITTLE_MAN, 11, 30);
+    Create(Entity::LITTLE_MAN, 7, 30);
+ 
     /// \todo Make the bullet factory manage its own list
 
     entities.push_back(Bullet::Create(&Level::p_level->world, graphics,
@@ -97,7 +97,7 @@ bool Application::OnInit() {
                                      Player::player->hit_pts);
 
     if(level.LoadAssets(graphics.renderer, "art_assets/sky2.png",
-                        "art_assets/grass.png") == NULL) {
+                        "art_assets/lanscape.png") == NULL) {
         Logger::log("Level loading failure: " + std::string(SDL_GetError()));
     }
 

@@ -35,3 +35,4 @@ Building
 --------
 
 Compile with `make`
+Run with bin/psycho
